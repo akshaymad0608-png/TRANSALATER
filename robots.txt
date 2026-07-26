@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://translator-ten-sage.vercel.app/sitemap.xml
+Sitemap: https://languagetransalator.com/sitemap.xml
