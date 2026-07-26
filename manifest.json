@@ -1,0 +1,16 @@
+{
+  "name": "Rosetta — Voice & Text Translator",
+  "short_name": "Rosetta",
+  "description": "Free voice, text, conversation and video-call translator supporting 130+ world and regional languages.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#EDEFF6",
+  "theme_color": "#5B45E0",
+  "lang": "en",
+  "categories": ["utilities", "productivity", "education"],
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
