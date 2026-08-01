@@ -1,0 +1,49 @@
+# Rosetta
+
+> Free, private, browser-based translator for 40+ languages. Translate typed or spoken text, hold a two-way live conversation on one phone, or make a peer-to-peer video call with real-time translated subtitles. No sign-up, no API keys, nothing to install.
+
+Rosetta (https://languagetransalator.com/) runs entirely client-side in the browser. Video calls are peer-to-peer, so conversations are never stored on a server.
+
+## Modes
+- Text & voice translation: type or speak, auto-detect the language, translate instantly, and play the result aloud.
+- Conversation mode: two people on one phone — each speaks their own language and Rosetta translates and reads the reply aloud in the other language.
+- Video call with subtitles: share a room code and each person sees the other's speech as live translated subtitles.
+
+## Key facts
+- Cost: 100% free — no sign-up, no API keys, no usage limit.
+- Privacy: runs in the browser; video calls are peer-to-peer; conversations are not stored on a server.
+- Platform: any modern web browser on phone or computer (Chrome/Edge recommended for voice and video).
+
+---
+
+## Supported languages (40+)
+English, Hindi, Gujarati, Marathi, Bengali, Punjabi, Tamil, Telugu, Kannada, Malayalam, Urdu, Arabic, Spanish, French, German, Italian, Portuguese, Russian, Chinese (Simplified), Chinese (Traditional), Japanese, Korean, Thai, Vietnamese, Indonesian, Malay, Filipino, Turkish, Dutch, Polish, Ukrainian, Greek, Hebrew, Persian, Swedish, Danish, Finnish, Norwegian, Czech, Romanian, Hungarian, Swahili, Afrikaans.
+
+---
+
+## How to use Rosetta
+1. Pick languages: choose the language you speak and the language to translate into.
+2. Type or speak: type your text, or tap the microphone and speak — Rosetta transcribes and translates instantly.
+3. Listen or share: tap the speaker to hear the translation, use Conversation mode for two people on one phone, or start a video call and share the room code for live subtitles.
+
+---
+
+## Frequently asked questions
+
+Q: Is Rosetta free?
+A: Yes — completely free, with no sign-up and no API keys, and no limit on how much you translate.
+
+Q: Is my translation private?
+A: Yes. Rosetta runs in your browser and video calls are peer-to-peer, so your conversations are not stored on any server.
+
+Q: How many languages does Rosetta support?
+A: 40+ world and regional languages, including English, Hindi, Gujarati, Marathi, Bengali, Tamil, Telugu, Spanish, French, German, Arabic, Chinese, Japanese and Korean.
+
+Q: Can I translate a live conversation on one phone?
+A: Yes. Conversation mode lets two people talk on a single device — each person taps their button, speaks, and Rosetta translates and reads the reply aloud in the other language.
+
+Q: Can I translate a video call?
+A: Yes. Start a call, share the room code, and each person sees the other's speech as live translated subtitles. Works best in Chrome or Edge with camera and microphone allowed.
+
+Q: Do I need to install an app?
+A: No. Rosetta works in any modern web browser on phone or computer — nothing to install.

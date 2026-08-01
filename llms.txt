@@ -1,0 +1,22 @@
+# Rosetta
+
+> Free, private, browser-based translator for 40+ languages. Translate typed or spoken text, hold a two-way live conversation on one phone, or make a peer-to-peer video call with real-time translated subtitles. No sign-up, no API keys, nothing to install.
+
+Rosetta (https://languagetransalator.com/) runs entirely client-side in the browser. Video calls are peer-to-peer, so conversations are never stored on a server. It is aimed at anyone who needs to communicate across a language barrier — travellers, families, students, and people talking to someone face to face.
+
+## Modes
+- Text & voice translation: type or speak, auto-detect the language, translate instantly, and play the result aloud.
+- Conversation mode: two people on one phone — each speaks their own language and Rosetta translates and reads the reply aloud in the other language.
+- Video call with subtitles: share a room code and each person sees the other's speech as live translated subtitles.
+
+## Key facts
+- Cost: 100% free — no sign-up, no API keys, no usage limit.
+- Privacy: runs in the browser; video calls are peer-to-peer; conversations are not stored on a server.
+- Languages: 40+ world and regional languages, including English, Hindi, Gujarati, Marathi, Bengali, Punjabi, Tamil, Telugu, Kannada, Malayalam, Urdu, Arabic, Spanish, French, German, Italian, Portuguese, Russian, Chinese, Japanese, Korean and more.
+- Platform: any modern web browser on phone or computer (Chrome/Edge recommended for voice and video).
+- Text-to-speech: translations can be read aloud.
+
+## Links
+- App: https://languagetransalator.com/
+
+_Last updated: 2026-08-01. Full data version: https://languagetransalator.com/llms-full.txt_
