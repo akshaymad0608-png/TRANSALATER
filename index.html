@@ -445,6 +445,16 @@
     <h2>40+ languages supported</h2>
     <p class="langs">English, Hindi, Gujarati, Marathi, Bengali, Punjabi, Tamil, Telugu, Kannada, Malayalam, Urdu, Arabic, Spanish, French, German, Italian, Portuguese, Russian, Chinese (Simplified &amp; Traditional), Japanese, Korean, Thai, Vietnamese, Indonesian, Malay, Filipino, Turkish, Dutch, Polish, Ukrainian, Greek, Hebrew, Persian, Swedish, Danish, Finnish, Norwegian, Czech, Romanian, Hungarian, Swahili and Afrikaans.</p>
 
+    <h2>Popular translations &amp; modes</h2>
+    <p class="langs" style="display:flex;flex-wrap:wrap;gap:9px">
+      <a href="/english-to-hindi-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Hindi</a>
+      <a href="/english-to-gujarati-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Gujarati</a>
+      <a href="/english-to-marathi-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Marathi</a>
+      <a href="/english-to-tamil-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Tamil</a>
+      <a href="/voice-conversation-translator.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">Voice &amp; Conversation</a>
+      <a href="/video-call-translator.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">Video Call Translator</a>
+    </p>
+
     <h2>Frequently asked questions</h2>
     <div class="faq">
       <details><summary>Is Rosetta free?</summary><p>Yes — completely free, with no sign-up and no API keys, and no limit on how much you translate.</p></details>
@@ -773,6 +783,46 @@ $("vcRoom").addEventListener("input",e=>e.target.value=e.target.value.toUpperCas
 
 /* startup checks */
 if(!SR){ vcNote("Note: this browser has no speech recognition, so captions won't generate. Chrome or Edge work best."); }
+
+/* ================= NEW: deep-linking, remembered languages, auto-translate ================= *
+ * Lets SEO landing pages open the tool with languages/text pre-filled
+ * (?sl=en&tl=hi&q=Hello), remembers the last language pair, and translates as
+ * you type. Purely additive — existing Translate button and voice input still work. */
+(function(){
+  const hasCode = c => LANGS.some(l => l.code === c);
+  try{
+    const p = new URLSearchParams(location.search);
+    const sl = p.get("sl"), tl = p.get("tl"), q = p.get("q");
+
+    // restore last-used pair when the URL doesn't specify one
+    if(!sl){ const v = localStorage.getItem("rosetta_sl"); if(v && (v === "auto" || hasCode(v))) srcSel.value = v; }
+    if(!tl){ const v = localStorage.getItem("rosetta_tl"); if(v && hasCode(v)) tgtSel.value = v; }
+
+    // explicit URL params win
+    if(sl && (sl === "auto" || hasCode(sl))) srcSel.value = sl;
+    if(tl && hasCode(tl)) tgtSel.value = tl;
+    applyDir(); refreshSwap();
+
+    // open a specific mode: ?tab=translate|conversation|video
+    const tab = p.get("tab");
+    if(tab){ const el = document.querySelector('.tab[data-view="'+tab+'"]'); if(el) el.click(); }
+
+    // remember the pair whenever it changes
+    srcSel.addEventListener("change", () => { try{ localStorage.setItem("rosetta_sl", srcSel.value); }catch(e){} });
+    tgtSel.addEventListener("change", () => { try{ localStorage.setItem("rosetta_tl", tgtSel.value); }catch(e){} });
+
+    // pre-filled text → translate immediately
+    if(q){ input.value = q; count.textContent = q.length; applyDir(); translate(); }
+  }catch(e){}
+
+  // translate-as-you-type (debounced); voice input doesn't fire 'input', so no conflict
+  let autoTimer;
+  input.addEventListener("input", () => {
+    clearTimeout(autoTimer);
+    if(!input.value.trim()) return;
+    autoTimer = setTimeout(() => { if(input.value.trim()) translate(); }, 800);
+  });
+})();
 </script>
 </body>
 </html>

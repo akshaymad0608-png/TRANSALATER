@@ -16,6 +16,14 @@ Rosetta (https://languagetransalator.com/) runs entirely client-side in the brow
 - Platform: any modern web browser on phone or computer (Chrome/Edge recommended for voice and video).
 - Text-to-speech: translations can be read aloud.
 
+## Landing pages
+- [English to Hindi](https://languagetransalator.com/english-to-hindi-translation.html): Translate English to Hindi free — type or speak, hear it read aloud, and hold a live two-way conversation. No sign-up, works in your browser on mobile.
+- [English to Gujarati](https://languagetransalator.com/english-to-gujarati-translation.html): Translate English to Gujarati free — type or speak, hear it read aloud, and hold a live two-way conversation. No sign-up, works in your browser on mobile.
+- [English to Marathi](https://languagetransalator.com/english-to-marathi-translation.html): Translate English to Marathi free — type or speak, hear it read aloud, and hold a live two-way conversation. No sign-up, works in your browser on mobile.
+- [English to Tamil](https://languagetransalator.com/english-to-tamil-translation.html): Translate English to Tamil free — type or speak, hear it read aloud, and hold a live two-way conversation. No sign-up, works in your browser on mobile.
+- [Video Call Translator](https://languagetransalator.com/video-call-translator.html): Make a free video call with real-time translated subtitles in 40+ languages. Share a room code — each person sees the other’s speech translated live. Private, in-browser.
+- [Voice & Conversation Translator](https://languagetransalator.com/voice-conversation-translator.html): Free voice translator and two-way conversation mode — speak and hear translations in 40+ languages on one phone. No sign-up, private, works in your browser.
+
 ## Links
 - App: https://languagetransalator.com/
 
