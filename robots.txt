@@ -1,6 +1,0 @@
-# robots.txt for https://languagetransalator.com/
-User-agent: *
-Allow: /
-
-# Sitemap location
-Sitemap: https://languagetransalator.com/sitemap.xml
