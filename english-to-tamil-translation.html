@@ -144,6 +144,14 @@
   p{margin:12px 0}
   .cta{display:inline-flex;align-items:center;gap:9px;background:var(--primary);color:#fff;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:16px;padding:13px 24px;border-radius:12px;box-shadow:var(--shadow)}
   .cta:hover{background:var(--primary-press);text-decoration:none}
+
+  .phrasebook{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:14px 0 6px;background:var(--surface)}
+  .phrasebook a{display:flex;align-items:center;gap:12px;padding:11px 14px;border-top:1px solid var(--line);color:var(--ink);font-size:15px}
+  .phrasebook a:first-child{border-top:0}
+  .phrasebook a:hover{background:var(--surface-2);text-decoration:none}
+  .phrasebook .en{flex:1;min-width:0}
+  .phrasebook .tr{flex:1;min-width:0;font-weight:600;color:var(--primary);text-align:right}
+  @media (max-width:520px){.phrasebook a{font-size:14px;padding:10px 12px;gap:10px}}
   .phrases{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0 6px}
   .phrases a{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:14px;color:var(--ink);box-shadow:var(--shadow)}
   .phrases a:hover{border-color:var(--primary);text-decoration:none}
@@ -187,18 +195,18 @@
   <p>Need it the other way? Switch the languages with one tap to translate Tamil to English. You can also use <a href="/?tab=conversation">Conversation mode</a> to talk with someone face to face, each in your own language.</p>
 
   <h2>Popular phrases to translate</h2>
-  <p>Tap any phrase to open it in the translator and hear it in Tamil:</p>
-  <div class="phrases">
-    <a href="/?sl=en&tl=ta&q=Hello">Hello</a>
-    <a href="/?sl=en&tl=ta&q=Thank%20you">Thank you</a>
-    <a href="/?sl=en&tl=ta&q=Good%20morning">Good morning</a>
-    <a href="/?sl=en&tl=ta&q=How%20are%20you%3F">How are you?</a>
-    <a href="/?sl=en&tl=ta&q=Nice%20to%20meet%20you">Nice to meet you</a>
-    <a href="/?sl=en&tl=ta&q=How%20much%20is%20this%3F">How much is this?</a>
-    <a href="/?sl=en&tl=ta&q=Where%20is%20the%20bathroom%3F">Where is the bathroom?</a>
-    <a href="/?sl=en&tl=ta&q=Please%20help%20me">Please help me</a>
-    <a href="/?sl=en&tl=ta&q=I%20don%E2%80%99t%20understand">I don’t understand</a>
-    <a href="/?sl=en&tl=ta&q=Can%20you%20speak%20slowly%3F">Can you speak slowly?</a>
+  <p>Common English phrases with their Tamil translation. Tap any row to open it in the translator and hear it read aloud:</p>
+  <div class="phrasebook">
+    <a href="/?sl=en&tl=ta&q=Hello" title="Open 'Hello' in the translator"><span class="en">Hello</span><span class="tr" lang="ta">வணக்கம்</span></a>
+    <a href="/?sl=en&tl=ta&q=Thank%20you" title="Open 'Thank you' in the translator"><span class="en">Thank you</span><span class="tr" lang="ta">நன்றி</span></a>
+    <a href="/?sl=en&tl=ta&q=Good%20morning" title="Open 'Good morning' in the translator"><span class="en">Good morning</span><span class="tr" lang="ta">காலை வணக்கம்</span></a>
+    <a href="/?sl=en&tl=ta&q=How%20are%20you%3F" title="Open 'How are you?' in the translator"><span class="en">How are you?</span><span class="tr" lang="ta">எப்படி இருக்கிறீர்கள்?</span></a>
+    <a href="/?sl=en&tl=ta&q=Nice%20to%20meet%20you" title="Open 'Nice to meet you' in the translator"><span class="en">Nice to meet you</span><span class="tr" lang="ta">உங்களை சந்தித்ததில் மகிழ்ச்சி</span></a>
+    <a href="/?sl=en&tl=ta&q=How%20much%20is%20this%3F" title="Open 'How much is this?' in the translator"><span class="en">How much is this?</span><span class="tr" lang="ta">இது எவ்வளவு?</span></a>
+    <a href="/?sl=en&tl=ta&q=Where%20is%20the%20bathroom%3F" title="Open 'Where is the bathroom?' in the translator"><span class="en">Where is the bathroom?</span><span class="tr" lang="ta">குளியலறை எங்கே?</span></a>
+    <a href="/?sl=en&tl=ta&q=Please%20help%20me" title="Open 'Please help me' in the translator"><span class="en">Please help me</span><span class="tr" lang="ta">தயவுசெய்து எனக்கு உதவுங்கள்</span></a>
+    <a href="/?sl=en&tl=ta&q=I%20don%E2%80%99t%20understand" title="Open 'I don’t understand' in the translator"><span class="en">I don’t understand</span><span class="tr" lang="ta">எனக்கு புரியவில்லை</span></a>
+    <a href="/?sl=en&tl=ta&q=Can%20you%20speak%20slowly%3F" title="Open 'Can you speak slowly?' in the translator"><span class="en">Can you speak slowly?</span><span class="tr" lang="ta">மெதுவாக பேச முடியுமா?</span></a>
   </div>
 
   <h2>How to translate English to Tamil</h2>
@@ -208,6 +216,14 @@
     <li><b>Get the Tamil translation</b> — it appears instantly; tap the speaker to hear it aloud.</li>
     <li><b>Copy or converse</b> — copy the Tamil text, or switch to Conversation mode for a two-way chat.</li>
   </ol>
+  <h2>What to know about Tamil translation</h2>
+  <p>Tamil has its own ancient script and about 80 million speakers, and it holds official status in Tamil Nadu, Sri Lanka and Singapore. It differs from north Indian languages in ways that show up directly in translations:</p>
+  <ul>
+    <li><b>Written and spoken Tamil are not the same.</b> Tamil has a formal written form and a everyday spoken form. Machine translation produces the written form, which is correct and understood everywhere — it simply reads more formal than street speech.</li>
+    <li><b>Respect is built into the verb.</b> நீங்கள் is the respectful "you" and நீ the familiar one; the verb ending changes with it. Translations use the respectful form by default.</li>
+    <li><b>Word order is flexible.</b> Tamil puts the verb at the end and marks roles with suffixes, so a literal word-for-word reading back into English will look scrambled even when the translation is right.</li>
+  </ul>
+
   <h2>Frequently asked questions</h2>
   <div class="faq">
     <details><summary>How do I translate English to Tamil for free?</summary><p>Open Rosetta, keep English as the source and Tamil as the target, then type or speak. The Tamil translation appears instantly — free, with no sign-up.</p></details>
