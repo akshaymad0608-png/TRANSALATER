@@ -282,6 +282,14 @@
     .brand h1{font-size:21px}
     .tab span{display:none}
     .tab{padding:11px}
+
+    /* Touch sizing: the language pickers are the primary control, and at the
+       desktop padding they render ~22px tall — far too small to hit reliably
+       on a phone. Labels also get a little larger to stay readable. */
+    select{padding:11px 30px 11px 10px;min-height:44px;background-color:var(--surface-2);background-position:right 9px center}
+    .tag,.field label{font-size:11.5px;letter-spacing:.1em}
+    .ib{width:44px;height:44px}
+    .tab{min-height:44px}
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
