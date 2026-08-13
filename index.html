@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+      "audience": {
+        "@type": "Audience",
+        "name": "Speakers of Indian and world languages",
+        "geographicArea": { "@type": "Country", "name": "India" }
+      },
+      "publisher": { "@id": "https://languagetransalator.com/#publisher" },
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -39,6 +45,19 @@
 <meta name="twitter:image:alt" content="Rosetta translator" />
 
 <!-- Structured data: helps Google understand this is a free web app -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://languagetransalator.com/#publisher",
+  "name": "Rosetta",
+  "url": "https://languagetransalator.com/",
+  "description": "Free browser-based voice, text and video-call translator for 40+ world and Indian regional languages.",
+  "areaServed": { "@type": "Country", "name": "India" },
+  "founder": { "@type": "Person", "name": "Akshay Mahajan", "url": "https://akshay.website" },
+  "sameAs": ["https://akshay.website"]
+}
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
