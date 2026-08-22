@@ -181,6 +181,11 @@
   .output{overflow-y:auto;white-space:pre-wrap}
   .output.empty{color:#aeb2c6}
   .output.rtl,textarea.rtl{direction:rtl;text-align:right}
+  /* romanised pronunciation — only rendered for scripts an English reader cannot sound out */
+  .roman{display:flex;gap:8px;align-items:baseline;margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;line-height:1.5}
+  .roman[hidden]{display:none}
+  .roman span{flex:none;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+  .roman b{font-weight:500;font-family:"JetBrains Mono",ui-monospace,monospace;color:var(--ink);word-break:break-word}
   .pfoot{display:flex;align-items:center;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
   .count{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);margin-left:auto}
 
@@ -368,6 +373,7 @@
         <section class="panel tgt">
           <div class="phead"><span class="tag">To</span><select id="tgtLang" aria-label="Translate to"></select></div>
           <div class="output empty" id="output">Translation appears here</div>
+          <p class="roman" id="roman" hidden><span>say it</span><b id="romanText"></b></p>
           <div class="pfoot">
             <button class="ib speak" id="speakTgt" title="Listen to translation"><svg viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9a3 3 0 010 6M18.5 7a6 6 0 010 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
             <button class="ib" id="copyBtn" title="Copy"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M6 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v1" stroke="currentColor" stroke-width="1.6"/></svg></button>
@@ -540,10 +546,16 @@ function speak(text,code,btn){
 }
 async function callTranslate(text,src,tgt){
   try{
-    const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${encodeURIComponent(src)}&tl=${encodeURIComponent(tgt)}&dt=t&q=${encodeURIComponent(text)}`;
+    /* dt=rm asks for a romanisation alongside the translation. Non-Latin targets
+     * come back with a trailing [null,null,"..."] segment; Latin ones (Spanish,
+     * French) simply omit it, which is exactly when we don't want to show one.
+     * The segment has a null first element, and join("") turns null into "", so
+     * the existing text extraction is unaffected. */
+    const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${encodeURIComponent(src)}&tl=${encodeURIComponent(tgt)}&dt=t&dt=rm&q=${encodeURIComponent(text)}`;
     const r=await fetch(url); if(!r.ok)throw 0;
     const d=await r.json(); const t=(d[0]||[]).map(s=>s[0]).join(""); if(!t)throw 0;
-    return {text:t,detected:d[2]||src};
+    const roman=(d[0]||[]).filter(s=>s&&s[0]==null&&typeof s[2]==="string").map(s=>s[2]).join("").trim();
+    return {text:t,detected:d[2]||src,roman:roman&&roman!==t?roman:""};
   }catch(e){
     const sl=src==="auto"?"en":src;
     const r=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${encodeURIComponent(sl)}|${encodeURIComponent(tgt)}`);
@@ -569,12 +581,17 @@ const srcSel=$("srcLang"),tgtSel=$("tgtLang"),input=$("input"),output=$("output"
 fill(srcSel,true); fill(tgtSel,false); srcSel.value="auto"; tgtSel.value="hi";
 function applyDir(){input.classList.toggle("rtl",!!(byCode[srcSel.value]||{}).rtl);output.classList.toggle("rtl",!!(byCode[tgtSel.value]||{}).rtl);}
 input.addEventListener("input",()=>count.textContent=input.value.length);
+/* Show how to say the translation, in Latin letters. Hidden whenever there is
+ * nothing to show — a Latin-script target, or the MyMemory fallback, which
+ * returns no romanisation. */
+const romanBox=$("roman"),romanText=$("romanText");
+function showRoman(r){romanText.textContent=r||"";romanBox.hidden=!r;}
 async function translate(){
   const text=input.value.trim(); if(!text){toast("Type or speak something first");return;}
   setStatus("Translating…","busy"); $("translateBtn").disabled=true;
   try{
     const res=await callTranslate(text,srcSel.value,tgtSel.value);
-    output.textContent=res.text; output.classList.remove("empty");
+    output.textContent=res.text; output.classList.remove("empty"); showRoman(res.roman);
     detected.textContent=(srcSel.value==="auto"&&byCode[res.detected])?"detected: "+byCode[res.detected].name:"";
     setStatus("Done","live"); setTimeout(()=>setStatus("Ready"),1000);
   }catch(e){setStatus("Translation failed","err");toast("Could not translate. Check your connection.");}
@@ -603,9 +620,9 @@ swapBtn.addEventListener("click",()=>{
   const s=srcSel.value;srcSel.value=tgtSel.value;tgtSel.value=s;
   const out=output.classList.contains("empty")?"":output.textContent; const prev=input.value;
   input.value=out; output.textContent=prev||"Translation appears here"; output.classList.toggle("empty",!prev);
-  count.textContent=input.value.length; detected.textContent=""; applyDir(); refreshSwap();
+  count.textContent=input.value.length; detected.textContent=""; showRoman(""); applyDir(); refreshSwap();
 });
-$("clearBtn").addEventListener("click",()=>{input.value="";count.textContent="0";detected.textContent="";output.textContent="Translation appears here";output.classList.add("empty");input.focus();});
+$("clearBtn").addEventListener("click",()=>{input.value="";count.textContent="0";detected.textContent="";output.textContent="Translation appears here";output.classList.add("empty");showRoman("");input.focus();});
 $("copyBtn").addEventListener("click",async()=>{const t=output.classList.contains("empty")?"":output.textContent;if(!t){toast("Nothing to copy yet");return;}try{await navigator.clipboard.writeText(t);toast("Copied to clipboard");}catch{toast("Copy failed");}});
 $("translateBtn").addEventListener("click",translate);
 input.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key==="Enter"){e.preventDefault();translate();}});

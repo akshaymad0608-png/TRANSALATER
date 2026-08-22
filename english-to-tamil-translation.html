@@ -121,6 +121,7 @@
   .phrasebook a:hover{background:var(--surface-2);text-decoration:none}
   .phrasebook .en{flex:1;min-width:0}
   .phrasebook .tr{flex:1;min-width:0;font-weight:600;color:var(--primary);text-align:right}
+  .phrasebook .rm{display:block;margin-top:3px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;font-style:normal;font-weight:400;line-height:1.45;color:var(--muted)}
   @media (max-width:520px){.phrasebook a{font-size:14px;padding:10px 12px;gap:10px}}
   .phrases{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0 6px}
   .phrases a{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:14px;color:var(--ink);box-shadow:var(--shadow)}
@@ -165,31 +166,31 @@
   <p>Need it the other way? Switch the languages with one tap to translate Tamil to English. You can also use <a href="/?tab=conversation">Conversation mode</a> to talk with someone face to face, each in your own language.</p>
 
   <h2>Popular phrases to translate</h2>
-  <p>Common English phrases with their Tamil translation. Tap any row to open it in the translator and hear it read aloud:</p>
+  <p>Common English phrases with their Tamil translation, and the pronunciation written in English letters so you can say it even if you cannot read the Tamil script. Tap any row to open it in the translator and hear it read aloud:</p>
   <div class="phrasebook">
-    <a href="/?sl=en&tl=ta&q=Hello" title="Open 'Hello' in the translator"><span class="en">Hello</span><span class="tr" lang="ta">வணக்கம்</span></a>
-    <a href="/?sl=en&tl=ta&q=Thank%20you" title="Open 'Thank you' in the translator"><span class="en">Thank you</span><span class="tr" lang="ta">நன்றி</span></a>
-    <a href="/?sl=en&tl=ta&q=Good%20morning" title="Open 'Good morning' in the translator"><span class="en">Good morning</span><span class="tr" lang="ta">காலை வணக்கம்</span></a>
-    <a href="/?sl=en&tl=ta&q=How%20are%20you%3F" title="Open 'How are you?' in the translator"><span class="en">How are you?</span><span class="tr" lang="ta">எப்படி இருக்கிறீர்கள்?</span></a>
-    <a href="/?sl=en&tl=ta&q=Nice%20to%20meet%20you" title="Open 'Nice to meet you' in the translator"><span class="en">Nice to meet you</span><span class="tr" lang="ta">உங்களை சந்தித்ததில் மகிழ்ச்சி</span></a>
-    <a href="/?sl=en&tl=ta&q=How%20much%20is%20this%3F" title="Open 'How much is this?' in the translator"><span class="en">How much is this?</span><span class="tr" lang="ta">இது எவ்வளவு?</span></a>
-    <a href="/?sl=en&tl=ta&q=Where%20is%20the%20bathroom%3F" title="Open 'Where is the bathroom?' in the translator"><span class="en">Where is the bathroom?</span><span class="tr" lang="ta">குளியலறை எங்கே?</span></a>
-    <a href="/?sl=en&tl=ta&q=Please%20help%20me" title="Open 'Please help me' in the translator"><span class="en">Please help me</span><span class="tr" lang="ta">தயவுசெய்து எனக்கு உதவுங்கள்</span></a>
-    <a href="/?sl=en&tl=ta&q=I%20don%E2%80%99t%20understand" title="Open 'I don’t understand' in the translator"><span class="en">I don’t understand</span><span class="tr" lang="ta">எனக்கு புரியவில்லை</span></a>
-    <a href="/?sl=en&tl=ta&q=Can%20you%20speak%20slowly%3F" title="Open 'Can you speak slowly?' in the translator"><span class="en">Can you speak slowly?</span><span class="tr" lang="ta">மெதுவாக பேச முடியுமா?</span></a>
+    <a href="/?sl=en&tl=ta&q=Hello" title="Open 'Hello' in the translator"><span class="en">Hello</span><span class="tr" lang="ta">வணக்கம்<i class="rm">vanakkam</i></span></a>
+    <a href="/?sl=en&tl=ta&q=Thank%20you" title="Open 'Thank you' in the translator"><span class="en">Thank you</span><span class="tr" lang="ta">நன்றி<i class="rm">nantri</i></span></a>
+    <a href="/?sl=en&tl=ta&q=Good%20morning" title="Open 'Good morning' in the translator"><span class="en">Good morning</span><span class="tr" lang="ta">காலை வணக்கம்<i class="rm">kaalai vanakkam</i></span></a>
+    <a href="/?sl=en&tl=ta&q=How%20are%20you%3F" title="Open 'How are you?' in the translator"><span class="en">How are you?</span><span class="tr" lang="ta">எப்படி இருக்கிறீர்கள்?<i class="rm">eppadi irukkireergal?</i></span></a>
+    <a href="/?sl=en&tl=ta&q=Nice%20to%20meet%20you" title="Open 'Nice to meet you' in the translator"><span class="en">Nice to meet you</span><span class="tr" lang="ta">உங்களை சந்தித்ததில் மகிழ்ச்சி<i class="rm">ungalai santhiththathil makilchchi</i></span></a>
+    <a href="/?sl=en&tl=ta&q=How%20much%20is%20this%3F" title="Open 'How much is this?' in the translator"><span class="en">How much is this?</span><span class="tr" lang="ta">இது எவ்வளவு?<i class="rm">ithu evvalavu?</i></span></a>
+    <a href="/?sl=en&tl=ta&q=Where%20is%20the%20bathroom%3F" title="Open 'Where is the bathroom?' in the translator"><span class="en">Where is the bathroom?</span><span class="tr" lang="ta">குளியலறை எங்கே?<i class="rm">kuliyalarai engkae?</i></span></a>
+    <a href="/?sl=en&tl=ta&q=Please%20help%20me" title="Open 'Please help me' in the translator"><span class="en">Please help me</span><span class="tr" lang="ta">தயவுசெய்து எனக்கு உதவுங்கள்<i class="rm">thayavuseithu enakku uthavungkal</i></span></a>
+    <a href="/?sl=en&tl=ta&q=I%20don%E2%80%99t%20understand" title="Open 'I don’t understand' in the translator"><span class="en">I don’t understand</span><span class="tr" lang="ta">எனக்கு புரியவில்லை<i class="rm">enakku puriyavillai</i></span></a>
+    <a href="/?sl=en&tl=ta&q=Can%20you%20speak%20slowly%3F" title="Open 'Can you speak slowly?' in the translator"><span class="en">Can you speak slowly?</span><span class="tr" lang="ta">மெதுவாக பேச முடியுமா?<i class="rm">medhuvaaga pesa mudiyumaa?</i></span></a>
   </div>
 
   <!-- talking-phrasebook:start -->
   <h2>Talking to someone in Tamil</h2>
-  <p>Phrases for reaching a person rather than reading a sign — asking to talk, checking they can hear you, or telling someone you already spoke. Tap any row to open it in the translator and hear it aloud:</p>
+  <p>Phrases for reaching a person rather than reading a sign — asking to talk, checking they can hear you, or telling someone you already spoke. Each one shows the Tamil spelling and how to pronounce it in English letters. Tap any row to open it in the translator and hear it aloud:</p>
   <div class="phrasebook">
-    <a href="/?sl=en&tl=ta&q=Can%20you%20talk%20with%20me%3F" title="Open 'Can you talk with me?' in the translator"><span class="en">Can you talk with me?</span><span class="tr" lang="ta">என்னுடன் பேச முடியுமா?</span></a>
-    <a href="/?sl=en&tl=ta&q=Can%20we%20talk%3F" title="Open 'Can we talk?' in the translator"><span class="en">Can we talk?</span><span class="tr" lang="ta">பேசலாமா?</span></a>
-    <a href="/?sl=en&tl=ta&q=Can%20you%20hear%20me%3F" title="Open 'Can you hear me?' in the translator"><span class="en">Can you hear me?</span><span class="tr" lang="ta">நான் சொல்வதை நீங்கள் கேட்கிறீர்களா?</span></a>
-    <a href="/?sl=en&tl=ta&q=I%20want%20to%20speak%20with%20you" title="Open 'I want to speak with you' in the translator"><span class="en">I want to speak with you</span><span class="tr" lang="ta">நான் உன்னுடன் பேச விரும்புகிறேன்</span></a>
-    <a href="/?sl=en&tl=ta&q=Did%20you%20reach%20home%3F" title="Open 'Did you reach home?' in the translator"><span class="en">Did you reach home?</span><span class="tr" lang="ta">நீங்கள் வீட்டை அடைந்தீர்களா?</span></a>
-    <a href="/?sl=en&tl=ta&q=I%20spoke%20to%20him" title="Open 'I spoke to him' in the translator"><span class="en">I spoke to him</span><span class="tr" lang="ta">அவரிடம் பேசினேன்</span></a>
-    <a href="/?sl=en&tl=ta&q=Please%20speak%20in%20Tamil" title="Open 'Please speak in Tamil' in the translator"><span class="en">Please speak in Tamil</span><span class="tr" lang="ta">தயவுசெய்து தமிழில் பேசுங்கள்</span></a>
+    <a href="/?sl=en&tl=ta&q=Can%20you%20talk%20with%20me%3F" title="Open 'Can you talk with me?' in the translator"><span class="en">Can you talk with me?</span><span class="tr" lang="ta">என்னுடன் பேச முடியுமா?<i class="rm">ennudan pesa mudiyumaa?</i></span></a>
+    <a href="/?sl=en&tl=ta&q=Can%20we%20talk%3F" title="Open 'Can we talk?' in the translator"><span class="en">Can we talk?</span><span class="tr" lang="ta">பேசலாமா?<i class="rm">paesalaamaa?</i></span></a>
+    <a href="/?sl=en&tl=ta&q=Can%20you%20hear%20me%3F" title="Open 'Can you hear me?' in the translator"><span class="en">Can you hear me?</span><span class="tr" lang="ta">நான் சொல்வதை நீங்கள் கேட்கிறீர்களா?<i class="rm">naan solvathai neengazh kaetkireergalaa?</i></span></a>
+    <a href="/?sl=en&tl=ta&q=I%20want%20to%20speak%20with%20you" title="Open 'I want to speak with you' in the translator"><span class="en">I want to speak with you</span><span class="tr" lang="ta">நான் உன்னுடன் பேச விரும்புகிறேன்<i class="rm">naan unnudan pesa virumbugiren</i></span></a>
+    <a href="/?sl=en&tl=ta&q=Did%20you%20reach%20home%3F" title="Open 'Did you reach home?' in the translator"><span class="en">Did you reach home?</span><span class="tr" lang="ta">நீங்கள் வீட்டை அடைந்தீர்களா?<i class="rm">neengazh veettai adaintheergalaa?</i></span></a>
+    <a href="/?sl=en&tl=ta&q=I%20spoke%20to%20him" title="Open 'I spoke to him' in the translator"><span class="en">I spoke to him</span><span class="tr" lang="ta">அவரிடம் பேசினேன்<i class="rm">avaridam paesinaen</i></span></a>
+    <a href="/?sl=en&tl=ta&q=Please%20speak%20in%20Tamil" title="Open 'Please speak in Tamil' in the translator"><span class="en">Please speak in Tamil</span><span class="tr" lang="ta">தயவுசெய்து தமிழில் பேசுங்கள்<i class="rm">thayavuseithu tamilil paesungal</i></span></a>
   </div>
   <!-- talking-phrasebook:end -->
 
