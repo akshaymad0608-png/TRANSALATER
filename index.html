@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>/* set the theme before first paint so there is no flash of the wrong one */try{var t=localStorage.getItem("rosetta_theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -110,10 +111,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js"></script>
 <style>
   :root{
+    --primary-solid:#5B45E0; --header-bg:rgba(237,239,246,.86); --placeholder:#70758D; --hover:#eef0f7; --dot-idle:#c3c7d6;
+   
     --bg:#EDEFF6; --surface:#FFFFFF; --surface-2:#F7F8FC;
-    --ink:#1A1C29; --muted:#6C7089; --line:#E2E5F0;
+    --ink:#1A1C29; --muted:#666A82; --line:#E2E5F0;
     --primary:#5B45E0; --primary-press:#4a37c4;
-    --from:#DD5F2B; --to:#0E9C88; --danger:#D64949;
+    --from:#B84A1C; --to:#0A7A6B; --danger:#D64949;
     --radius:18px; --shadow:0 1px 2px rgba(26,28,41,.04), 0 12px 30px -18px rgba(26,28,41,.28);
   }
   *{box-sizing:border-box}
@@ -131,7 +134,7 @@
   /* header */
   header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
   .brand{display:flex;align-items:center;gap:13px}
-  .mark{width:44px;height:44px;border-radius:13px;flex:none;background:linear-gradient(135deg,var(--primary),#7d6bff);
+  .mark{width:44px;height:44px;border-radius:13px;flex:none;background:linear-gradient(135deg,var(--primary-solid),#7d6bff);
     display:grid;place-items:center;box-shadow:0 8px 20px -8px rgba(91,69,224,.7);position:relative;overflow:hidden}
   .mark svg{width:24px;height:24px;position:relative;z-index:1}
   .mark::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 25%, rgba(255,255,255,.5), transparent 40%)}
@@ -139,9 +142,9 @@
   .brand p{margin:1px 0 0;font-size:12.5px;color:var(--muted)}
   .status{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);background:var(--surface);
     border:1px solid var(--line);border-radius:999px;padding:7px 14px;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow)}
-  .dot{width:8px;height:8px;border-radius:50%;background:#c3c7d6;transition:background .25s}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--dot-idle);transition:background .25s}
   .status.live .dot{background:var(--to);box-shadow:0 0 0 3px rgba(14,156,136,.18)}
-  .status.busy .dot{background:var(--primary);animation:pulse 1s infinite}
+  .status.busy .dot{background:var(--primary-solid);animation:pulse 1s infinite}
   .status.err .dot{background:var(--danger)}
   @keyframes pulse{50%{opacity:.3}}
 
@@ -153,7 +156,7 @@
     display:flex;align-items:center;justify-content:center;gap:7px;transition:.16s}
   .tab svg{width:16px;height:16px}
   .tab:hover{color:var(--ink);background:var(--surface-2)}
-  .tab.active{background:var(--ink);color:#fff}
+  .tab.active{background:var(--ink);color:var(--bg)}
   .tab:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
 
   .view{display:none}
@@ -177,9 +180,9 @@
   .detected{font-size:11px;color:var(--muted);margin-left:auto;font-style:italic}
   textarea,.output{flex:1;width:100%;border:0;resize:none;font-family:"Inter",sans-serif;font-size:18px;line-height:1.55;color:var(--ink);background:transparent;padding:2px 0}
   textarea:focus{outline:none}
-  textarea::placeholder{color:#aeb2c6}
+  textarea::placeholder{color:var(--placeholder)}
   .output{overflow-y:auto;white-space:pre-wrap}
-  .output.empty{color:#aeb2c6}
+  .output.empty{color:var(--placeholder)}
   .output.rtl,textarea.rtl{direction:rtl;text-align:right}
   /* romanised pronunciation — only rendered for scripts an English reader cannot sound out */
   .roman{display:flex;gap:8px;align-items:baseline;margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;line-height:1.5}
@@ -192,7 +195,7 @@
   .ib{width:38px;height:38px;border-radius:11px;border:1px solid var(--line);background:var(--surface-2);
     display:grid;place-items:center;cursor:pointer;color:var(--ink);transition:.16s;flex:none}
   .ib svg{width:18px;height:18px}
-  .ib:hover{background:#eef0f7;transform:translateY(-1px)}
+  .ib:hover{background:var(--hover);transform:translateY(-1px)}
   .ib:active{transform:translateY(0)}
   .ib:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
   .ib:disabled{opacity:.4;cursor:not-allowed;transform:none}
@@ -208,10 +211,10 @@
   .bar{display:flex;align-items:center;gap:12px;padding:16px 18px;background:var(--surface-2);border-top:1px solid var(--line)}
   .swap{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;color:var(--ink);transition:.2s;flex:none}
   .swap svg{width:19px;height:19px;transition:transform .35s cubic-bezier(.5,1.6,.4,1)}
-  .swap:hover{background:#eef0f7}.swap:hover svg{transform:rotate(180deg)}
+  .swap:hover{background:var(--hover)}.swap:hover svg{transform:rotate(180deg)}
   .swap:disabled{opacity:.35;cursor:not-allowed}
   .swap:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
-  .btn-primary{flex:1;height:46px;border:0;border-radius:12px;cursor:pointer;background:var(--primary);color:#fff;
+  .btn-primary{flex:1;height:46px;border:0;border-radius:12px;cursor:pointer;background:var(--primary-solid);color:#fff;
     font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:15.5px;display:flex;align-items:center;justify-content:center;gap:9px;transition:.16s}
   .btn-primary svg{width:18px;height:18px}
   .btn-primary:hover{background:var(--primary-press)}
@@ -231,7 +234,7 @@
   .side-pick .tag{display:block;margin-bottom:4px}
   .side-a .tag{color:var(--from)} .side-b .tag{color:var(--to)}
   .transcript{min-height:260px;max-height:52vh;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px}
-  .empty-note{margin:auto;text-align:center;color:#aeb2c6;font-size:14px;max-width:280px;line-height:1.6}
+  .empty-note{margin:auto;text-align:center;color:var(--placeholder);font-size:14px;max-width:280px;line-height:1.6}
   .msg{max-width:78%;padding:11px 14px;border-radius:15px;font-size:15.5px;line-height:1.5;position:relative}
   .msg .orig{font-size:12.5px;opacity:.62;margin-top:5px}
   .msg.a{align-self:flex-start;background:#FCEFE8;border:1px solid #F3D9C9;border-bottom-left-radius:5px}
@@ -320,6 +323,41 @@
   .about .faq summary::after{content:"+";float:right;color:var(--muted);font-weight:400}
   .about .faq details[open] summary::after{content:"–"}
   .about .faq p{margin:0 0 14px}
+
+  /* Dark theme. Declared twice on purpose: the media query serves visitors whose
+     OS is dark and who have not chosen, the attribute rule serves an explicit
+     choice and must also win when the OS is light. */
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+    --bg:#0E1017; --surface:#161926; --surface-2:#1D2130;
+    --ink:#E7E9F2; --muted:#9AA0B8; --line:#2A2F42;
+    --primary:#8E7BFF; --primary-press:#7D6BFF;
+    --primary-solid:#6A55E8; --from:#DD5F2B; --to:#0E9C88; --header-bg:rgba(14,16,23,.86); --placeholder:#7C82A0; --hover:#242938; --dot-idle:#3A4058;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 12px 30px -18px rgba(0,0,0,.85);
+    color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0E1017; --surface:#161926; --surface-2:#1D2130;
+    --ink:#E7E9F2; --muted:#9AA0B8; --line:#2A2F42;
+    --primary:#8E7BFF; --primary-press:#7D6BFF;
+    --primary-solid:#6A55E8; --from:#DD5F2B; --to:#0E9C88; --header-bg:rgba(14,16,23,.86); --placeholder:#7C82A0; --hover:#242938; --dot-idle:#3A4058;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 12px 30px -18px rgba(0,0,0,.85);
+    color-scheme:dark;
+  }
+  .themeToggle{width:38px;height:38px;flex:none;display:grid;place-items:center;border-radius:11px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;padding:0;transition:background .2s,border-color .2s}
+  .themeToggle:hover{background:var(--hover)}
+  .themeToggle:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+  .themeToggle svg{width:18px;height:18px}
+  .themeToggle .moon{display:none}
+  :root[data-theme="dark"] .themeToggle .moon{display:block}
+  :root[data-theme="dark"] .themeToggle .sun{display:none}
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]) .themeToggle .moon{display:block}
+    :root:not([data-theme="light"]) .themeToggle .sun{display:none}
+  }
+
+  @media (max-width:660px){.themeToggle{width:44px;height:44px}}
 </style>
 </head>
 <body>
@@ -331,6 +369,7 @@
       </div>
       <div><h1>Rosetta</h1><p>speak · translate · converse · call</p></div>
     </div>
+    <button class="themeToggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch between light and dark"><svg class="sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6L17 17M7 7L5.4 5.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 019.8 4a8.4 8.4 0 102 10.2 8.2 8.2 0 008.2 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></button>
     <div class="status" id="status"><span class="dot"></span><span id="statusText">Ready</span></div>
   </header>
 
@@ -854,6 +893,39 @@ if(!SR){ vcNote("Note: this browser has no speech recognition, so captions won't
     if(!input.value.trim()) return;
     autoTimer = setTimeout(() => { if(input.value.trim()) translate(); }, 800);
   });
+})();
+</script>
+<script>
+/* Theme toggle. Reads the current theme from what is actually painted rather
+   than from storage, so the first click from an OS-dark default flips to light
+   instead of appearing to do nothing. */
+(function(){
+  var btn=document.getElementById("themeToggle"); if(!btn) return;
+  var root=document.documentElement;
+  function current(){
+    var set=root.getAttribute("data-theme");
+    if(set) return set;
+    return window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light";
+  }
+  function label(){
+    btn.setAttribute("aria-label", current()==="dark"?"Switch to light theme":"Switch to dark theme");
+  }
+  label();
+  btn.addEventListener("click",function(){
+    var next=current()==="dark"?"light":"dark";
+    root.setAttribute("data-theme",next);
+    try{localStorage.setItem("rosetta_theme",next);}catch(e){}
+    var m=document.querySelector('meta[name="theme-color"]');
+    if(m) m.setAttribute("content", next==="dark"?"#0E1017":"#EDEFF6");
+    label();
+  });
+  /* The OS can change under an open tab. Only relabel while no explicit choice
+     is set — after that the attribute wins and the OS is irrelevant. */
+  if(window.matchMedia){
+    var mq=window.matchMedia("(prefers-color-scheme:dark)");
+    var onScheme=function(){ if(!root.getAttribute("data-theme")) label(); };
+    if(mq.addEventListener) mq.addEventListener("change",onScheme); else if(mq.addListener) mq.addListener(onScheme);
+  }
 })();
 </script>
 </body>
