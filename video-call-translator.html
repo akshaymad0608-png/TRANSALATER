@@ -243,6 +243,8 @@
   }
 
   @media (max-width:520px){.themeToggle{width:44px;height:44px}}
+  /* Held only for the instant the theme swaps — see the toggle script. */
+  .theme-switching,.theme-switching *,.theme-switching *::before,.theme-switching *::after{transition:none !important}
 </style>
 </head>
 <body>
@@ -339,7 +341,13 @@
   label();
   btn.addEventListener("click",function(){
     var next=current()==="dark"?"light":"dark";
+    /* Transitions off for the swap. .tab is transition:all with a background
+       from var(--ink); when the token changes the property does not re-resolve
+       and the active tab stays painted in the old theme until a reload. */
+    root.classList.add("theme-switching");
     root.setAttribute("data-theme",next);
+    void root.offsetWidth;
+    root.classList.remove("theme-switching");
     try{localStorage.setItem("rosetta_theme",next);}catch(e){}
     var m=document.querySelector('meta[name="theme-color"]');
     if(m) m.setAttribute("content", next==="dark"?"#0E1017":"#EDEFF6");
