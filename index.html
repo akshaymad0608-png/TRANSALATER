@@ -138,7 +138,7 @@
     display:grid;place-items:center;box-shadow:0 8px 20px -8px rgba(91,69,224,.7);position:relative;overflow:hidden}
   .mark svg{width:24px;height:24px;position:relative;z-index:1}
   .mark::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 25%, rgba(255,255,255,.5), transparent 40%)}
-  .brand h1{font-family:"Space Grotesk",sans-serif;font-size:23px;font-weight:700;margin:0;letter-spacing:-.02em}
+  .brand h1,.brand .brand-name{font-family:"Space Grotesk",sans-serif;font-size:23px;font-weight:700;margin:0;letter-spacing:-.02em}
   .brand p{margin:1px 0 0;font-size:12.5px;color:var(--muted)}
   .status{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);background:var(--surface);
     border:1px solid var(--line);border-radius:999px;padding:7px 14px;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow)}
@@ -293,7 +293,7 @@
     .panel.src{border-right:0;border-bottom:1px solid var(--line)}
     .panel{min-height:190px}
     .videos{grid-template-columns:1fr}
-    .brand h1{font-size:21px}
+    .brand h1,.brand .brand-name{font-size:21px}
     .tab span{display:none}
     .tab{padding:11px}
 
@@ -358,6 +358,13 @@
   }
 
   @media (max-width:660px){.themeToggle{width:44px;height:44px}}
+  /* Standard visually-hidden pattern: present for screen readers and search
+     crawlers, removed from the visual layout without display:none (which
+     would also hide it from both). Used for the real h1 below — the app
+     header shows the wordmark "Rosetta", which said everything about the
+     brand and nothing about what the page does, and was the page's only
+     heading. */
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   /* Held only for the instant the theme swaps — see the toggle script. */
   .theme-switching,.theme-switching *,.theme-switching *::before,.theme-switching *::after{transition:none !important}
 </style>
@@ -369,7 +376,7 @@
       <div class="mark" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-      <div><h1>Rosetta</h1><p>speak · translate · converse · call</p></div>
+      <div><p class="brand-name" aria-hidden="true">Rosetta</p><h1 class="sr-only">Rosetta — Free Voice &amp; Video-Call Translator, 40+ Languages</h1><p>speak · translate · converse · call</p></div>
     </div>
     <button class="themeToggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch between light and dark"><svg class="sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6L17 17M7 7L5.4 5.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 019.8 4a8.4 8.4 0 102 10.2 8.2 8.2 0 008.2 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></button>
     <div class="status" id="status"><span class="dot"></span><span id="statusText">Ready</span></div>
