@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — Rosetta Language Translator</title>
+<meta name="description" content="Get in touch with the Rosetta team. Report a bug, suggest a language pair, or ask a question about the free browser-based voice and video-call translator." />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="canonical" href="https://languagetransalator.com/contact.html" />
+<meta name="robots" content="index, follow" />
+<meta name="author" content="Akshay Mahajan" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4380996737976478" crossorigin="anonymous"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #EDEFF6; --surface: #fff; --text: #0E1017; --muted: #5A5F73;
+    --accent: #5B45E0; --line: #D8DBEA; --radius: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0E1017; --surface: #181B25; --text: #E8EAF2; --muted: #8B90A8; --line: #252836; }
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  header { background: var(--surface); border-bottom: 1px solid var(--line); padding: 16px 24px; display: flex; align-items: center; gap: 12px; }
+  header a { text-decoration: none; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; }
+  header a:hover { color: var(--accent); }
+  .back { font-size: 0.85rem; color: var(--muted); }
+  main { max-width: 600px; margin: 0 auto; padding: 48px 24px 80px; }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 12px; }
+  .sub { color: var(--muted); margin-bottom: 40px; }
+  label { display: block; font-size: 0.9rem; font-weight: 500; margin-bottom: 6px; color: var(--text); }
+  input, textarea, select {
+    width: 100%; padding: 12px 14px; border: 1px solid var(--line);
+    border-radius: var(--radius); background: var(--surface); color: var(--text);
+    font-family: inherit; font-size: 0.95rem; margin-bottom: 20px;
+  }
+  input:focus, textarea:focus { outline: 2px solid var(--accent); border-color: transparent; }
+  textarea { min-height: 140px; resize: vertical; }
+  button {
+    background: var(--accent); color: #fff; border: none; border-radius: var(--radius);
+    padding: 12px 28px; font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+    font-size: 0.95rem; cursor: pointer; width: 100%;
+  }
+  button:hover { opacity: 0.9; }
+  .or { text-align: center; color: var(--muted); margin: 28px 0; font-size: 0.9rem; }
+  .email-link { display: block; text-align: center; color: var(--accent); font-weight: 500; }
+  footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
+  footer a { color: var(--muted); text-decoration: none; margin: 0 8px; }
+  footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <a href="/">← Rosetta</a>
+  <span class="back">/ Contact</span>
+</header>
+<main>
+  <h1>Contact</h1>
+  <p class="sub">Bug report, feature request, or general question — drop a message below.</p>
+
+  <form action="mailto:akshaymad0608@gmail.com" method="GET" enctype="text/plain">
+    <label for="name">Your name</label>
+    <input type="text" id="name" name="name" placeholder="Priya Sharma" required />
+
+    <label for="subject">Subject</label>
+    <select id="subject" name="subject">
+      <option value="Bug report">Bug report</option>
+      <option value="Feature request">Feature request</option>
+      <option value="Language request">Language request</option>
+      <option value="General question">General question</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label for="message">Message</label>
+    <textarea id="message" name="body" placeholder="Describe the issue or your question…" required></textarea>
+
+    <button type="submit">Send via email</button>
+  </form>
+
+  <p class="or">or email directly</p>
+  <a class="email-link" href="mailto:akshaymad0608@gmail.com">akshaymad0608@gmail.com</a>
+</main>
+<footer>
+  <p>© 2026 Rosetta · <a href="/">Home</a> <a href="/about.html">About</a> <a href="/privacy.html">Privacy</a> <a href="/terms.html">Terms</a> <a href="/contact.html">Contact</a></p>
+</footer>
+</body>
+</html>
