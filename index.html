@@ -919,27 +919,35 @@ function showStage(room){
   $("vcSetup").style.display="none"; $("vcStage").classList.add("on"); $("roomShow").textContent=room;
 }
 function showCallError(msg, retryId){
+  try{if(peer)peer.destroy();}catch(e){} peer=null;
+  mediaConn=null; dataConn=null;
   $("vcSetup").style.display="block"; $("vcStage").classList.remove("on");
   const retryBtn = retryId ? `<button class="perm-retry" onclick="$('${retryId}').click();vcNote('')">Try again</button>` : '';
   vcNote(null,`<div class="perm-card"><h4>⚠️ ${msg}</h4>${retryBtn}</div>`);
   setStatus("Call error","err");
 }
 
+const PEER_CFG={
+  host:'0.peerjs.com', port:443, secure:true, path:'/',
+  config:ICE_CFG,
+  debug:1
+};
 function ensurePeer(id){
-  peer = id ? new Peer(id,{config:ICE_CFG}) : new Peer({config:ICE_CFG});
+  if(peer){try{peer.destroy();}catch(e){} peer=null;}
+  peer = id ? new Peer(id,PEER_CFG) : new Peer(PEER_CFG);
   peer.on("error",err=>{
     console.error("PeerJS error:",err.type,err);
     clearTimeout(connectTimer);
     if(err.type==="unavailable-id"){
-      showCallError("That room code is taken — click 'Start a call' to get a new one.","vcCreate");
+      showCallError("That room code is taken — try 'Start a call' again for a new code.","vcCreate");
     } else if(err.type==="peer-unavailable"){
       showCallError("Room not found — check the code and try 'Join a call' again.","vcJoin");
     } else if(err.type==="network"||err.type==="server-error"||err.type==="socket-error"||err.type==="socket-closed"){
-      showCallError("Connection server unreachable — check your internet and try again.","vcCreate");
+      showCallError("Could not reach the call server ("+err.type+") — check your internet and try again.","vcCreate");
     } else if(err.type==="browser-incompatible"){
-      showCallError("Your browser doesn't support video calls. Open in Chrome or Edge.",null);
+      showCallError("Your browser doesn't support video calls. Please open in Chrome or Edge.",null);
     } else {
-      showCallError("Call failed ("+err.type+") — refresh the page and try again.","vcCreate");
+      showCallError("Call error: "+err.type+" — reload the page and try again.","vcCreate");
     }
   });
 }
