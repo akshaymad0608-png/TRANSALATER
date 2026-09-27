@@ -391,6 +391,42 @@
   .conv-toolbar{display:flex;gap:8px;padding:10px 18px;border-bottom:1px solid var(--line);background:var(--surface-2)}
   .conv-toolbar span{font-family:"Space Grotesk",sans-serif;font-size:12.5px;color:var(--muted);margin-right:auto;align-self:center}
 
+  /* ---------- SHOW TO PERSON OVERLAY ---------- */
+  .show-overlay{position:fixed;inset:0;background:rgba(10,10,14,.97);z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;padding:36px 28px;cursor:pointer}
+  .show-overlay.on{display:flex}
+  .show-overlay .show-text{font-size:clamp(32px,8vw,80px);color:#fff;text-align:center;line-height:1.3;max-width:780px;font-family:"Space Grotesk",sans-serif;font-weight:700;word-break:break-word}
+  .show-overlay .show-text.rtl{direction:rtl}
+  .show-overlay .show-lang{margin-top:22px;color:rgba(255,255,255,.28);font-size:12px;font-family:"JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.15em}
+  .show-overlay .show-hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.22);font-size:12px;font-family:"JetBrains Mono",monospace;letter-spacing:.06em;white-space:nowrap}
+
+  /* ---------- QUICK PHRASE KIT ---------- */
+  .pk{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .pk-toggle{width:100%;padding:11px 16px;background:var(--surface-2);border:0;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;cursor:pointer;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:12.5px;color:var(--muted);text-align:left;transition:.15s}
+  .pk-toggle:hover{color:var(--ink)}
+  .pk-toggle svg{width:15px;height:15px;flex:none}
+  .pk-arrow{margin-left:auto;width:14px;height:14px;transition:transform .2s;color:var(--muted)}
+  .pk[open] .pk-arrow{transform:rotate(180deg)}
+  .pk-body{display:none}
+  .pk[open] .pk-body{display:block}
+  .pk-cats{display:flex;gap:0;border-bottom:1px solid var(--line);overflow-x:auto;padding:0 12px;scrollbar-width:none}
+  .pk-cats::-webkit-scrollbar{display:none}
+  .pk-cat{border:0;background:none;padding:10px 12px;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:12px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:.15s}
+  .pk-cat.active{color:var(--primary);border-bottom-color:var(--primary)}
+  .pk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:7px;padding:12px 14px}
+  .pk-phrase{border:1px solid var(--line);background:var(--surface-2);border-radius:9px;padding:9px 12px;font-size:13px;font-weight:500;color:var(--ink);cursor:pointer;text-align:left;font-family:"Space Grotesk",sans-serif;transition:.15s;line-height:1.35}
+  .pk-phrase:hover{background:var(--primary);color:#fff;border-color:var(--primary);transform:translateY(-1px)}
+  .pk-phrase:active{transform:translateY(0)}
+  @media (max-width:660px){.pk-grid{grid-template-columns:1fr 1fr}}
+
+  /* ---------- PWA INSTALL BANNER ---------- */
+  .pwa-banner{position:fixed;bottom:0;left:0;right:0;background:var(--ink);color:var(--bg);padding:14px 18px 18px;display:flex;align-items:center;gap:12px;z-index:60;transform:translateY(110%);transition:transform .4s cubic-bezier(.2,1,.4,1);box-shadow:0 -4px 20px rgba(0,0,0,.2)}
+  .pwa-banner.show{transform:translateY(0)}
+  .pwa-banner p{margin:0;flex:1;font-size:13px;line-height:1.4}
+  .pwa-banner p b{display:block;font-size:14px;margin-bottom:2px}
+  .pwa-btn{border:0;background:var(--primary-solid);color:#fff;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:13px;padding:9px 16px;border-radius:9px;cursor:pointer;white-space:nowrap;flex:none}
+  .pwa-dismiss{background:none;border:0;color:rgba(255,255,255,.4);font-size:22px;cursor:pointer;padding:4px;line-height:1;flex:none}
+  .pwa-dismiss:hover{color:rgba(255,255,255,.8)}
+
   /* Standard visually-hidden pattern: present for screen readers and search
      crawlers, removed from the visual layout without display:none (which
      would also hide it from both). Used for the real h1 below — the app
@@ -461,6 +497,7 @@
             <button class="ib speak" id="speakTgt" title="Listen to translation"><svg viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9a3 3 0 010 6M18.5 7a6 6 0 010 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
             <button class="ib" id="copyBtn" title="Copy translation"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M6 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v1" stroke="currentColor" stroke-width="1.6"/></svg></button>
             <button class="ib" id="shareBtn" title="Share translation"><svg viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="2.5" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="12" r="2.5" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="19" r="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M8.4 10.8l7.2-4.1M8.4 13.2l7.2 4.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+            <button class="ib" id="showBtn" title="Show to person — fullscreen large text"><svg viewBox="0 0 24 24" fill="none"><path d="M8 3H5a2 2 0 00-2 2v3M21 8V5a2 2 0 00-2-2h-3M16 21h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
         </section>
       </div>
@@ -476,6 +513,24 @@
         <button class="hist-clear-btn" id="histClearAll">Clear</button>
       </div>
       <div class="hist-list" id="histList"></div>
+    </div>
+
+    <!-- Quick Phrase Kit -->
+    <div class="pk" id="pk">
+      <button class="pk-toggle" onclick="togglePk()">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Quick Phrase Kit — Emergency · Travel · Medical · Food
+        <svg class="pk-arrow" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="pk-body">
+        <div class="pk-cats">
+          <button class="pk-cat active" data-cat="emergency">Emergency</button>
+          <button class="pk-cat" data-cat="medical">Medical</button>
+          <button class="pk-cat" data-cat="travel">Travel</button>
+          <button class="pk-cat" data-cat="food">Food</button>
+        </div>
+        <div class="pk-grid" id="pkGrid"></div>
+      </div>
     </div>
   </div>
 
@@ -582,6 +637,20 @@
       <details><summary>Do I need to install an app?</summary><p>No — Rosetta works in any modern web browser on phone or computer, with nothing to install.</p></details>
     </div>
   </section>
+</div>
+
+<!-- Show to Person overlay -->
+<div class="show-overlay" id="showOverlay">
+  <div class="show-text" id="showText"></div>
+  <div class="show-lang" id="showLang"></div>
+  <div class="show-hint">Tap anywhere or press ESC to close</div>
+</div>
+
+<!-- PWA Install Banner -->
+<div class="pwa-banner" id="pwaBanner">
+  <p><b>Add Rosetta to home screen</b>Opens instantly, works offline</p>
+  <button class="pwa-btn" id="pwaInstall">Install</button>
+  <button class="pwa-dismiss" id="pwaDismiss" aria-label="Dismiss">&#215;</button>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1009,6 +1078,74 @@ $("saveConvBtn").addEventListener("click",()=>{
   const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
   a.download="rosetta-conversation-"+Date.now()+".txt"; a.click();
   toast("Transcript downloaded");
+});
+
+/* ================= SHOW TO PERSON ================= */
+$("showBtn").addEventListener("click",()=>{
+  const t=output.classList.contains("empty")?"":output.textContent;
+  if(!t){toast("Translate something first");return;}
+  $("showText").textContent=t;
+  $("showText").className="show-text"+((byCode[tgtSel.value]||{}).rtl?" rtl":"");
+  $("showLang").textContent=(byCode[tgtSel.value]||{}).name||tgtSel.value;
+  $("showOverlay").classList.add("on");
+  document.body.style.overflow="hidden";
+  try{document.documentElement.requestFullscreen();}catch(e){}
+});
+$("showOverlay").addEventListener("click",closeShow);
+function closeShow(){
+  $("showOverlay").classList.remove("on");
+  document.body.style.overflow="";
+  try{if(document.fullscreenElement)document.exitFullscreen();}catch(e){}
+}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("showOverlay").classList.contains("on"))closeShow();});
+
+/* ================= QUICK PHRASE KIT ================= */
+const PK_PHRASES={
+  emergency:["Help!","Call the police!","I need a doctor","Fire!","Call an ambulance","Where is the hospital?","I am lost","I have been robbed","I am in danger","Please help me"],
+  medical:["I have a headache","I am allergic to penicillin","I need medicine","I am diabetic","I am injured","I cannot breathe","I need insulin","Where is the nearest pharmacy?","I feel dizzy","I am having chest pain"],
+  travel:["Where is the train station?","How much does it cost?","I need a taxi","Where is the airport?","I am looking for a hotel","Can you show me on the map?","What time does it open?","Do you speak English?","Please write it down","Can you help me?"],
+  food:["I am vegetarian","I am allergic to nuts","No spicy food please","Water please","The bill please","Is this gluten-free?","I am vegan","This is delicious!","No onion or garlic","Is this dish halal?"]
+};
+let pkCat="emergency";
+function renderPkGrid(){
+  const grid=$("pkGrid"); grid.innerHTML="";
+  PK_PHRASES[pkCat].forEach(phrase=>{
+    const btn=document.createElement("button"); btn.className="pk-phrase"; btn.textContent=phrase;
+    btn.addEventListener("click",async()=>{
+      srcSel.value="en"; applyDir(); refreshSwap();
+      input.value=phrase; updateCounts();
+      document.querySelector('.tab[data-view="translate"]').click();
+      window.scrollTo({top:0,behavior:"smooth"});
+      await translate();
+    });
+    grid.appendChild(btn);
+  });
+}
+document.querySelectorAll(".pk-cat").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".pk-cat").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active"); pkCat=btn.dataset.cat; renderPkGrid();
+  });
+});
+function togglePk(){const pk=$("pk");pk.toggleAttribute("open");renderPkGrid();}
+renderPkGrid();
+
+/* ================= PWA INSTALL BANNER ================= */
+let pwaDeferredPrompt=null;
+window.addEventListener("beforeinstallprompt",e=>{
+  e.preventDefault(); pwaDeferredPrompt=e;
+  try{if(localStorage.getItem("pwa_dismissed"))return;}catch(ex){}
+  setTimeout(()=>$("pwaBanner").classList.add("show"),3500);
+});
+$("pwaInstall").addEventListener("click",async()=>{
+  if(!pwaDeferredPrompt)return;
+  pwaDeferredPrompt.prompt();
+  await pwaDeferredPrompt.userChoice;
+  pwaDeferredPrompt=null; $("pwaBanner").classList.remove("show");
+});
+$("pwaDismiss").addEventListener("click",()=>{
+  $("pwaBanner").classList.remove("show");
+  try{localStorage.setItem("pwa_dismissed","1");}catch(e){}
 });
 
 /* ================= COPY ROOM CODE ================= */
