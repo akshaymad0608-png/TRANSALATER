@@ -358,6 +358,39 @@
   }
 
   @media (max-width:660px){.themeToggle{width:44px;height:44px}}
+
+  /* ---------- HISTORY ---------- */
+  .hist-panel{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .hist-header{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+  .hist-title{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .hist-title svg{width:14px;height:14px;flex:none}
+  .hist-badge{background:var(--primary);color:#fff;font-size:10px;font-family:"JetBrains Mono",monospace;border-radius:99px;padding:1px 6px;margin-left:4px}
+  .hist-clear-btn{font-size:11.5px;color:var(--muted);background:none;border:1px solid var(--line);cursor:pointer;padding:4px 10px;border-radius:6px;font-family:"Space Grotesk",sans-serif;font-weight:600}
+  .hist-clear-btn:hover{background:var(--hover);color:var(--danger);border-color:var(--danger)}
+  .hist-list{display:flex;flex-direction:column;max-height:280px;overflow-y:auto}
+  .hist-item{display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;border-bottom:1px solid var(--line);transition:.14s;text-align:left;background:none;border-left:0;border-right:0;border-top:0;width:100%;font-family:inherit}
+  .hist-item:last-child{border-bottom:0}
+  .hist-item:hover{background:var(--surface-2)}
+  .hist-pair{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.06em;color:var(--primary);flex:none;background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:2px 6px;white-space:nowrap}
+  .hist-texts{flex:1;min-width:0;text-align:left}
+  .hist-src{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hist-tgt{font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+  .hist-arrow{color:var(--muted);font-size:16px;flex:none}
+  @media (max-width:660px){.hist-panel{border-radius:12px}}
+
+  /* ---------- WORD COUNT ---------- */
+  .wcount{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);margin-left:auto;display:flex;gap:6px}
+  .wcount .warn{color:#E07B30}
+
+  /* ---------- EXPAND TEXTAREA (mobile) ---------- */
+  .ib.expand{display:none}
+  @media (max-width:660px){.ib.expand{display:grid}}
+  .panel.expanded textarea{min-height:56vh!important;font-size:20px}
+
+  /* ---------- CONV TOOLBAR ---------- */
+  .conv-toolbar{display:flex;gap:8px;padding:10px 18px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+  .conv-toolbar span{font-family:"Space Grotesk",sans-serif;font-size:12.5px;color:var(--muted);margin-right:auto;align-self:center}
+
   /* Standard visually-hidden pattern: present for screen readers and search
      crawlers, removed from the visual layout without display:none (which
      would also hide it from both). Used for the real h1 below — the app
@@ -416,7 +449,8 @@
             </button>
             <button class="ib speak" id="speakSrc" title="Listen to source"><svg viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9a3 3 0 010 6M18.5 7a6 6 0 010 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
             <button class="ib" id="clearBtn" title="Clear"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
-            <span class="count" id="count">0</span>
+            <button class="ib expand" id="expandBtn" title="Expand"><svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <span class="wcount"><span id="count">0</span><span id="wcount" style="opacity:.6">·0w</span></span>
           </div>
         </section>
         <section class="panel tgt">
@@ -425,7 +459,8 @@
           <p class="roman" id="roman" hidden><span>say it</span><b id="romanText"></b></p>
           <div class="pfoot">
             <button class="ib speak" id="speakTgt" title="Listen to translation"><svg viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9a3 3 0 010 6M18.5 7a6 6 0 010 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
-            <button class="ib" id="copyBtn" title="Copy"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M6 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v1" stroke="currentColor" stroke-width="1.6"/></svg></button>
+            <button class="ib" id="copyBtn" title="Copy translation"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M6 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v1" stroke="currentColor" stroke-width="1.6"/></svg></button>
+            <button class="ib" id="shareBtn" title="Share translation"><svg viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="2.5" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="12" r="2.5" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="19" r="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M8.4 10.8l7.2-4.1M8.4 13.2l7.2 4.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
           </div>
         </section>
       </div>
@@ -435,6 +470,13 @@
       </div>
     </div>
     <p class="hint">Tap <b>🎤</b> and speak, or type and hit <b>Translate</b>. Use <b>🔊</b> to hear it. Shortcut: <b>Ctrl/⌘ + Enter</b>.</p>
+    <div class="hist-panel" id="histPanel" style="display:none">
+      <div class="hist-header">
+        <span class="hist-title"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v4l3 3M12 3a9 9 0 100 18A9 9 0 0012 3z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Recent translations <span class="hist-badge" id="histBadge"></span></span>
+        <button class="hist-clear-btn" id="histClearAll">Clear</button>
+      </div>
+      <div class="hist-list" id="histList"></div>
+    </div>
   </div>
 
   <!-- ============ CONVERSATION ============ -->
@@ -443,6 +485,11 @@
       <div class="conv-setup">
         <div class="side-pick side-a"><span class="tag">Person A speaks</span><select id="convA" aria-label="Person A language"></select></div>
         <div class="side-pick side-b"><span class="tag">Person B speaks</span><select id="convB" aria-label="Person B language"></select></div>
+      </div>
+      <div class="conv-toolbar">
+        <span id="convCount">0 messages</span>
+        <button class="ib" id="saveConvBtn" title="Download transcript" style="width:32px;height:32px;border-radius:8px"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v12M8 11l4 4 4-4M4 17v1a2 2 0 002 2h12a2 2 0 002-2v-1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="ib" id="clearConvBtn" title="Clear conversation" style="width:32px;height:32px;border-radius:8px"><svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
       <div class="transcript" id="transcript">
         <div class="empty-note">Pick both languages, then hold a conversation. Tap a coloured button, speak, and it translates &amp; reads the reply aloud for the other person.</div>
@@ -488,7 +535,7 @@
           </div>
         </div>
         <div class="vc-controls">
-          <span class="roompill">Room <b id="roomShow">—</b></span>
+          <span class="roompill">Room <b id="roomShow">—</b> <button onclick="copyRoomCode()" style="background:none;border:0;cursor:pointer;padding:2px 4px;border-radius:4px;color:var(--primary);display:inline-flex;align-items:center" title="Copy room code"><svg viewBox="0 0 24 24" fill="none" style="width:14px;height:14px"><rect x="9" y="9" width="11" height="11" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M6 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v1" stroke="currentColor" stroke-width="1.7"/></svg></button></span>
           <button class="ib" id="vcMic" title="Mute mic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 15a3 3 0 003-3V6a3 3 0 00-6 0v6a3 3 0 003 3z" stroke="currentColor" stroke-width="1.6"/><path d="M19 11a7 7 0 01-14 0M12 18v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
           <button class="ib" id="vcCam" title="Turn camera off"><svg viewBox="0 0 24 24" fill="none"><path d="M15 10l6-3v10l-6-3M3 7a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <button class="ib" id="vcSpeakToggle" title="Read incoming captions aloud"><svg viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9a3 3 0 010 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
@@ -629,7 +676,7 @@ document.querySelectorAll(".tab").forEach(tab=>{
 const srcSel=$("srcLang"),tgtSel=$("tgtLang"),input=$("input"),output=$("output"),detected=$("detected"),count=$("count");
 fill(srcSel,true); fill(tgtSel,false); srcSel.value="auto"; tgtSel.value="hi";
 function applyDir(){input.classList.toggle("rtl",!!(byCode[srcSel.value]||{}).rtl);output.classList.toggle("rtl",!!(byCode[tgtSel.value]||{}).rtl);}
-input.addEventListener("input",()=>count.textContent=input.value.length);
+// count update handled by updateCounts() defined later; legacy reference kept for load order
 /* Show how to say the translation, in Latin letters. Hidden whenever there is
  * nothing to show — a Latin-script target, or the MyMemory fallback, which
  * returns no romanisation. */
@@ -643,6 +690,7 @@ async function translate(){
     output.textContent=res.text; output.classList.remove("empty"); showRoman(res.roman);
     detected.textContent=(srcSel.value==="auto"&&byCode[res.detected])?"detected: "+byCode[res.detected].name:"";
     setStatus("Done","live"); setTimeout(()=>setStatus("Ready"),1000);
+    addToHist(text,res.text,srcSel.value==="auto"?(res.detected||"en"):srcSel.value,tgtSel.value);
   }catch(e){setStatus("Translation failed","err");toast("Could not translate. Check your connection.");}
   finally{$("translateBtn").disabled=false;}
 }
@@ -653,7 +701,7 @@ else micBtn.addEventListener("click",()=>{
   recog=new SR(); recog.lang=(byCode[srcSel.value]||{speech:"en-US"}).speech; recog.interimResults=true; recog.continuous=false;
   const base=input.value?input.value+" ":"";
   recog.onstart=()=>{listening=true;micBtn.classList.add("on");setStatus("Listening…","live");};
-  recog.onresult=e=>{let t="";for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;input.value=base+t;count.textContent=input.value.length;};
+  recog.onresult=e=>{let t="";for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;input.value=base+t;if(typeof updateCounts==="function")updateCounts();else count.textContent=input.value.length;};
   recog.onerror=e=>{listening=false;micBtn.classList.remove("on");
     if(e.error==="not-allowed"||e.error==="service-not-allowed"){setStatus("Mic blocked","err");toast("Allow microphone access to use voice input.");}
     else if(e.error==="no-speech")setStatus("No speech heard","err"); else setStatus("Mic error","err");};
@@ -669,9 +717,9 @@ swapBtn.addEventListener("click",()=>{
   const s=srcSel.value;srcSel.value=tgtSel.value;tgtSel.value=s;
   const out=output.classList.contains("empty")?"":output.textContent; const prev=input.value;
   input.value=out; output.textContent=prev||"Translation appears here"; output.classList.toggle("empty",!prev);
-  count.textContent=input.value.length; detected.textContent=""; showRoman(""); applyDir(); refreshSwap();
+  if(typeof updateCounts==="function")updateCounts();else count.textContent=input.value.length; detected.textContent=""; showRoman(""); applyDir(); refreshSwap();
 });
-$("clearBtn").addEventListener("click",()=>{input.value="";count.textContent="0";detected.textContent="";output.textContent="Translation appears here";output.classList.add("empty");showRoman("");input.focus();});
+$("clearBtn").addEventListener("click",()=>{input.value="";count.textContent="0";const wc=$("wcount");if(wc)wc.textContent="·0w";detected.textContent="";output.textContent="Translation appears here";output.classList.add("empty");showRoman("");input.focus();});
 $("copyBtn").addEventListener("click",async()=>{const t=output.classList.contains("empty")?"":output.textContent;if(!t){toast("Nothing to copy yet");return;}try{await navigator.clipboard.writeText(t);toast("Copied to clipboard");}catch{toast("Copy failed");}});
 $("translateBtn").addEventListener("click",translate);
 input.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key==="Enter"){e.preventDefault();translate();}});
@@ -691,6 +739,8 @@ function addMsg(side,translated,original){
   const note=transcript.querySelector(".empty-note"); if(note)note.remove();
   const from=side==="a"?convA.value:convB.value;
   const to=side==="a"?convB.value:convA.value;
+  convMsgs.push({side,translated,original,from,to,ts:new Date().toLocaleTimeString()});
+  updateConvCount();
   const div=document.createElement("div");
   div.className="msg "+side+((byCode[to]||{}).rtl?" rtl":"");
   div.innerHTML=`<div class="tx"></div><div class="orig"></div><button class="replay" title="Replay"><svg viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9a3 3 0 010 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>`;
@@ -864,6 +914,110 @@ $("vcRoom").addEventListener("input",e=>e.target.value=e.target.value.toUpperCas
 
 /* startup checks */
 if(!SR){ vcNote("Note: this browser has no speech recognition, so captions won't generate. Chrome or Edge work best."); }
+
+/* ================= WORD COUNT ================= */
+function updateCounts(){
+  const v=input.value; const chars=v.length;
+  count.textContent=chars;
+  const words=v.trim()?v.trim().split(/\s+/).length:0;
+  const wc=$("wcount"); wc.textContent="·"+words+"w";
+  wc.className=chars>4500?"warn":"";
+}
+input.addEventListener("input",updateCounts);
+
+/* ================= EXPAND TEXTAREA (mobile) ================= */
+$("expandBtn").addEventListener("click",()=>{
+  const panel=input.closest(".panel");
+  const expanded=panel.classList.toggle("expanded");
+  const icon=$("expandBtn").querySelector("svg");
+  icon.innerHTML=expanded
+    ?'<path d="M9 9l-6 6M3 9v6h6M15 15l6-6M21 15v-6h-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>'
+    :'<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>';
+  if(expanded)input.focus();
+});
+
+/* ================= AUTO-TRANSLATE ON PASTE ================= */
+input.addEventListener("paste",()=>{
+  setTimeout(()=>{ if(input.value.trim()){ updateCounts(); translate(); }},50);
+});
+
+/* ================= TRANSLATION HISTORY ================= */
+const HIST_KEY="rosetta_hist"; const HIST_MAX=8;
+function loadHist(){try{return JSON.parse(localStorage.getItem(HIST_KEY)||"[]");}catch(e){return [];}}
+function saveHist(h){try{localStorage.setItem(HIST_KEY,JSON.stringify(h));}catch(e){}}
+function renderHist(){
+  const h=loadHist(); const panel=$("histPanel"),list=$("histList"),badge=$("histBadge");
+  panel.style.display=h.length?"block":"none";
+  badge.textContent=h.length||"";
+  list.innerHTML="";
+  h.forEach((item,i)=>{
+    const btn=document.createElement("button");
+    btn.className="hist-item";
+    btn.innerHTML=`<span class="hist-pair">${(item.slName||item.sl).slice(0,3).toUpperCase()}→${(item.tlName||item.tl).slice(0,3).toUpperCase()}</span><span class="hist-texts"><span class="hist-src">${escHist(item.src)}</span><span class="hist-tgt">${escHist(item.tgt)}</span></span><span class="hist-arrow">›</span>`;
+    btn.addEventListener("click",()=>{
+      srcSel.value=item.sl; tgtSel.value=item.tl; input.value=item.src;
+      output.textContent=item.tgt; output.classList.remove("empty");
+      updateCounts(); applyDir(); refreshSwap();
+      document.querySelector('.tab[data-view="translate"]').click();
+      input.scrollIntoView({behavior:"smooth",block:"nearest"});
+    });
+    list.appendChild(btn);
+  });
+}
+function addToHist(src,tgt,sl,tl){
+  if(!src||!tgt)return;
+  const slName=(byCode[sl]||{}).name||sl; const tlName=(byCode[tl]||{}).name||tl;
+  const h=loadHist().filter(x=>!(x.src===src&&x.sl===sl&&x.tl===tl));
+  h.unshift({src,tgt,sl,tl,slName,tlName,ts:Date.now()});
+  saveHist(h.slice(0,HIST_MAX)); renderHist();
+}
+function escHist(s){return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])).slice(0,80);}
+$("histClearAll").addEventListener("click",()=>{saveHist([]);renderHist();toast("History cleared");});
+renderHist();
+
+/* ================= SHARE BUTTON ================= */
+$("shareBtn").addEventListener("click",async()=>{
+  const src=input.value.trim(); const tgt=output.classList.contains("empty")?"":output.textContent;
+  if(!src){toast("Nothing to share yet");return;}
+  const url=location.origin+"/?sl="+encodeURIComponent(srcSel.value)+"&tl="+encodeURIComponent(tgtSel.value)+(src?"&q="+encodeURIComponent(src.slice(0,300)):"");
+  if(navigator.share){
+    try{await navigator.share({title:"Rosetta Translation",text:(tgt||src),url});return;}catch(e){if(e.name==="AbortError")return;}
+  }
+  try{await navigator.clipboard.writeText(url);toast("Link copied! Share it on WhatsApp or SMS.");}
+  catch{toast("Could not copy link");}
+});
+
+/* ================= CONVERSATION: CLEAR + SAVE ================= */
+let convMsgs=[];
+function updateConvCount(){$("convCount").textContent=convMsgs.length+" message"+(convMsgs.length===1?"":"s");}
+$("clearConvBtn").addEventListener("click",()=>{
+  if(convMsgs.length&&!confirm("Clear conversation?"))return;
+  convMsgs=[]; transcript.innerHTML='<div class="empty-note">Pick both languages, then hold a conversation. Tap a coloured button, speak, and it translates &amp; reads the reply aloud for the other person.</div>';
+  updateConvCount();
+});
+$("saveConvBtn").addEventListener("click",()=>{
+  if(!convMsgs.length){toast("Nothing to save yet");return;}
+  const lines=["Rosetta Conversation Transcript","Generated: "+new Date().toLocaleString(),"","---",""];
+  convMsgs.forEach(m=>{
+    const fromName=(byCode[m.from]||{}).name||m.from; const toName=(byCode[m.to]||{}).name||m.to;
+    lines.push(`[${m.ts}] Person ${m.side.toUpperCase()} (${fromName} → ${toName})`);
+    lines.push("  Original:    "+m.original);
+    lines.push("  Translation: "+m.translated);
+    lines.push("");
+  });
+  const blob=new Blob([lines.join("\n")],{type:"text/plain"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download="rosetta-conversation-"+Date.now()+".txt"; a.click();
+  toast("Transcript downloaded");
+});
+
+/* ================= COPY ROOM CODE ================= */
+function copyRoomCode(){
+  const code=$("roomShow").textContent;
+  if(!code||code==="—"){toast("No active room");return;}
+  navigator.clipboard.writeText(code).then(()=>toast("Room code copied: "+code)).catch(()=>toast(code));
+}
+
 
 /* ================= NEW: deep-linking, remembered languages, auto-translate ================= *
  * Lets SEO landing pages open the tool with languages/text pre-filled
