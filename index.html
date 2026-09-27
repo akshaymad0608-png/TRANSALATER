@@ -849,7 +849,18 @@ $("talkB").addEventListener("click",()=>startConv("b"));
 /* ================= VIDEO CALL mode ================= */
 const vcMyLang=$("vcMyLang"),vcReadLang=$("vcReadLang");
 fill(vcMyLang,false);fill(vcReadLang,false); vcMyLang.value="en"; vcReadLang.value="hi";
-let peer=null,localStream=null,mediaConn=null,dataConn=null,vcRecog=null,vcReadAloud=true,micOn=true,camOn=true,vcListening=false;
+let peer=null,localStream=null,mediaConn=null,dataConn=null,vcRecog=null,vcReadAloud=true,micOn=true,camOn=true,vcListening=false,connectTimer=null;
+
+/* STUN + free TURN — needed for P2P through strict NAT (mobile, different WiFi) */
+const ICE_CFG={iceServers:[
+  {urls:'stun:stun.l.google.com:19302'},
+  {urls:'stun:stun1.l.google.com:19302'},
+  {urls:'stun:stun2.l.google.com:19302'},
+  {urls:'stun:openrelay.metered.ca:80'},
+  {urls:'turn:openrelay.metered.ca:80',username:'openrelayproject',credential:'openrelayproject'},
+  {urls:'turn:openrelay.metered.ca:443',username:'openrelayproject',credential:'openrelayproject'},
+  {urls:'turn:openrelay.metered.ca:443?transport=tcp',username:'openrelayproject',credential:'openrelayproject'},
+]};
 
 function randCode(){const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let s="";for(let i=0;i<6;i++)s+=c[Math.floor(Math.random()*c.length)];return s;}
 function vcNote(msg,html){
@@ -892,16 +903,34 @@ function showStage(room){
   $("vcSetup").style.display="none"; $("vcStage").classList.add("on"); $("roomShow").textContent=room;
 }
 function ensurePeer(id){
-  // id optional (custom = room creator). Uses PeerJS free cloud broker.
-  peer = id ? new Peer(id) : new Peer();
+  peer = id ? new Peer(id,{config:ICE_CFG}) : new Peer({config:ICE_CFG});
   peer.on("error",err=>{
-    console.error(err);
-    if(err.type==="unavailable-id"){vcNote("That room code is taken — try Start a call to get a fresh one.");}
-    else if(err.type==="peer-unavailable"){toast("No one is hosting that room code yet.");}
-    else if(err.type==="network"||err.type==="server-error"){toast("Couldn't reach the connection server. Try again, or use a normal browser tab.");}
-    else toast("Call error: "+err.type);
+    console.error("PeerJS error:",err.type,err);
+    clearTimeout(connectTimer);
+    if(err.type==="unavailable-id"){
+      vcNote("That room code is taken — click 'Start a call' to get a fresh one.");
+      $("vcSetup").style.display="block"; $("vcStage").classList.remove("on");
+    } else if(err.type==="peer-unavailable"){
+      toast("Room not found — check the code and try again.");
+      $("vcSetup").style.display="block"; $("vcStage").classList.remove("on");
+    } else if(err.type==="network"||err.type==="server-error"||err.type==="socket-error"||err.type==="socket-closed"){
+      toast("Connection server error — open in Chrome/Edge and try again.");
+      $("vcSetup").style.display="block"; $("vcStage").classList.remove("on");
+    } else if(err.type==="browser-incompatible"){
+      toast("Your browser doesn't support video calls. Use Chrome or Edge.");
+    } else {
+      toast("Call error: "+err.type+" — try refreshing the page.");
+    }
     setStatus("Call error","err");
   });
+}
+
+function startConnectTimer(msg,timeout){
+  clearTimeout(connectTimer);
+  connectTimer=setTimeout(()=>{
+    toast("Still trying to connect… Make sure both devices are on a network, then try again.");
+    setStatus("Connecting… (slow)","busy");
+  },timeout||18000);
 }
 function wireIncoming(){
   peer.on("call",async call=>{
@@ -912,11 +941,12 @@ function wireIncoming(){
 }
 function bindMedia(call){
   call.on("stream",remote=>{
+    clearTimeout(connectTimer);
     $("remoteVid").srcObject=remote; $("remotePlaceholder").style.display="none";
     $("remoteLabel").textContent="Connected"; setStatus("In call","live"); startVcRecog();
   });
   call.on("close",()=>endCall(true));
-  call.on("error",()=>toast("Media connection error."));
+  call.on("error",e=>{console.error("media conn error",e);toast("Video connection failed — check both sides are on a stable network.");});
 }
 function bindData(conn){
   conn.on("open",()=>{ /* ready */ });
@@ -962,28 +992,42 @@ function startVcRecog(){
 function stopVcRecog(){vcListening=false;if(vcRecog){try{vcRecog.abort();}catch(e){}}}
 
 $("vcCreate").addEventListener("click",async()=>{
-  if(typeof Peer==="undefined"){toast("Calling library didn't load. Open this in a normal browser tab.");return;}
-  vcNote("Starting…");
+  if(typeof Peer==="undefined"){toast("Calling library didn't load. Open this in a normal browser tab (not an in-app browser).");return;}
+  vcNote("Getting camera & mic…");
   try{await getMedia();}catch(e){showPermHelp(()=>$("vcCreate").click());return;}
+  vcNote("Connecting to server…");
   const room=($("vcRoom").value.trim()||randCode()).toUpperCase();
   $("vcRoom").value=room;
-  ensurePeer("rosetta-"+room);
-  peer.on("open",()=>{ wireIncoming(); showStage(room); setStatus("Waiting for guest…","busy"); vcNote(""); startVcRecog(); });
+  ensurePeer("rosetta-vc-"+room);
+  startConnectTimer("host",15000);
+  peer.on("open",()=>{
+    clearTimeout(connectTimer);
+    wireIncoming(); showStage(room); setStatus("Waiting for guest…","busy"); vcNote("");
+    startVcRecog();
+    /* show share hint after 8s if no one joined */
+    connectTimer=setTimeout(()=>{ if(!mediaConn) toast("Share the room code — your friend enters it and taps Join."); },8000);
+  });
 });
 $("vcJoin").addEventListener("click",async()=>{
-  if(typeof Peer==="undefined"){toast("Calling library didn't load. Open this in a normal browser tab.");return;}
+  if(typeof Peer==="undefined"){toast("Calling library didn't load. Open this in a normal browser tab (not an in-app browser).");return;}
   const room=$("vcRoom").value.trim().toUpperCase();
   if(!room){toast("Enter the room code your friend shared.");return;}
-  vcNote("Joining…");
+  if(room.length<4){toast("Room code looks too short — check it and try again.");return;}
+  vcNote("Getting camera & mic…");
   try{await getMedia();}catch(e){showPermHelp(()=>$("vcJoin").click());return;}
+  vcNote("Connecting…");
   ensurePeer(null);
+  startConnectTimer("join",20000);
   peer.on("open",()=>{
+    clearTimeout(connectTimer);
     showStage(room); setStatus("Connecting…","busy"); vcNote("");
-    const call=peer.call("rosetta-"+room,localStream); mediaConn=call; bindMedia(call);
-    const conn=peer.connect("rosetta-"+room); dataConn=conn; bindData(conn);
+    const call=peer.call("rosetta-vc-"+room,localStream); mediaConn=call; bindMedia(call);
+    const conn=peer.connect("rosetta-vc-"+room); dataConn=conn; bindData(conn);
+    startConnectTimer("peer",20000);
   });
 });
 function endCall(fromRemote){
+  clearTimeout(connectTimer);
   stopVcRecog();
   try{if(mediaConn)mediaConn.close();}catch(e){}
   try{if(dataConn)dataConn.close();}catch(e){}
