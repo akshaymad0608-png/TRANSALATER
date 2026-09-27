@@ -894,10 +894,26 @@ function showPermHelp(retryFn){
 }
 
 async function getMedia(){
-  if(localStream)return localStream;
+  if(localStream&&localStream.active)return localStream;
+  localStream=null;
   localStream=await navigator.mediaDevices.getUserMedia({video:true,audio:true});
   $("localVid").srcObject=localStream;
   return localStream;
+}
+function handleMediaError(e, retryFn){
+  const n=e.name||"";
+  if(n==="NotAllowedError"||n==="PermissionDeniedError"){
+    showPermHelp(retryFn);
+  } else if(n==="NotFoundError"||n==="DevicesNotFoundError"){
+    vcNote(null,`<div class="perm-card"><h4>📷 No camera or microphone found</h4><p style="font-size:13px;margin:4px 0 12px;color:var(--ink)">Make sure a camera and microphone are connected to your device, then try again.</p><button class="perm-retry" id="permRetryBtn">Try again</button></div>`);
+    const btn=$("permRetryBtn");if(btn)btn.addEventListener("click",()=>{vcNote("Starting…");retryFn();});
+  } else if(n==="NotReadableError"||n==="TrackStartError"){
+    vcNote(null,`<div class="perm-card"><h4>📷 Camera is in use by another app</h4><p style="font-size:13px;margin:4px 0 12px;color:var(--ink)">Close any other app using the camera (video call apps, etc.), then try again.</p><button class="perm-retry" id="permRetryBtn">Try again</button></div>`);
+    const btn=$("permRetryBtn");if(btn)btn.addEventListener("click",()=>{vcNote("Starting…");retryFn();});
+  } else {
+    vcNote(null,`<div class="perm-card"><h4>⚠️ Could not access camera/mic (${n||"unknown error"})</h4><p style="font-size:13px;margin:4px 0 12px;color:var(--ink)">Try reloading the page. If it keeps failing, check your browser's camera permissions.</p><button class="perm-retry" id="permRetryBtn">Try again</button></div>`);
+    const btn=$("permRetryBtn");if(btn)btn.addEventListener("click",()=>{vcNote("Starting…");retryFn();});
+  }
 }
 function showStage(room){
   $("vcSetup").style.display="none"; $("vcStage").classList.add("on"); $("roomShow").textContent=room;
@@ -936,7 +952,7 @@ function startConnectTimer(msg,timeout){
 }
 function wireIncoming(){
   peer.on("call",async call=>{
-    try{await getMedia();}catch(e){toast("Allow camera & microphone to take the call.");return;}
+    try{await getMedia();}catch(e){handleMediaError(e,()=>wireIncoming());return;}
     call.answer(localStream); mediaConn=call; bindMedia(call);
   });
   peer.on("connection",conn=>{dataConn=conn; bindData(conn);});
@@ -996,7 +1012,7 @@ function stopVcRecog(){vcListening=false;if(vcRecog){try{vcRecog.abort();}catch(
 $("vcCreate").addEventListener("click",async()=>{
   if(typeof Peer==="undefined"){toast("Calling library didn't load. Open this in a normal browser tab (not an in-app browser).");return;}
   vcNote("Getting camera & mic…");
-  try{await getMedia();}catch(e){showPermHelp(()=>$("vcCreate").click());return;}
+  try{await getMedia();}catch(e){handleMediaError(e,()=>$("vcCreate").click());return;}
   vcNote("Connecting to server…");
   const room=($("vcRoom").value.trim()||randCode()).toUpperCase();
   $("vcRoom").value=room;
@@ -1016,7 +1032,7 @@ $("vcJoin").addEventListener("click",async()=>{
   if(!room){toast("Enter the room code your friend shared.");return;}
   if(room.length<4){toast("Room code looks too short — check it and try again.");return;}
   vcNote("Getting camera & mic…");
-  try{await getMedia();}catch(e){showPermHelp(()=>$("vcJoin").click());return;}
+  try{await getMedia();}catch(e){handleMediaError(e,()=>$("vcJoin").click());return;}
   vcNote("Connecting…");
   ensurePeer(null);
   startConnectTimer("join",20000);
