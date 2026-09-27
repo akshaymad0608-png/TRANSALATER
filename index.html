@@ -287,6 +287,12 @@
     border-radius:10px;padding:9px 14px;display:flex;align-items:center;gap:9px;letter-spacing:.15em}
   .roompill b{color:var(--primary)}
   .waiting{text-align:center;color:var(--ink);font-size:13px;padding:8px;font-weight:500}
+  .perm-card{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-align:left;margin:4px 0}
+  .perm-card h4{margin:0 0 8px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;color:var(--ink);font-family:"Space Grotesk",sans-serif}
+  .perm-card ol{margin:6px 0 12px;padding-left:20px;font-size:13px;line-height:1.8;color:var(--ink)}
+  .perm-card ol b{color:var(--primary)}
+  .perm-card .perm-retry{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:8px 18px;cursor:pointer;font-size:13px;font-weight:600;font-family:"Space Grotesk",sans-serif;transition:.15s}
+  .perm-card .perm-retry:hover{opacity:.88}
 
   @media (max-width:660px){
     .panels{grid-template-columns:1fr}
@@ -572,7 +578,7 @@
           <button class="btn-primary" id="vcCreate"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Start a call</button>
           <button class="btn-ghost" id="vcJoin"><svg viewBox="0 0 24 24" fill="none"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Join a call</button>
         </div>
-        <p class="waiting" id="vcSetupNote"></p>
+        <div class="waiting" id="vcSetupNote"></div>
       </div>
 
       <div class="stage" id="vcStage">
@@ -846,7 +852,35 @@ fill(vcMyLang,false);fill(vcReadLang,false); vcMyLang.value="en"; vcReadLang.val
 let peer=null,localStream=null,mediaConn=null,dataConn=null,vcRecog=null,vcReadAloud=true,micOn=true,camOn=true,vcListening=false;
 
 function randCode(){const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let s="";for(let i=0;i<6;i++)s+=c[Math.floor(Math.random()*c.length)];return s;}
-function vcNote(msg){$("vcSetupNote").textContent=msg||"";}
+function vcNote(msg,html){
+  const el=$("vcSetupNote");
+  if(html){el.innerHTML=html;}
+  else{el.textContent=msg||"";}
+}
+
+function _browserKey(){
+  const ua=navigator.userAgent;
+  if(/iPad|iPhone|iPod/.test(ua))return"ios";
+  if(/Android/.test(ua))return"android";
+  if(/Firefox/.test(ua))return"firefox";
+  if(/Safari/.test(ua)&&!/Chrome/.test(ua))return"safari";
+  return"chrome";
+}
+
+const _permSteps={
+  chrome:`<ol><li>Click the <b>🔒 lock icon</b> in the address bar (left of the URL)</li><li>Set <b>Camera</b> and <b>Microphone</b> to <b>Allow</b></li><li>Click the button below to try again</li></ol>`,
+  firefox:`<ol><li>Click the <b>🔒 lock icon</b> in the address bar</li><li>Click the <b>×</b> next to blocked Camera &amp; Microphone to clear the block</li><li>Click the button below — the browser will ask again</li></ol>`,
+  safari:`<ol><li>Go to <b>Safari → Settings for This Website…</b></li><li>Set <b>Camera</b> and <b>Microphone</b> to <b>Allow</b></li><li>Reload the page and start the call again</li></ol>`,
+  android:`<ol><li>Tap the <b>🔒 lock icon</b> in the address bar (or the ⋮ menu → Site settings)</li><li>Set <b>Camera</b> and <b>Microphone</b> to <b>Allow</b></li><li>Reload the page and tap Start a call again</li></ol>`,
+  ios:`<ol><li>Go to iPhone <b>Settings → Safari</b></li><li>Scroll down to <b>languagetransalator.com</b> (or Settings → Apps → Safari → Website Settings)</li><li>Set <b>Camera</b> and <b>Microphone</b> to <b>Allow</b></li><li>Come back and start the call again</li></ol>`,
+};
+
+function showPermHelp(retryFn){
+  const steps=_permSteps[_browserKey()]||_permSteps.chrome;
+  vcNote(null,`<div class="perm-card"><h4>📷 Camera &amp; microphone access needed</h4>${steps}<button class="perm-retry" id="permRetryBtn">Try again</button></div>`);
+  const btn=$("permRetryBtn");
+  if(btn)btn.addEventListener("click",()=>{vcNote("Starting…");retryFn();});
+}
 
 async function getMedia(){
   if(localStream)return localStream;
@@ -930,7 +964,7 @@ function stopVcRecog(){vcListening=false;if(vcRecog){try{vcRecog.abort();}catch(
 $("vcCreate").addEventListener("click",async()=>{
   if(typeof Peer==="undefined"){toast("Calling library didn't load. Open this in a normal browser tab.");return;}
   vcNote("Starting…");
-  try{await getMedia();}catch(e){vcNote("");toast("Allow camera & microphone to start a call.");return;}
+  try{await getMedia();}catch(e){showPermHelp(()=>$("vcCreate").click());return;}
   const room=($("vcRoom").value.trim()||randCode()).toUpperCase();
   $("vcRoom").value=room;
   ensurePeer("rosetta-"+room);
@@ -941,7 +975,7 @@ $("vcJoin").addEventListener("click",async()=>{
   const room=$("vcRoom").value.trim().toUpperCase();
   if(!room){toast("Enter the room code your friend shared.");return;}
   vcNote("Joining…");
-  try{await getMedia();}catch(e){vcNote("");toast("Allow camera & microphone to join.");return;}
+  try{await getMedia();}catch(e){showPermHelp(()=>$("vcJoin").click());return;}
   ensurePeer(null);
   peer.on("open",()=>{
     showStage(room); setStatus("Connecting…","busy"); vcNote("");
