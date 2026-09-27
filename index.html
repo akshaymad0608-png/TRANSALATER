@@ -879,11 +879,11 @@ function _browserKey(){
 }
 
 const _permSteps={
-  chrome:`<ol><li>Click the <b>🔒 lock icon</b> in the address bar (left of the URL)</li><li>Set <b>Camera</b> and <b>Microphone</b> to <b>Allow</b></li><li>Click the button below to try again</li></ol>`,
-  firefox:`<ol><li>Click the <b>🔒 lock icon</b> in the address bar</li><li>Click the <b>×</b> next to blocked Camera &amp; Microphone to clear the block</li><li>Click the button below — the browser will ask again</li></ol>`,
-  safari:`<ol><li>Go to <b>Safari → Settings for This Website…</b></li><li>Set <b>Camera</b> and <b>Microphone</b> to <b>Allow</b></li><li>Reload the page and start the call again</li></ol>`,
-  android:`<ol><li>Tap the <b>🔒 lock icon</b> in the address bar (or the ⋮ menu → Site settings)</li><li>Set <b>Camera</b> and <b>Microphone</b> to <b>Allow</b></li><li>Reload the page and tap Start a call again</li></ol>`,
-  ios:`<ol><li>Go to iPhone <b>Settings → Safari</b></li><li>Scroll down to <b>languagetransalator.com</b> (or Settings → Apps → Safari → Website Settings)</li><li>Set <b>Camera</b> and <b>Microphone</b> to <b>Allow</b></li><li>Come back and start the call again</li></ol>`,
+  chrome:`<ol><li>Look at the <b>address bar</b> — click the small icon on the <b>left of the URL</b><br><small style="color:var(--muted)">(may look like 🔒 lock, ⓘ info, or ⚙ tune/sliders icon)</small></li><li>Select <b>"Site settings"</b></li><li>Change <b>Camera</b> and <b>Microphone</b> to <b>Allow</b></li><li>Click the button below to try again</li></ol>`,
+  firefox:`<ol><li>Click the <b>🔒 lock</b> or <b>ⓘ info icon</b> in the address bar</li><li>Click <b>Connection secure → More information</b> → <b>Permissions</b> tab</li><li>Remove the block on <b>Camera</b> and <b>Microphone</b></li><li>Click the button below — the browser will ask again</li></ol>`,
+  safari:`<ol><li>In the menu bar go to <b>Safari → Settings for This Website…</b></li><li>Set <b>Camera</b> and <b>Microphone</b> to <b>Allow</b></li><li>Reload the page and start the call again</li></ol>`,
+  android:`<ol><li>Tap the <b>⋮ three-dot menu</b> (top right) → <b>Settings → Site settings</b><br><small style="color:var(--muted)">Or tap the icon left of the URL if visible</small></li><li>Find this site → set <b>Camera</b> and <b>Microphone</b> to <b>Allow</b></li><li>Reload the page and tap Start a call again</li></ol>`,
+  ios:`<ol><li>Open iPhone <b>Settings → Safari</b></li><li>Under <b>Settings for Websites</b> tap <b>Camera</b> → set to <b>Allow</b></li><li>Go back and tap <b>Microphone</b> → set to <b>Allow</b></li><li>Come back here and start the call again</li></ol>`,
 };
 
 function showPermHelp(retryFn){
