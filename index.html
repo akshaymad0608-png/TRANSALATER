@@ -902,34 +902,36 @@ async function getMedia(){
 function showStage(room){
   $("vcSetup").style.display="none"; $("vcStage").classList.add("on"); $("roomShow").textContent=room;
 }
+function showCallError(msg, retryId){
+  $("vcSetup").style.display="block"; $("vcStage").classList.remove("on");
+  const retryBtn = retryId ? `<button class="perm-retry" onclick="$('${retryId}').click();vcNote('')">Try again</button>` : '';
+  vcNote(null,`<div class="perm-card"><h4>⚠️ ${msg}</h4>${retryBtn}</div>`);
+  setStatus("Call error","err");
+}
+
 function ensurePeer(id){
   peer = id ? new Peer(id,{config:ICE_CFG}) : new Peer({config:ICE_CFG});
   peer.on("error",err=>{
     console.error("PeerJS error:",err.type,err);
     clearTimeout(connectTimer);
     if(err.type==="unavailable-id"){
-      vcNote("That room code is taken — click 'Start a call' to get a fresh one.");
-      $("vcSetup").style.display="block"; $("vcStage").classList.remove("on");
+      showCallError("That room code is taken — click 'Start a call' to get a new one.","vcCreate");
     } else if(err.type==="peer-unavailable"){
-      toast("Room not found — check the code and try again.");
-      $("vcSetup").style.display="block"; $("vcStage").classList.remove("on");
+      showCallError("Room not found — check the code and try 'Join a call' again.","vcJoin");
     } else if(err.type==="network"||err.type==="server-error"||err.type==="socket-error"||err.type==="socket-closed"){
-      toast("Connection server error — open in Chrome/Edge and try again.");
-      $("vcSetup").style.display="block"; $("vcStage").classList.remove("on");
+      showCallError("Connection server unreachable — check your internet and try again.","vcCreate");
     } else if(err.type==="browser-incompatible"){
-      toast("Your browser doesn't support video calls. Use Chrome or Edge.");
+      showCallError("Your browser doesn't support video calls. Open in Chrome or Edge.",null);
     } else {
-      toast("Call error: "+err.type+" — try refreshing the page.");
+      showCallError("Call failed ("+err.type+") — refresh the page and try again.","vcCreate");
     }
-    setStatus("Call error","err");
   });
 }
 
 function startConnectTimer(msg,timeout){
   clearTimeout(connectTimer);
   connectTimer=setTimeout(()=>{
-    toast("Still trying to connect… Make sure both devices are on a network, then try again.");
-    setStatus("Connecting… (slow)","busy");
+    showCallError("Taking too long to connect — check your internet and try again.","vcCreate");
   },timeout||18000);
 }
 function wireIncoming(){
