@@ -9,7 +9,7 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         {
           "key": "Permissions-Policy",
-          "value": "camera=(), geolocation=(), payment=(), interest-cohort=()"
+          "value": "camera=self, microphone=self, geolocation=(), payment=(), interest-cohort=()"
         },
         {
           "key": "Strict-Transport-Security",
@@ -17,7 +17,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://translate.googleapis.com https://translate.google.com https://pagead2.googlesyndication.com https://adservice.google.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://translate.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https:; connect-src 'self' https://api.mymemory.translated.net https://translate.googleapis.com https://pagead2.googlesyndication.com https://adservice.google.com; media-src 'self' blob:; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self' mailto:; object-src 'none'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://translate.googleapis.com https://translate.google.com https://pagead2.googlesyndication.com https://adservice.google.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://translate.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https:; connect-src 'self' https://api.mymemory.translated.net https://translate.googleapis.com https://pagead2.googlesyndication.com https://adservice.google.com https://0.peerjs.com wss://0.peerjs.com https://openrelay.metered.ca wss://openrelay.metered.ca stun:stun.l.google.com stun:stun1.l.google.com stun:stun2.l.google.com; media-src 'self' blob:; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self' mailto:; object-src 'none'; upgrade-insecure-requests"
         }
       ]
     }
