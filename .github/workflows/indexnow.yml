@@ -1,0 +1,49 @@
+name: IndexNow
+
+# Tells Bing, Yandex, Seznam and Naver which pages changed, so they recrawl
+# them without waiting for the next scheduled crawl. The key file
+# 8a8653f96bc758ad2bcfef1c70576bee.txt at the site root proves ownership.
+
+on:
+  push:
+    branches: [main]
+    paths: ['**.html', 'sitemap.xml']
+  workflow_dispatch:
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Wait for the Vercel deployment
+        run: sleep 150
+
+      - name: Submit changed pages
+        env:
+          HOST: languagetransalator.com
+          KEY: 8a8653f96bc758ad2bcfef1c70576bee
+          BEFORE: ${{ github.event.before }}
+        run: |
+          # Manual runs, and pushes whose base is unknown, submit the whole sitemap.
+          if [ "${{ github.event_name }}" = "push" ] && git cat-file -e "$BEFORE" 2>/dev/null; then
+            files=$(git diff --name-only "$BEFORE" HEAD -- '*.html' | grep -v '^google.*\.html$' || true)
+            urls=$(for f in $files; do
+              [ -f "$f" ] || continue
+              if [ "$f" = "index.html" ]; then echo "https://$HOST/"; else echo "https://$HOST/$f"; fi
+            done)
+          else
+            urls=$(grep -o '<loc>[^<]*' sitemap.xml | sed 's/<loc>//')
+          fi
+          if [ -z "$urls" ]; then echo "No page changed."; exit 0; fi
+          echo "$urls"
+          list=$(printf '%s\n' $urls | jq -R . | jq -s -c .)
+          code=$(curl -sS -o response.txt -w '%{http_code}' \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d "{\"host\":\"$HOST\",\"key\":\"$KEY\",\"keyLocation\":\"https://$HOST/$KEY.txt\",\"urlList\":$list}" \
+            https://api.indexnow.org/indexnow)
+          cat response.txt; echo "HTTP $code"
+          # 200 = accepted, 202 = accepted while the key is being verified.
+          [ "$code" = 200 ] || [ "$code" = 202 ]
