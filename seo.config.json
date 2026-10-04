@@ -1,0 +1,9 @@
+{
+  "origin": "https://languagetransalator.com",
+  "distDir": ".",
+  "ignore": ["/reports", "/seo-data", "/scripts", "/node_modules"],
+  "important": ["/", "/about", "/contact", "/privacy", "/terms"],
+  "minSitemapUrls": 15,
+  "adsense": true,
+  "gsc": { "brandTerms": ["languagetransalator", "language translator", "rosetta"], "minImpressions": 10 }
+}
