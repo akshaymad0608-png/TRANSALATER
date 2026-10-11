@@ -466,8 +466,11 @@
   .pill:hover{background:var(--primary-press);transform:translateY(-1px)}
 
   /* hero */
-  .hero{position:relative;overflow:hidden;padding:64px 20px 72px;text-align:center}
-  .orbits{position:absolute;inset:0;pointer-events:none}
+  /* Only the decorative layer clips. With overflow:hidden on .hero itself the
+     hero became a scroll container: following #app scrolled the hero box
+     instead of the page, hid the headline, and left nothing to scroll back. */
+  .hero{position:relative;padding:64px 20px 72px;text-align:center}
+  .orbits{position:absolute;inset:0;pointer-events:none;overflow:hidden}
   .ring{position:absolute;left:50%;top:-120px;border:1px solid var(--ring);border-radius:50%;transform:translateX(-50%)}
   .r1{width:760px;height:760px}.r2{width:1120px;height:1120px}.r3{width:1480px;height:1480px}.r4{width:1840px;height:1840px}
   .flag{position:absolute;width:var(--s);height:var(--s);margin-left:calc(var(--s)/-2);border-radius:50%;background:var(--surface);border:1px solid var(--line);
