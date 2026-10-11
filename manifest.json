@@ -1,16 +1,92 @@
 {
+  "id": "/",
   "name": "Rosetta — Voice & Text Translator",
   "short_name": "Rosetta",
-  "description": "Free voice, text, conversation and video-call translator supporting 130+ world and regional languages.",
-  "start_url": "/",
+  "description": "Free voice, text, conversation and video-call translator for 40+ world and Indian languages.",
+  "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#EDEFF6",
-  "theme_color": "#5B45E0",
+  "background_color": "#FAFAFB",
+  "theme_color": "#6B2BF0",
   "lang": "en",
-  "categories": ["utilities", "productivity", "education"],
+  "dir": "ltr",
+  "categories": [
+    "utilities",
+    "productivity",
+    "education",
+    "travel"
+  ],
   "icons": [
-    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
-  ]
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Conversation",
+      "short_name": "Talk",
+      "description": "Two people, one phone",
+      "url": "/?tab=conversation&source=shortcut",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Video call",
+      "short_name": "Call",
+      "description": "Video call with live subtitles",
+      "url": "/?tab=video&source=shortcut",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "English to Hindi",
+      "short_name": "EN → HI",
+      "url": "/?sl=en&tl=hi&source=shortcut",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "q",
+      "url": "url"
+    },
+    "enctype": "application/x-www-form-urlencoded"
+  }
 }
