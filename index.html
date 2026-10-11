@@ -646,6 +646,24 @@
     .topnav .pill{padding:0 14px}
   }
   @media (max-width:350px){.navright .pill{display:none}}
+
+  /* video call: grid for up to 4 people */
+  .videos[data-n="3"],.videos[data-n="4"]{grid-template-columns:1fr 1fr}
+  .vwrap.me video{transform:scaleX(-1)}
+  .vwrap .vlabel,.vwrap .caption{z-index:2}
+  #vcWaiting[hidden]{display:none}
+  #vcStage{scroll-margin-top:84px}
+  .selfmuted small{display:block;margin-top:6px;opacity:.8}
+  .caption .interim{opacity:.75;font-style:italic}
+  .ib.cc span{font:700 12px/1 "Inter",sans-serif;letter-spacing:.02em}
+  .ib.cc.on{background:var(--primary-solid);border-color:var(--primary-solid);color:#fff}
+  .ib.cc.listening{animation:pulse 1s infinite}
+  @media (max-width:660px){
+    .videos{grid-template-columns:1fr}
+    .videos[data-n="3"],.videos[data-n="4"]{grid-template-columns:1fr 1fr}
+    .videos[data-n="3"] .vwrap,.videos[data-n="4"] .vwrap{aspect-ratio:3/4}
+    .videos[data-n="3"] .caption,.videos[data-n="4"] .caption{font-size:13px;padding:7px 9px}
+  }
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4380996737976478" crossorigin="anonymous"></script>
 </head>
@@ -832,29 +850,27 @@
       </div>
 
       <div class="stage" id="vcStage">
-        <div class="videos">
-          <div class="vwrap">
+        <div class="videos" id="vcGrid" data-n="2">
+          <div class="vwrap me">
             <span class="vlabel">You</span>
             <video id="localVid" autoplay muted playsinline></video>
             <div class="caption" id="localCap"></div>
           </div>
-          <div class="vwrap">
-            <span class="vlabel" id="remoteLabel">Waiting…</span>
-            <video id="remoteVid" autoplay playsinline></video>
-            <div class="selfmuted" id="remotePlaceholder">Waiting for the other person to join…</div>
-            <div class="caption" id="remoteCap"></div>
+          <div class="vwrap" id="vcWaiting">
+            <div class="selfmuted">Waiting for others to join…<br><small>Share the room code · up to 4 people</small></div>
           </div>
         </div>
         <div class="vc-controls">
           <span class="roompill">Room <b id="roomShow">—</b> <button onclick="copyRoomCode()" style="background:none;border:0;cursor:pointer;padding:2px 4px;border-radius:4px;color:var(--primary);display:inline-flex;align-items:center" title="Copy room code"><svg viewBox="0 0 24 24" fill="none" style="width:14px;height:14px"><rect x="9" y="9" width="11" height="11" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M6 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v1" stroke="currentColor" stroke-width="1.7"/></svg></button></span>
           <button class="ib" id="vcMic" title="Mute mic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 15a3 3 0 003-3V6a3 3 0 00-6 0v6a3 3 0 003 3z" stroke="currentColor" stroke-width="1.6"/><path d="M19 11a7 7 0 01-14 0M12 18v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
           <button class="ib" id="vcCam" title="Turn camera off"><svg viewBox="0 0 24 24" fill="none"><path d="M15 10l6-3v10l-6-3M3 7a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="ib cc" id="vcCapBtn" title="Captions"><span aria-hidden="true">CC</span></button>
           <button class="ib" id="vcSpeakToggle" title="Read incoming captions aloud"><svg viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9a3 3 0 010 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
           <button class="btn-ghost btn-danger" id="vcEnd" style="flex:none;min-width:120px;height:38px">End call</button>
         </div>
       </div>
     </div>
-    <p class="hint">Share the <b>room code</b> with one person. Each of you sets your own languages. What you say is transcribed, translated, and shown to the other as <b>live subtitles</b>. Works best in a normal browser tab (Chrome/Edge) with camera + mic allowed.</p>
+    <p class="hint">Share the <b>room code</b> — up to <b>4 people</b> can join. Each person picks the language they speak and the language they want to read; what anyone says appears under their video as <b>live subtitles</b>, translated for you. On a phone, tap <b>CC</b> and speak to send a subtitle. In the same room? Use earphones or keep one device muted to avoid echo. Chrome or Edge work best.</p>
   </div>
 
   </div>
@@ -1045,14 +1061,16 @@ function setStatus(text,kind=""){
 function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),2000);}
 function loadVoices(){return window.speechSynthesis?speechSynthesis.getVoices():[];}
 if(window.speechSynthesis) speechSynthesis.onvoiceschanged=loadVoices;
-function speak(text,code,btn,rate){
-  if(!window.speechSynthesis||!text||!text.trim())return;
+function speak(text,code,btn,rate,done){
+  if(!window.speechSynthesis||!text||!text.trim()){if(done)done();return;}
   speechSynthesis.cancel();
   const lang=(byCode[code]||{}).speech||"en-US";
   const u=new SpeechSynthesisUtterance(text); u.lang=lang; if(rate) u.rate=rate;
   const v=loadVoices(); const ex=v.find(x=>x.lang===lang)||v.find(x=>x.lang&&x.lang.toLowerCase().startsWith(lang.split("-")[0]));
   if(ex)u.voice=ex;
-  if(btn){u.onstart=()=>btn.classList.add("on");u.onend=()=>btn.classList.remove("on");u.onerror=()=>btn.classList.remove("on");}
+  if(btn){u.onstart=()=>btn.classList.add("on");}
+  const fin=()=>{if(btn)btn.classList.remove("on");if(done){const d=done;done=null;d();}};
+  u.onend=fin;u.onerror=fin;
   speechSynthesis.speak(u);
 }
 async function callTranslate(text,src,tgt){
@@ -1220,9 +1238,33 @@ $("talkA").addEventListener("click",()=>startConv("a"));
 $("talkB").addEventListener("click",()=>startConv("b"));
 
 /* ================= VIDEO CALL mode ================= */
+/* A small mesh: everyone connects directly to everyone else, up to four
+   people. The person who starts the call owns the room id; each newcomer
+   connects to them, gets the ids of the others, and connects to those too.
+   Subtitles travel over the data connections: each speaker sends their own
+   words once, and every listener translates into the language they chose. */
 const vcMyLang=$("vcMyLang"),vcReadLang=$("vcReadLang");
-fill(vcMyLang,false);fill(vcReadLang,false); vcMyLang.value="en"; vcReadLang.value="hi";
-let peer=null,localStream=null,mediaConn=null,dataConn=null,vcRecog=null,vcReadAloud=true,micOn=true,camOn=true,vcListening=false,connectTimer=null;
+fill(vcMyLang,false);fill(vcReadLang,false);
+const MAX_PEOPLE=4;
+const TOUCH=window.matchMedia("(pointer:coarse)").matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+let peer=null,localStream=null,vcRecog=null,vcReadAloud=false,micOn=true,camOn=true,vcListening=false,connectTimer=null;
+let isHost=false,inCall=false,ttsBusy=false,recogErrors=0;
+/* Phones: continuous recognition fights the call for the microphone (and on
+   Android beeps on every restart), so captions are tap-to-talk there.
+   Computers: always-on captions. */
+let autoCaptions=!TOUCH;
+const peers=new Map(); // peer id -> {call, conn, tile, lang}
+
+(function(){
+  const has=c=>!!(c&&byCode[c]);
+  const get=k=>{try{return localStorage.getItem(k);}catch(e){return null;}};
+  let my=get("vc_my"), rd=get("vc_read");
+  if(!has(my)){const sl=get("rosetta_sl"),nav=(navigator.language||"en").split("-")[0];my=has(sl)?sl:(has(nav)?nav:"en");}
+  if(!has(rd)){const tl=get("rosetta_tl");rd=has(tl)?tl:"en";}
+  vcMyLang.value=my; vcReadLang.value=rd;
+  vcMyLang.addEventListener("change",()=>{try{localStorage.setItem("vc_my",vcMyLang.value);}catch(e){} broadcast({type:"hello",lang:vcMyLang.value}); if(vcListening){stopVcRecog();startVcRecog();}});
+  vcReadLang.addEventListener("change",()=>{try{localStorage.setItem("vc_read",vcReadLang.value);}catch(e){}});
+})();
 
 /* STUN + free TURN — needed for P2P through strict NAT (mobile, different WiFi) */
 const ICE_CFG={iceServers:[
@@ -1266,11 +1308,18 @@ function showPermHelp(retryFn){
   if(btn)btn.addEventListener("click",()=>{vcNote("Starting…");retryFn();});
 }
 
+/* Echo cancellation, noise suppression and auto gain are requested
+   explicitly, and video is capped so a four-way call (three uploads per
+   device) stays within a phone's upload bandwidth. */
 async function getMedia(){
   if(localStream&&localStream.active)return localStream;
   localStream=null;
-  localStream=await navigator.mediaDevices.getUserMedia({video:true,audio:true});
+  localStream=await navigator.mediaDevices.getUserMedia({
+    audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},
+    video:{facingMode:"user",width:{ideal:640},height:{ideal:480},frameRate:{ideal:24,max:30}}
+  });
   $("localVid").srcObject=localStream;
+  applyMicState();
   return localStream;
 }
 function handleMediaError(e, retryFn){
@@ -1290,32 +1339,38 @@ function handleMediaError(e, retryFn){
 }
 function showStage(room){
   $("vcSetup").style.display="none"; $("vcStage").classList.add("on"); $("roomShow").textContent=room;
+  inCall=true; layoutGrid(); syncCapBtn();
+  $("vcStage").scrollIntoView({behavior:"smooth",block:"start"});
 }
 function showCallError(msg, retryId){
-  try{if(peer)peer.destroy();}catch(e){} peer=null;
-  mediaConn=null; dataConn=null;
+  hangUpAll();
   $("vcSetup").style.display="block"; $("vcStage").classList.remove("on");
   const retryBtn = retryId ? `<button class="perm-retry" onclick="$('${retryId}').click();vcNote('')">Try again</button>` : '';
   vcNote(null,`<div class="perm-card"><h4>⚠️ ${msg}</h4>${retryBtn}</div>`);
   setStatus("Call error","err");
 }
 
-const PEER_CFG={
+const PEER_CFG=Object.assign({
   host:'0.peerjs.com', port:443, secure:true, path:'/',
   config:ICE_CFG,
   debug:1
-};
+},window.__ROSETTA_PEER_CFG__||{});
 function ensurePeer(id){
   if(peer){try{peer.destroy();}catch(e){} peer=null;}
   peer = id ? new Peer(id,PEER_CFG) : new Peer(PEER_CFG);
   peer.on("error",err=>{
     console.error("PeerJS error:",err.type,err);
+    if(err.type==="peer-unavailable"&&inCall&&peers.size){
+      /* someone in the list left before we reached them; not fatal */
+      return;
+    }
     clearTimeout(connectTimer);
     if(err.type==="unavailable-id"){
-      showCallError("That room code is taken — try 'Start a call' again for a new code.","vcCreate");
+      showCallError("That room code is already in use — tap 'Join a call' to join it, or 'Start a call' with a new code.","vcJoin");
     } else if(err.type==="peer-unavailable"){
       showCallError("Room not found — check the code and try 'Join a call' again.","vcJoin");
     } else if(err.type==="network"||err.type==="server-error"||err.type==="socket-error"||err.type==="socket-closed"){
+      if(inCall&&peers.size){toast("Lost the call server — your current call continues, but no one new can join.");return;}
       showCallError("Could not reach the call server ("+err.type+") — check your internet and try again.","vcCreate");
     } else if(err.type==="browser-incompatible"){
       showCallError("Your browser doesn't support video calls. Please open in Chrome or Edge.",null);
@@ -1323,73 +1378,214 @@ function ensurePeer(id){
       showCallError("Call error: "+err.type+" — reload the page and try again.","vcCreate");
     }
   });
+  wireIncoming();
 }
-
-function startConnectTimer(msg,timeout){
+function startConnectTimer(retryId,timeout){
   clearTimeout(connectTimer);
   connectTimer=setTimeout(()=>{
-    showCallError("Taking too long to connect — check your internet and try again.","vcCreate");
+    showCallError("Taking too long to connect — check your internet and try again.",retryId||"vcCreate");
   },timeout||18000);
+}
+
+/* ---- people & tiles ---- */
+function isFull(id){return !peers.has(id)&&peers.size>=MAX_PEOPLE-1;}
+function personLabel(p){const l=p.lang&&byCode[p.lang];return l?l.name+" speaker":"Joining…";}
+function entry(id){
+  let p=peers.get(id);
+  if(!p){
+    p={};
+    const t=document.createElement("div"); t.className="vwrap remote";
+    t.innerHTML='<span class="vlabel"></span><video autoplay playsinline></video><div class="caption"></div>';
+    $("vcGrid").insertBefore(t,$("vcWaiting"));
+    p.tile=t; peers.set(id,p);
+    t.querySelector(".vlabel").textContent=personLabel(p);
+    layoutGrid();
+  }
+  return p;
+}
+function dropPeer(id){
+  const p=peers.get(id); if(!p)return;
+  peers.delete(id);
+  try{if(p.call)p.call.close();}catch(e){}
+  try{if(p.conn)p.conn.close();}catch(e){}
+  if(p.tile)p.tile.remove();
+  layoutGrid();
+  if(inCall){
+    toast(personLabel(p)==="Joining…"?"Someone left the call.":p.lang&&byCode[p.lang]?byCode[p.lang].name+" speaker left the call.":"Someone left the call.");
+    if(!peers.size){setStatus(isHost?"Waiting for guests…":"Everyone left","busy");}
+  }
+}
+function layoutGrid(){
+  const n=peers.size+1;
+  $("vcGrid").dataset.n=String(Math.max(2,n));
+  $("vcWaiting").hidden=peers.size>0;
+}
+function broadcast(m){
+  const msg=JSON.stringify(m);
+  peers.forEach(p=>{if(p.conn&&p.conn.open){try{p.conn.send(msg);}catch(e){}}});
+}
+
+function attachCall(call){
+  const id=call.peer, p=entry(id); p.call=call;
+  call.on("stream",stream=>{
+    const v=p.tile.querySelector("video");
+    if(v.srcObject!==stream){v.srcObject=stream; const pr=v.play&&v.play(); if(pr&&pr.catch)pr.catch(()=>{});}
+    clearTimeout(connectTimer); setStatus("In call","live");
+    if(autoCaptions)startVcRecog();
+  });
+  call.on("close",()=>dropPeer(id));
+  call.on("error",e=>{console.error("media conn error",e);});
+}
+function attachConn(conn){
+  const id=conn.peer, p=entry(id); p.conn=conn;
+  conn.on("open",()=>{
+    conn.send(JSON.stringify({type:"hello",lang:vcMyLang.value}));
+    if(isHost){
+      const others=[...peers.keys()].filter(k=>k!==id);
+      conn.send(JSON.stringify({type:"peers",ids:others}));
+    }
+  });
+  conn.on("data",raw=>onVcData(id,raw));
+  conn.on("close",()=>dropPeer(id));
+  conn.on("error",()=>{});
+}
+function dialPeer(id){
+  if(!peer||id===peer.id)return;
+  const p=peers.get(id);
+  if(p&&p.call&&p.conn)return;
+  if(isFull(id))return;
+  attachCall(peer.call(id,localStream));
+  attachConn(peer.connect(id,{reliable:true}));
 }
 function wireIncoming(){
   peer.on("call",async call=>{
-    try{await getMedia();}catch(e){handleMediaError(e,()=>wireIncoming());return;}
-    call.answer(localStream); mediaConn=call; bindMedia(call);
+    if(isFull(call.peer)){try{call.close();}catch(e){}return;}
+    try{await getMedia();}catch(e){handleMediaError(e,()=>{});return;}
+    call.answer(localStream); attachCall(call);
   });
-  peer.on("connection",conn=>{dataConn=conn; bindData(conn);});
-}
-function bindMedia(call){
-  call.on("stream",remote=>{
-    clearTimeout(connectTimer);
-    $("remoteVid").srcObject=remote; $("remotePlaceholder").style.display="none";
-    $("remoteLabel").textContent="Connected"; setStatus("In call","live"); startVcRecog();
+  peer.on("connection",conn=>{
+    if(isFull(conn.peer)){conn.on("open",()=>{try{conn.send(JSON.stringify({type:"full"}));}catch(e){} setTimeout(()=>{try{conn.close();}catch(e){}},500);});return;}
+    attachConn(conn);
   });
-  call.on("close",()=>endCall(true));
-  call.on("error",e=>{console.error("media conn error",e);toast("Video connection failed — check both sides are on a stable network.");});
 }
-function bindData(conn){
-  conn.on("open",()=>{ /* ready */ });
-  conn.on("data",async raw=>{
-    let m; try{m=JSON.parse(raw);}catch(e){return;}
-    if(m.type==="speech"){
-      const readLang=vcReadLang.value;
-      let shown=m.text;
-      try{const res=await callTranslate(m.text,m.lang||"auto",readLang);shown=res.text;}catch(e){}
-      const cap=$("remoteCap"); cap.classList.toggle("rtl",!!(byCode[readLang]||{}).rtl);
-      cap.innerHTML=`<div>${escapeHtml(shown)}</div><div class="co">${escapeHtml(m.text)}</div>`;
-      if(vcReadAloud)speak(shown,readLang);
-      clearTimeout(cap._t); cap._t=setTimeout(()=>cap.innerHTML="",6000);
+
+async function onVcData(id,raw){
+  let m; try{m=JSON.parse(raw);}catch(e){return;}
+  const p=peers.get(id); if(!p&&m.type!=="full")return;
+  if(m.type==="hello"){p.lang=m.lang; p.tile.querySelector(".vlabel").textContent=personLabel(p);}
+  else if(m.type==="peers"){(m.ids||[]).forEach(dialPeer);}
+  else if(m.type==="full"){showCallError("This call is full — up to "+MAX_PEOPLE+" people can join.",null);}
+  else if(m.type==="bye"){dropPeer(id);}
+  else if(m.type==="speech"){showRemoteCaption(p,m);}
+}
+
+/* Each listener translates into their own reading language. Interim words
+   show at once, untranslated and faded; the finished sentence replaces them,
+   translated, with the original underneath. */
+async function showRemoteCaption(p,m){
+  const cap=p.tile.querySelector(".caption");
+  if(m.lang&&p.lang!==m.lang){p.lang=m.lang;p.tile.querySelector(".vlabel").textContent=personLabel(p);}
+  if(!m.final){
+    if(p.finalPending)return;
+    cap.classList.remove("rtl");
+    cap.innerHTML=`<div class="interim">${escapeHtml(m.text)}</div>`;
+    clearTimeout(cap._t); cap._t=setTimeout(()=>{cap.innerHTML="";},5000);
+    return;
+  }
+  const rl=vcReadLang.value, src=m.lang||"auto", seq=(p.capSeq=(p.capSeq||0)+1);
+  let shown=m.text;
+  if(src!==rl){
+    p.finalPending=true;
+    /* one retry: the free endpoint sometimes refuses a burst of requests */
+    for(let attempt=0;attempt<2&&shown===m.text;attempt++){
+      try{const r=await callTranslate(m.text,src,rl); if(r&&r.text)shown=r.text;}
+      catch(e){if(attempt===0)await new Promise(res=>setTimeout(res,700));}
     }
-  });
-  conn.on("close",()=>{});
+    p.finalPending=false;
+  }
+  if(seq!==p.capSeq)return;   // a newer sentence arrived while this one was translating
+  cap.classList.toggle("rtl",!!(byCode[rl]||{}).rtl);
+  cap.innerHTML=`<div>${escapeHtml(shown)}</div>`+(shown!==m.text?`<div class="co">${escapeHtml(m.text)}</div>`:"");
+  clearTimeout(cap._t); cap._t=setTimeout(()=>{cap.innerHTML="";},9000);
+  if(vcReadAloud)speakCaption(shown,rl);
 }
 function escapeHtml(s){return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 
-/* transcribe MY speech, show locally, send to peer */
-function startVcRecog(){
-  if(!SR||vcListening)return;
-  vcRecog=new SR(); vcRecog.lang=byCode[vcMyLang.value].speech; vcRecog.interimResults=true; vcRecog.continuous=true;
-  vcListening=true;
+/* Reading a caption aloud through the speaker would otherwise go straight
+   back into this device's microphone: the others would hear the robot voice,
+   and it would be transcribed as if I had said it. While it plays, my mic
+   track is muted and recognition is paused. */
+function applyMicState(){if(localStream)localStream.getAudioTracks().forEach(t=>t.enabled=micOn&&!ttsBusy);}
+function speakCaption(text,lang){
+  ttsBusy=true; applyMicState();
+  const wasListening=vcListening&&autoCaptions; if(wasListening)stopVcRecog();
+  speak(text,lang,null,1,()=>{ttsBusy=false;applyMicState(); if(wasListening&&inCall&&micOn)startVcRecog();});
+}
+
+/* ---- my speech -> subtitles ---- */
+let lastInterimSent=0,lastInterimText="";
+function vcSendSpeech(text,final){
+  text=(text||"").trim(); if(!text)return;
+  const cap=$("localCap");
+  if(final){
+    cap.innerHTML=`<div>${escapeHtml(text)}</div>`;
+    clearTimeout(cap._t); cap._t=setTimeout(()=>{cap.innerHTML="";},5000);
+    broadcast({type:"speech",text,lang:vcMyLang.value,final:true});
+    lastInterimText="";
+  }else{
+    cap.innerHTML=`<div class="interim">${escapeHtml(text)}</div>`;
+    const now=Date.now();
+    if(text!==lastInterimText&&now-lastInterimSent>700){lastInterimSent=now;lastInterimText=text;broadcast({type:"speech",text,lang:vcMyLang.value,final:false});}
+  }
+}
+window.__rosettaVcSend=vcSendSpeech; // used by the automated tests
+function startVcRecog(once){
+  if(!SR||vcListening||!micOn||ttsBusy||!inCall)return;
+  vcRecog=new SR(); vcRecog.lang=(byCode[vcMyLang.value]||{speech:"en-US"}).speech;
+  vcRecog.interimResults=true; vcRecog.continuous=!once&&autoCaptions;
+  vcListening=true; syncCapBtn();
   vcRecog.onresult=e=>{
+    recogErrors=0;
     let interim="",fin="";
     for(let i=e.resultIndex;i<e.results.length;i++){
       const tr=e.results[i][0].transcript;
       if(e.results[i].isFinal)fin+=tr; else interim+=tr;
     }
-    const cap=$("localCap");
-    if(interim){cap.innerHTML=`<div style="opacity:.7">${escapeHtml(interim)}</div>`;}
-    if(fin.trim()){
-      cap.innerHTML=`<div>${escapeHtml(fin)}</div>`;
-      clearTimeout(cap._t); cap._t=setTimeout(()=>cap.innerHTML="",4000);
-      if(dataConn&&dataConn.open){dataConn.send(JSON.stringify({type:"speech",text:fin.trim(),lang:vcMyLang.value}));}
+    if(fin.trim())vcSendSpeech(fin,true); else if(interim.trim())vcSendSpeech(interim,false);
+  };
+  vcRecog.onerror=e=>{
+    if(e.error==="not-allowed"||e.error==="service-not-allowed"||e.error==="audio-capture"){
+      stopVcRecog(); autoCaptions=false; syncCapBtn();
+      toast(e.error==="audio-capture"?"The microphone is busy — subtitles are off.":"Mic blocked — subtitles are off.");
+    }else if(e.error!=="no-speech"&&e.error!=="aborted"){recogErrors++;}
+  };
+  vcRecog.onend=()=>{
+    const again=vcListening&&autoCaptions&&!once&&inCall&&micOn&&!ttsBusy;
+    vcListening=false; syncCapBtn();
+    if(again){
+      if(recogErrors>5){autoCaptions=false;syncCapBtn();toast("Subtitles paused after repeated errors — tap CC to try again.");return;}
+      setTimeout(()=>startVcRecog(),recogErrors?1500:250);
     }
   };
-  vcRecog.onerror=e=>{if(e.error==="not-allowed")toast("Mic blocked — captions won't send.");};
-  vcRecog.onend=()=>{if(vcListening){try{vcRecog.start();}catch(e){}}}; // auto-restart while in call
-  try{vcRecog.start();}catch(e){}
+  try{vcRecog.start(); if(once)buzz();}catch(e){vcListening=false;syncCapBtn();}
 }
-function stopVcRecog(){vcListening=false;if(vcRecog){try{vcRecog.abort();}catch(e){}}}
+function stopVcRecog(){vcListening=false;if(vcRecog){try{vcRecog.abort();}catch(e){}}vcRecog=null;syncCapBtn();}
+function syncCapBtn(){
+  const b=$("vcCapBtn"); if(!b)return;
+  b.classList.toggle("on",TOUCH?vcListening:autoCaptions);
+  b.classList.toggle("listening",vcListening);
+  b.title=TOUCH?"Tap, then speak to send a subtitle":(autoCaptions?"Subtitles on — tap to turn off":"Subtitles off — tap to turn on");
+}
+$("vcCapBtn").addEventListener("click",()=>{
+  if(!SR){toast(IN_APP?"Subtitles need the mic, which this app's browser blocks. Open the page in Chrome.":"This browser has no speech recognition, so subtitles can't be sent. Chrome or Edge work best.");return;}
+  if(!micOn){toast("Turn your mic on first.");return;}
+  if(TOUCH){ if(vcListening)stopVcRecog(); else startVcRecog(true); return; }
+  autoCaptions=!autoCaptions;
+  if(autoCaptions){startVcRecog();toast("Subtitles on");} else {stopVcRecog();toast("Subtitles off");}
+  syncCapBtn();
+});
 
+/* ---- start / join / leave ---- */
 $("vcCreate").addEventListener("click",async()=>{
   if(typeof Peer==="undefined"){toast("Calling library didn't load. Open this in a normal browser tab (not an in-app browser).");return;}
   vcNote("Getting camera & mic…");
@@ -1397,14 +1593,14 @@ $("vcCreate").addEventListener("click",async()=>{
   vcNote("Connecting to server…");
   const room=($("vcRoom").value.trim()||randCode()).toUpperCase();
   $("vcRoom").value=room;
+  isHost=true;
   ensurePeer("rosetta-vc-"+room);
-  startConnectTimer("host",15000);
+  startConnectTimer("vcCreate",15000);
   peer.on("open",()=>{
     clearTimeout(connectTimer);
-    wireIncoming(); showStage(room); setStatus("Waiting for guest…","busy"); vcNote("");
-    startVcRecog();
-    /* show share hint after 8s if no one joined */
-    connectTimer=setTimeout(()=>{ if(!mediaConn) toast("Share the room code — your friend enters it and taps Join."); },8000);
+    showStage(room); setStatus("Waiting for guests…","busy"); vcNote("");
+    if(autoCaptions)startVcRecog();
+    connectTimer=setTimeout(()=>{ if(!peers.size) toast("Share the room code — others enter it and tap Join."); },8000);
   });
 });
 $("vcJoin").addEventListener("click",async()=>{
@@ -1415,36 +1611,40 @@ $("vcJoin").addEventListener("click",async()=>{
   vcNote("Getting camera & mic…");
   try{await getMedia();}catch(e){handleMediaError(e,()=>$("vcJoin").click());return;}
   vcNote("Connecting…");
+  isHost=false;
   ensurePeer(null);
-  startConnectTimer("join",20000);
+  startConnectTimer("vcJoin",20000);
   peer.on("open",()=>{
     clearTimeout(connectTimer);
     showStage(room); setStatus("Connecting…","busy"); vcNote("");
-    const call=peer.call("rosetta-vc-"+room,localStream); mediaConn=call; bindMedia(call);
-    const conn=peer.connect("rosetta-vc-"+room); dataConn=conn; bindData(conn);
-    startConnectTimer("peer",20000);
+    dialPeer("rosetta-vc-"+room);
+    startConnectTimer("vcJoin",20000);
   });
 });
-function endCall(fromRemote){
+function hangUpAll(){
   clearTimeout(connectTimer);
   stopVcRecog();
-  try{if(mediaConn)mediaConn.close();}catch(e){}
-  try{if(dataConn)dataConn.close();}catch(e){}
+  if(window.speechSynthesis)speechSynthesis.cancel();
+  ttsBusy=false;
+  broadcast({type:"bye"});
+  [...peers.keys()].forEach(id=>{const p=peers.get(id);peers.delete(id);try{p.call&&p.call.close();}catch(e){}try{p.conn&&p.conn.close();}catch(e){}if(p.tile)p.tile.remove();});
   try{if(peer)peer.destroy();}catch(e){}
-  if(localStream){localStream.getTracks().forEach(t=>t.stop());localStream=null;}
-  peer=mediaConn=dataConn=null;
-  $("localVid").srcObject=null; $("remoteVid").srcObject=null;
-  $("vcStage").classList.remove("on"); $("vcSetup").style.display="block";
-  $("remotePlaceholder").style.display="grid"; $("remoteLabel").textContent="Waiting…";
-  $("localCap").innerHTML=""; $("remoteCap").innerHTML="";
-  setStatus(fromRemote?"Call ended":"Ready");
-  if(fromRemote)toast("The other person left the call.");
+  peer=null; inCall=false; isHost=false;
 }
-$("vcEnd").addEventListener("click",()=>endCall(false));
+function endCall(){
+  hangUpAll();
+  if(localStream){localStream.getTracks().forEach(t=>t.stop());localStream=null;}
+  $("localVid").srcObject=null; $("localCap").innerHTML="";
+  $("vcStage").classList.remove("on"); $("vcSetup").style.display="block";
+  layoutGrid();
+  setStatus("Ready");
+}
+$("vcEnd").addEventListener("click",()=>endCall());
+window.addEventListener("pagehide",()=>{if(inCall)broadcast({type:"bye"});});
 $("vcMic").addEventListener("click",()=>{
-  if(!localStream)return; micOn=!micOn; localStream.getAudioTracks().forEach(t=>t.enabled=micOn);
+  if(!localStream)return; micOn=!micOn; applyMicState();
   $("vcMic").classList.toggle("on",!micOn); $("vcMic").style.opacity=micOn?"1":".5";
-  if(micOn)startVcRecog(); else stopVcRecog();
+  if(micOn){if(autoCaptions)startVcRecog();} else stopVcRecog();
   toast(micOn?"Mic on":"Mic muted");
 });
 $("vcCam").addEventListener("click",()=>{
@@ -1453,13 +1653,14 @@ $("vcCam").addEventListener("click",()=>{
 });
 $("vcSpeakToggle").addEventListener("click",()=>{
   vcReadAloud=!vcReadAloud; $("vcSpeakToggle").classList.toggle("on",vcReadAloud);
-  toast(vcReadAloud?"Reading incoming captions aloud":"Captions silent (text only)");
+  if(!vcReadAloud&&window.speechSynthesis)speechSynthesis.cancel();
+  toast(vcReadAloud?"Reading subtitles aloud (your mic pauses while it speaks)":"Subtitles are text only");
 });
-$("vcSpeakToggle").classList.add("on");
 $("vcRoom").addEventListener("input",e=>e.target.value=e.target.value.toUpperCase());
+syncCapBtn();
 
 /* startup checks */
-if(!SR){ vcNote("Note: this browser has no speech recognition, so captions won't generate. Chrome or Edge work best."); }
+if(!SR){ vcNote("Note: this browser has no speech recognition, so it can't send subtitles. You can still see others' subtitles. Chrome or Edge work best."); }
 
 /* ================= WORD COUNT ================= */
 function updateCounts(){
