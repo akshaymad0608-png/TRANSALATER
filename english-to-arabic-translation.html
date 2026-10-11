@@ -62,11 +62,11 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4380996737976478" crossorigin="anonymous"></script>
   <style>
     :root {
-      --bg: #fff; --text: #1a1a1a; --muted: #6b7280; --accent: #2563eb;
-      --card: #f8fafc; --line: #e5e7eb; --native-bg: #eff6ff;
+      --bg: #fff; --text: #1a1a1a; --muted: #6b7280; --accent: #6B2BF0;
+      --card: #FAFAFB; --line: #e5e7eb; --native-bg: #F1EBFF;
     }
     @media (prefers-color-scheme: dark) {
-      :root { --bg: #0f172a; --text: #f1f5f9; --muted: #94a3b8; --accent: #60a5fa; --card: #1e293b; --line: #334155; --native-bg: #1e3a5f; }
+      :root { --bg: #0f172a; --text: #f1f5f9; --muted: #94a3b8; --accent: #A98BFF; --card: #1e293b; --line: #334155; --native-bg: #1e3a5f; }
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
@@ -110,21 +110,32 @@
     footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
     footer a { color: var(--muted); text-decoration: none; }
   </style>
+<link rel="stylesheet" href="/site.css" />
 </head>
 <body>
-<header>
-  <a href="/" class="brand">Rosetta</a>
-  <nav>
-    <a href="/">Translate</a>
-    <a href="/video-call-translator.html">Video</a>
-    <a href="/voice-conversation-translator.html">Voice</a>
-  </nav>
-</header>
+<nav class="topnav" aria-label="Main">
+  <div class="topnav-in">
+    <a class="brand" href="/" aria-label="Rosetta home"><div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div><span class="brand-name">Rosetta</span></a>
+    <div class="navlinks">
+      <a href="/#app">Translate</a>
+      <a href="/voice-conversation-translator.html">Conversation</a>
+      <a href="/video-call-translator.html">Video call</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+    <div class="navright">
+      
+      <a class="pill" href="/#app">Translate now</a>
+    </div>
+  </div>
+</nav>
 
 <main>
   <div class="hero">
     <h1>English to Arabic Translation</h1>
-    <p class="subtitle">Translate English to Arabic instantly — free, no sign-up. Type, speak, or upload a document.</p>
+    <p class="subtitle">Translate English to Arabic instantly — free, no sign-up. Type or paste text, or just speak.</p>
     <a class="cta" href="/?sl=en&tl=ar">Translate English to Arabic →</a>
     <p class="cta-sub">Free · No sign-up · Instant results</p>
   </div>
@@ -133,7 +144,7 @@
     <h2>Quick Phrases — English to Arabic</h2>
     <div class="fact-banner">Arabic is the liturgical language of Islam and is spoken by over 400 million people across 22 countries.</div>
     <p style="margin-bottom:12px; font-size:0.88rem; color:var(--muted)">Tap any Arabic phrase to open it in the full translator.</p>
-    <table>
+    <div class="tablewrap"><table>
       <thead><tr><th>English</th><th>Arabic (العربية)</th><th>Pronunciation</th></tr></thead>
       <tbody>
         <tr>
@@ -187,7 +198,7 @@
           <td class="rom">la af-ham</td>
         </tr>
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <section>
@@ -266,8 +277,21 @@
   </section>
 </main>
 
-<footer>
-  <p>© 2026 Rosetta &nbsp;·&nbsp; <a href="/about.html">About</a> &nbsp;·&nbsp; <a href="/privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="/terms.html">Terms</a> &nbsp;·&nbsp; <a href="/contact.html">Contact</a></p>
+<footer class="sitefoot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <a class="brand" href="/"><div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div><span class="brand-name">Rosetta</span></a>
+      <p>Free voice, text and video-call translator for 40+ languages. Runs in your browser — no sign-up, nothing stored.</p>
+    </div>
+    <nav class="foot-cols" aria-label="Footer">
+      <div><p class="fh">Translate</p><a href="/#app">Text &amp; voice</a><a href="/voice-conversation-translator.html">Conversation</a><a href="/video-call-translator.html">Video call</a></div>
+      <div><p class="fh">Popular</p><a href="/english-to-hindi-translation.html">English → Hindi</a><a href="/english-to-gujarati-translation.html">English → Gujarati</a><a href="/english-to-spanish-translation.html">English → Spanish</a></div>
+      <div><p class="fh">Rosetta</p><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/contact.html">Contact</a></div>
+    </nav>
+  </div>
+  <p class="copy">© 2026 Rosetta · Flags: <a href="https://github.com/lipis/flag-icons" rel="noopener">flag-icons</a> (MIT)</p>
 </footer>
 
 <script>

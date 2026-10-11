@@ -26,8 +26,8 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #EDEFF6; --surface: #fff; --text: #0E1017; --muted: #5A5F73;
-    --accent: #5B45E0; --line: #D8DBEA; --radius: 12px;
+    --bg: #FAFAFB; --surface: #fff; --text: #0E1017; --muted: #5A5F73;
+    --accent: #6B2BF0; --line: #D8DBEA; --radius: 12px;
   }
   @media (prefers-color-scheme: dark) {
     :root { --bg: #0E1017; --surface: #181B25; --text: #E8EAF2; --muted: #8B90A8; --line: #252836; }
@@ -59,13 +59,33 @@
   footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
   footer a { color: var(--muted); text-decoration: none; margin: 0 8px; }
   footer a:hover { color: var(--accent); }
+  .help{margin-top:48px;text-align:left}
+  .help h2{font-size:20px;margin:32px 0 10px;letter-spacing:-.01em}
+  .help ul{padding-left:20px;margin:0}
+  .help li,.help p{font-size:15px;line-height:1.7;color:var(--muted,#5F6170);margin:0 0 10px}
+  .help strong{color:var(--ink,#18181D)}
 </style>
+<link rel="stylesheet" href="/site.css" />
 </head>
 <body>
-<header>
-  <a href="/">← Rosetta</a>
-  <span class="back">/ Contact</span>
-</header>
+<nav class="topnav" aria-label="Main">
+  <div class="topnav-in">
+    <a class="brand" href="/" aria-label="Rosetta home"><div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div><span class="brand-name">Rosetta</span></a>
+    <div class="navlinks">
+      <a href="/#app">Translate</a>
+      <a href="/voice-conversation-translator.html">Conversation</a>
+      <a href="/video-call-translator.html">Video call</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html" aria-current="page">Contact</a>
+    </div>
+    <div class="navright">
+      
+      <a class="pill" href="/#app">Translate now</a>
+    </div>
+  </div>
+</nav>
 <main>
   <h1>Contact</h1>
   <p class="sub">Bug report, feature request, or general question — drop a message below.</p>
@@ -91,9 +111,38 @@
 
   <p class="or">or email directly</p>
   <a class="email-link" href="mailto:akshaymad0608@gmail.com">akshaymad0608@gmail.com</a>
+
+  <section class="help">
+    <h2>Before you write: quick fixes</h2>
+    <ul>
+      <li><strong>The microphone does nothing.</strong> Allow microphone access when the browser asks. If you blocked it earlier, click the lock icon next to the address bar, set Microphone to Allow, and reload. Voice input works best in Chrome or Edge.</li>
+      <li><strong>"Translation failed".</strong> The translation service is briefly unavailable or your connection dropped. Wait a few seconds and press Translate again; very long text is easier to translate a paragraph at a time.</li>
+      <li><strong>The video call will not connect.</strong> Both people need the same room code, a normal browser tab (not an in-app browser such as Instagram's), and camera and microphone allowed. Some office and school networks block peer-to-peer calls.</li>
+      <li><strong>No sound when reading aloud.</strong> Check the phone is not on silent. Some languages have no built-in voice on some devices; installing that language's voice in your phone's text-to-speech settings fixes it.</li>
+    </ul>
+
+    <h2>What to include</h2>
+    <p>For a bug, tell us the page, your device and browser (for example "Android, Chrome"), the two languages and what you expected to happen. For a language request, name the language and the region you need it for. Please do not send passwords, ID numbers or other private details.</p>
+
+    <h2>Who reads this</h2>
+    <p>Rosetta is built and maintained by Akshay Mahajan in Surat, India. Messages are read by a person, usually within two working days. Language requests and bug reports from users decide what gets worked on next.</p>
+  </section>
 </main>
-<footer>
-  <p>© 2026 Rosetta · <a href="/">Home</a> <a href="/about.html">About</a> <a href="/privacy.html">Privacy</a> <a href="/terms.html">Terms</a> <a href="/contact.html">Contact</a></p>
+<footer class="sitefoot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <a class="brand" href="/"><div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div><span class="brand-name">Rosetta</span></a>
+      <p>Free voice, text and video-call translator for 40+ languages. Runs in your browser — no sign-up, nothing stored.</p>
+    </div>
+    <nav class="foot-cols" aria-label="Footer">
+      <div><p class="fh">Translate</p><a href="/#app">Text &amp; voice</a><a href="/voice-conversation-translator.html">Conversation</a><a href="/video-call-translator.html">Video call</a></div>
+      <div><p class="fh">Popular</p><a href="/english-to-hindi-translation.html">English → Hindi</a><a href="/english-to-gujarati-translation.html">English → Gujarati</a><a href="/english-to-spanish-translation.html">English → Spanish</a></div>
+      <div><p class="fh">Rosetta</p><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/contact.html">Contact</a></div>
+    </nav>
+  </div>
+  <p class="copy">© 2026 Rosetta · Flags: <a href="https://github.com/lipis/flag-icons" rel="noopener">flag-icons</a> (MIT)</p>
 </footer>
 </body>
 </html>

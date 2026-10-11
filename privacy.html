@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Privacy Policy — Rosetta Language Translator</title>
-<meta name="description" content="How Rosetta at languagetransalator.com handles your data: Google Analytics, AdSense advertising cookies, and why your translations stay private." />
+<meta name="description" content="How Rosetta handles your data: which services receive text to translate it, what stays on your device, and AdSense advertising cookies." />
 <link rel="icon" href="/icon.svg" type="image/svg+xml" />
 <link rel="canonical" href="https://languagetransalator.com/privacy.html" />
 <meta name="robots" content="index, follow" />
@@ -12,12 +12,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Rosetta" />
 <meta property="og:title" content="Privacy Policy — Rosetta Language Translator" />
-<meta property="og:description" content="How Rosetta at languagetransalator.com handles your data: Google Analytics, AdSense advertising cookies, and why your translations stay private." />
+<meta property="og:description" content="How Rosetta handles your data: which services receive text to translate it, what stays on your device, and AdSense advertising cookies." />
 <meta property="og:url" content="https://languagetransalator.com/privacy.html" />
 <meta property="og:image" content="https://languagetransalator.com/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Privacy Policy — Rosetta Language Translator" />
-<meta name="twitter:description" content="How Rosetta at languagetransalator.com handles your data: Google Analytics, AdSense advertising cookies, and why your translations stay private." />
+<meta name="twitter:description" content="How Rosetta handles your data: which services receive text to translate it, what stays on your device, and AdSense advertising cookies." />
 <meta name="twitter:image" content="https://languagetransalator.com/og-image.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,8 +26,8 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #EDEFF6; --surface: #fff; --text: #0E1017; --muted: #5A5F73;
-    --accent: #5B45E0; --line: #D8DBEA; --radius: 12px;
+    --bg: #FAFAFB; --surface: #fff; --text: #0E1017; --muted: #5A5F73;
+    --accent: #6B2BF0; --line: #D8DBEA; --radius: 12px;
   }
   @media (prefers-color-scheme: dark) {
     :root { --bg: #0E1017; --surface: #181B25; --text: #E8EAF2; --muted: #8B90A8; --line: #252836; }
@@ -49,16 +49,31 @@
   footer a { color: var(--muted); text-decoration: none; margin: 0 8px; }
   footer a:hover { color: var(--accent); }
 </style>
+<link rel="stylesheet" href="/site.css" />
 </head>
 <body>
-<header>
-  <a href="/">← Rosetta</a>
-  <span class="back">/ Privacy Policy</span>
-</header>
+<nav class="topnav" aria-label="Main">
+  <div class="topnav-in">
+    <a class="brand" href="/" aria-label="Rosetta home"><div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div><span class="brand-name">Rosetta</span></a>
+    <div class="navlinks">
+      <a href="/#app">Translate</a>
+      <a href="/voice-conversation-translator.html">Conversation</a>
+      <a href="/video-call-translator.html">Video call</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+    <div class="navright">
+      
+      <a class="pill" href="/#app">Translate now</a>
+    </div>
+  </div>
+</nav>
 <main>
   <p style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:8px;">Legal</p>
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: 27 September 2026</p>
+  <p class="updated">Last updated: 11 October 2026</p>
 
   <section>
     <h2>Overview</h2>
@@ -66,37 +81,48 @@
   </section>
 
   <section>
-    <h2>Your translations are private</h2>
-    <p>All text and voice translation happens in your browser. Voice and conversation sessions run entirely on your device. Video-call translation is peer-to-peer (no server stores the audio or video). <strong>Rosetta does not collect or store any text you translate.</strong></p>
-  </section>
-
-  <section>
-    <h2>Information collected</h2>
+    <h2>What happens to the text you translate</h2>
+    <p><strong>Rosetta does not keep what you translate.</strong> There are no accounts and no server of ours that stores your text, audio or video. To produce a translation, though, the text has to go somewhere:</p>
     <ul>
-      <li><strong>Analytics data.</strong> This site uses Google Analytics to understand how visitors find and use Rosetta. It records page views, approximate location (derived from IP address), device type, and referring source. It does not record the content of your translations.</li>
-      <li><strong>Advertising.</strong> This site carries Google AdSense ads. Google may use cookies to serve personalised ads based on your previous browsing activity. You can opt out via <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google's ad settings</a>.</li>
+      <li><strong>Text translation.</strong> The text you type or speak is sent to Google Translate to be translated. If that fails, it is sent to MyMemory (Translated srl) instead. Those services receive the text and your IP address, under their own privacy policies.</li>
+      <li><strong>Voice input.</strong> The microphone uses your browser's built-in speech recognition. In Chrome and Edge the audio is processed by Google or Microsoft respectively to turn it into text.</li>
+      <li><strong>Read aloud.</strong> Playback uses the voices built into your device and browser.</li>
+      <li><strong>Video calls.</strong> Calls connect the two browsers directly (peer-to-peer). The PeerJS service (0.peerjs.com) is used only to introduce the two devices. If a direct connection is not possible, the encrypted call is relayed through the Open Relay TURN service. Calls are not recorded.</li>
     </ul>
+    <p>Do not use Rosetta for confidential, medical or legal text that you would not want a third-party translation service to receive.</p>
   </section>
 
   <section>
-    <h2>Cookies</h2>
-    <p>Google Analytics and Google AdSense set cookies. These are standard third-party cookies used for analytics and ad personalisation. No first-party cookies are set by this website itself (browser storage is used only to remember your language preferences locally on your device).</p>
+    <h2>Stored on your device</h2>
+    <p>Rosetta saves a few things in your own browser's local storage, never on a server: your last chosen languages, light or dark theme, your recent translations list, and whether you dismissed the "add to home screen" prompt. Clearing your browser data, or the <em>Clear</em> button on the recent list, removes them.</p>
+  </section>
+
+  <section>
+    <h2>Advertising and cookies</h2>
+    <p>This site shows ads from Google AdSense. Google and its partners use cookies to serve ads based on your previous visits to this and other websites. Google's use of advertising cookies lets it and its partners serve ads based on those visits.</p>
+    <ul>
+      <li>You can turn off personalised ads in <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google's Ads Settings</a>, or opt out of some third-party vendors at <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">aboutads.info</a>.</li>
+      <li>Visitors in the European Economic Area, the UK and Switzerland are asked for consent before personalised ads are shown.</li>
+      <li>How Google uses data from sites that use its services: <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">policies.google.com/technologies/partner-sites</a>.</li>
+    </ul>
+    <p>Rosetta itself sets no cookies and runs no analytics or tracking scripts.</p>
   </section>
 
   <section>
     <h2>Third-party services</h2>
     <ul>
-      <li>Google Analytics — usage statistics</li>
       <li>Google AdSense — advertising</li>
-      <li>Google Translate API — translation engine (text is sent to Google's servers to perform translation)</li>
-      <li>MyMemory API — fallback translation engine</li>
+      <li>Google Translate — translation engine</li>
+      <li>MyMemory (Translated srl) — fallback translation engine</li>
+      <li>PeerJS and Open Relay — connecting video calls</li>
+      <li>Google Fonts and cdnjs — fonts and the video-call library</li>
     </ul>
-    <p>Each third-party service has its own privacy policy. Google's policy is at <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">policies.google.com/privacy</a>.</p>
+    <p>Each service has its own privacy policy. Google's is at <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">policies.google.com/privacy</a>.</p>
   </section>
 
   <section>
-    <h2>Your rights</h2>
-    <p>You can block analytics and ads using any standard browser extension. If you have questions about data collected via Google services, see <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's privacy policy</a>.</p>
+    <h2>Children</h2>
+    <p>Rosetta is a general-audience tool and is not directed at children under 13.</p>
   </section>
 
   <section>
@@ -104,8 +130,21 @@
     <p>Questions about this policy? Email <a href="mailto:akshaymad0608@gmail.com">akshaymad0608@gmail.com</a> or use the <a href="/contact.html">contact form</a>.</p>
   </section>
 </main>
-<footer>
-  <p>© 2026 Rosetta · <a href="/">Home</a> <a href="/about.html">About</a> <a href="/privacy.html">Privacy</a> <a href="/terms.html">Terms</a> <a href="/contact.html">Contact</a></p>
+<footer class="sitefoot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <a class="brand" href="/"><div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div><span class="brand-name">Rosetta</span></a>
+      <p>Free voice, text and video-call translator for 40+ languages. Runs in your browser — no sign-up, nothing stored.</p>
+    </div>
+    <nav class="foot-cols" aria-label="Footer">
+      <div><p class="fh">Translate</p><a href="/#app">Text &amp; voice</a><a href="/voice-conversation-translator.html">Conversation</a><a href="/video-call-translator.html">Video call</a></div>
+      <div><p class="fh">Popular</p><a href="/english-to-hindi-translation.html">English → Hindi</a><a href="/english-to-gujarati-translation.html">English → Gujarati</a><a href="/english-to-spanish-translation.html">English → Spanish</a></div>
+      <div><p class="fh">Rosetta</p><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/contact.html">Contact</a></div>
+    </nav>
+  </div>
+  <p class="copy">© 2026 Rosetta · Flags: <a href="https://github.com/lipis/flag-icons" rel="noopener">flag-icons</a> (MIT)</p>
 </footer>
 </body>
 </html>

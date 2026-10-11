@@ -1,0 +1,36 @@
+/* Shared chrome for the content pages: the same nav and footer as the
+   homepage. Loaded after each page's own <style>, and it reads that page's
+   colour tokens (with light fallbacks), so dark mode follows the page. */
+.topnav{position:sticky;top:0;z-index:40;background:var(--header-bg,rgba(250,250,251,.88));backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line,#E7E7EE);margin:0;padding:0;width:auto;max-width:none}
+.topnav .topnav-in{max-width:1180px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:20px}
+.topnav .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink,#18181D);margin:0}
+.topnav .mark{width:36px;height:36px;border-radius:11px;flex:none;background:linear-gradient(135deg,#6B2BF0,#8f6bff);display:grid;place-items:center;box-shadow:0 8px 20px -8px rgba(107,43,240,.7);position:relative;overflow:hidden}
+.topnav .mark svg{width:20px;height:20px}
+.topnav .brand-name{font:italic 700 21px/1 "Inter",system-ui,sans-serif;letter-spacing:-.03em;color:var(--ink,#18181D)}
+.topnav .navlinks{display:flex;gap:28px;margin:0 auto;padding:0;background:none;border:0}
+.topnav .navlinks a{color:var(--ink,#18181D);text-decoration:none;font:500 14.5px "Inter",system-ui,sans-serif;opacity:.82;padding:6px 0;background:none;border:0}
+.topnav .navlinks a:hover,.topnav .navlinks a[aria-current]{opacity:1;color:#6B2BF0}
+.topnav .navright{display:flex;align-items:center;gap:10px;margin:0}
+.topnav .pill{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 22px;border-radius:999px;background:#6B2BF0;color:#fff;text-decoration:none;font:600 14.5px "Inter",system-ui,sans-serif;white-space:nowrap}
+.topnav .pill:hover{background:#5A1FD6}
+.sitefoot{margin-top:80px;border-top:1px solid var(--line,#E7E7EE);background:var(--surface-2,#F5F5F8);text-align:left;padding:0;color:var(--muted,#5F6170);font-size:14px}
+.sitefoot .foot-in{max-width:1080px;margin:0 auto;padding:44px 24px 20px;display:grid;grid-template-columns:1.2fr 2fr;gap:44px}
+.sitefoot .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.sitefoot .mark{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#6B2BF0,#8f6bff);display:grid;place-items:center}
+.sitefoot .mark svg{width:18px;height:18px}
+.sitefoot .brand-name{font:italic 700 19px/1 "Inter",system-ui,sans-serif;color:var(--ink,#18181D)}
+.sitefoot .foot-brand p{margin:12px 0 0;line-height:1.65;max-width:320px;color:var(--muted,#5F6170)}
+.sitefoot .foot-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.sitefoot .fh{margin:0 0 10px;font-weight:600;font-size:13px;color:var(--ink,#18181D)}
+.sitefoot .foot-cols a{display:block;padding:5px 0;color:var(--muted,#5F6170);text-decoration:none}
+.sitefoot .foot-cols a:hover{color:#6B2BF0}
+.sitefoot .copy{max-width:1080px;margin:0 auto;padding:14px 24px 26px;font-size:13px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+@media (max-width:900px){.topnav .navlinks{display:none}.topnav .navright{margin-left:auto}.sitefoot .foot-in{grid-template-columns:1fr;gap:26px}}
+@media (max-width:660px){
+  .topnav .topnav-in{padding:10px 16px}
+  .sitefoot .foot-cols{grid-template-columns:1fr 1fr}
+  /* iOS zooms into fields set below 16px */
+  input:not([type=checkbox]):not([type=radio]),select,textarea{font-size:16px}
+}
+main a{overflow-wrap:anywhere}
