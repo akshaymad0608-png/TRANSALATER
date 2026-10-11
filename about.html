@@ -26,8 +26,8 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #EDEFF6; --surface: #fff; --text: #0E1017; --muted: #5A5F73;
-    --accent: #5B45E0; --line: #D8DBEA; --radius: 12px;
+    --bg: #FAFAFB; --surface: #fff; --text: #0E1017; --muted: #5A5F73;
+    --accent: #6B2BF0; --line: #D8DBEA; --radius: 12px;
   }
   @media (prefers-color-scheme: dark) {
     :root { --bg: #0E1017; --surface: #181B25; --text: #E8EAF2; --muted: #8B90A8; --line: #252836; }
@@ -49,18 +49,33 @@
   footer a { color: var(--muted); text-decoration: none; margin: 0 8px; }
   footer a:hover { color: var(--accent); }
 </style>
+<link rel="stylesheet" href="/site.css" />
 </head>
 <body>
-<header>
-  <a href="/">← Rosetta</a>
-  <span class="back">/ About</span>
-</header>
+<nav class="topnav" aria-label="Main">
+  <div class="topnav-in">
+    <a class="brand" href="/" aria-label="Rosetta home"><div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div><span class="brand-name">Rosetta</span></a>
+    <div class="navlinks">
+      <a href="/#app">Translate</a>
+      <a href="/voice-conversation-translator.html">Conversation</a>
+      <a href="/video-call-translator.html">Video call</a>
+      <a href="/about.html" aria-current="page">About</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+    <div class="navright">
+      
+      <a class="pill" href="/#app">Translate now</a>
+    </div>
+  </div>
+</nav>
 <main>
   <h1>About Rosetta</h1>
 
   <section>
     <h2>What is Rosetta?</h2>
-    <p>Rosetta is a free, privacy-first language translator that runs entirely in your browser. It supports 40+ languages including all major Indian regional languages — Hindi, Gujarati, Marathi, Tamil, Telugu, Bengali, Kannada, Malayalam, and more — plus global languages like Spanish, French, German, Arabic, Chinese, Japanese, and Korean.</p>
+    <p>Rosetta is a free language translator that works right in your browser. It supports 40+ languages including all major Indian regional languages — Hindi, Gujarati, Marathi, Tamil, Telugu, Bengali, Kannada, Malayalam, and more — plus global languages like Spanish, French, German, Arabic, Chinese, Japanese, and Korean.</p>
     <p>Unlike many translation apps, Rosetta does not require sign-up or installation. Just open the page and start translating.</p>
   </section>
 
@@ -90,8 +105,21 @@
     <p>Rosetta is a pure HTML + CSS + JavaScript app with no build step or framework. Translation is powered by the Google Translate API and MyMemory as a fallback. Voice features use the browser's built-in Web Speech API. Video calls use WebRTC for peer-to-peer connections.</p>
   </section>
 </main>
-<footer>
-  <p>© 2026 Rosetta · <a href="/">Home</a> <a href="/about.html">About</a> <a href="/privacy.html">Privacy</a> <a href="/terms.html">Terms</a> <a href="/contact.html">Contact</a></p>
+<footer class="sitefoot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <a class="brand" href="/"><div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div><span class="brand-name">Rosetta</span></a>
+      <p>Free voice, text and video-call translator for 40+ languages. Runs in your browser — no sign-up, nothing stored.</p>
+    </div>
+    <nav class="foot-cols" aria-label="Footer">
+      <div><p class="fh">Translate</p><a href="/#app">Text &amp; voice</a><a href="/voice-conversation-translator.html">Conversation</a><a href="/video-call-translator.html">Video call</a></div>
+      <div><p class="fh">Popular</p><a href="/english-to-hindi-translation.html">English → Hindi</a><a href="/english-to-gujarati-translation.html">English → Gujarati</a><a href="/english-to-spanish-translation.html">English → Spanish</a></div>
+      <div><p class="fh">Rosetta</p><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/contact.html">Contact</a></div>
+    </nav>
+  </div>
+  <p class="copy">© 2026 Rosetta · Flags: <a href="https://github.com/lipis/flag-icons" rel="noopener">flag-icons</a> (MIT)</p>
 </footer>
 </body>
 </html>

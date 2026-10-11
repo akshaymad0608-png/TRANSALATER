@@ -59,7 +59,7 @@
   "@type": "WebApplication",
   "name": "Rosetta",
   "url": "https://languagetransalator.com/",
-  "description": "Free, private, browser-based translator for 40+ languages with voice, text, live conversation and video-call subtitle modes. Runs entirely on-device with no sign-up or API keys.",
+  "description": "Free, private, browser-based translator for 40+ languages with voice, text, live conversation and video-call subtitle modes. Works in the browser with no sign-up or API keys.",
   "applicationCategory": "CommunicationApplication",
   "operatingSystem": "Any (modern web browser)",
   "browserRequirements": "Requires JavaScript and a modern browser (Chrome/Edge recommended)",
@@ -81,7 +81,7 @@
     "Text-to-speech playback of translations",
     "Two-way live conversation mode on a single device",
     "Peer-to-peer video calls with real-time translated subtitles",
-    "Runs client-side — no account, no API keys, private by design"
+    "No account or API keys; Rosetta does not store what you translate"
   ]
 }
 </script>
@@ -95,7 +95,7 @@
   "@type": "FAQPage",
   "mainEntity": [
     { "@type": "Question", "name": "Is Rosetta free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Rosetta is completely free with no sign-up and no API keys. There is no limit on how much you translate." } },
-    { "@type": "Question", "name": "Is my translation private?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Rosetta runs in your browser. Video calls are peer-to-peer and your conversations are not stored on any server." } },
+    { "@type": "Question", "name": "Is my translation private?", "acceptedAnswer": { "@type": "Answer", "text": "Rosetta does not store what you translate. To produce a translation, the text is sent to a translation service (Google Translate, with MyMemory as a fallback). Voice input uses your browser's speech recognition, which in Chrome is processed by Google. Video calls are peer-to-peer and are not recorded." } },
     { "@type": "Question", "name": "How many languages does Rosetta support?", "acceptedAnswer": { "@type": "Answer", "text": "Rosetta supports 40+ world and regional languages, including English, Hindi, Gujarati, Marathi, Bengali, Tamil, Telugu, Spanish, French, German, Arabic, Chinese, Japanese and Korean." } },
     { "@type": "Question", "name": "Can I translate a live conversation on one phone?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Conversation mode lets two people talk on a single device — each person taps their button, speaks, and Rosetta translates and reads the reply aloud in the other language." } },
     { "@type": "Question", "name": "Can I translate a video call?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Start a call, share the room code, and each person sees the other's speech as live translated subtitles. Works best in Chrome or Edge with camera and microphone allowed." } },
@@ -199,6 +199,7 @@
   .ib:active{transform:translateY(0)}
   .ib:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
   .ib:disabled{opacity:.4;cursor:not-allowed;transform:none}
+  .ib.slow span{font:600 11px/1 "Inter",sans-serif;letter-spacing:-.02em}
   .ib.mic.on{background:var(--from);border-color:var(--from);color:#fff}
   .ib.speak.on{background:var(--to);border-color:var(--to);color:#fff}
   .mic.on svg{display:none}
@@ -306,6 +307,7 @@
     /* Touch sizing: the language pickers are the primary control, and at the
        desktop padding they render ~22px tall — far too small to hit reliably
        on a phone. Labels also get a little larger to stay readable. */
+    select,.field input,.field select{font-size:16px}
     select{padding:11px 30px 11px 10px;min-height:44px;background-color:var(--surface-2);background-position:right 9px center}
     .tag,.field label{font-size:11.5px;letter-spacing:.1em}
     .ib{width:44px;height:44px}
@@ -642,7 +644,7 @@
   <div class="hero-copy">
     <p class="eyebrow">Free voice, text &amp; video-call translator</p>
     <h1 class="display">Bridging languages,<br><span class="hl">connecting people</span><span class="sr-only"> — free voice &amp; video-call translator for 40+ languages</span></h1>
-    <p class="hero-sub">Translate typed or spoken words across 40+ languages, talk face to face on one phone, or video call with live subtitles. Free, private, no sign-up.</p>
+    <p class="hero-sub">Translate typed or spoken words across 40+ languages, talk face to face on one phone, or video call with live subtitles. Free, no sign-up, nothing stored.</p>
     <div class="hero-ctas">
       <a class="cta dark" href="#app"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h9M8 3v2c0 4-2 7-5 8M6 9c0 3 3 5 6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 20l4-9 4 9M14.5 17h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><small>Start now</small>Translate text &amp; voice</span></a>
       <a class="cta dark" href="#app" data-open-view="video"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 10l6-3v10l-6-3M3 7a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><small>Live subtitles</small>Start a video call</span></a>
@@ -694,6 +696,7 @@
           <p class="roman" id="roman" hidden><span>say it</span><b id="romanText"></b></p>
           <div class="pfoot">
             <button class="ib speak" id="speakTgt" title="Listen to translation"><svg viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9a3 3 0 010 6M18.5 7a6 6 0 010 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+            <button class="ib speak slow" id="speakSlow" title="Listen slowly" aria-label="Listen to the translation slowly"><span aria-hidden="true">0.6×</span></button>
             <button class="ib" id="copyBtn" title="Copy translation"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M6 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v1" stroke="currentColor" stroke-width="1.6"/></svg></button>
             <button class="ib" id="shareBtn" title="Share translation"><svg viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="2.5" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="12" r="2.5" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="19" r="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M8.4 10.8l7.2-4.1M8.4 13.2l7.2 4.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
             <button class="ib" id="showBtn" title="Show to person — fullscreen large text"><svg viewBox="0 0 24 24" fill="none"><path d="M8 3H5a2 2 0 00-2 2v3M21 8V5a2 2 0 00-2-2h-3M16 21h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -808,7 +811,7 @@
   <section class="sec" id="how" aria-label="About Rosetta translator">
     <div class="split-head">
       <h2 class="h2">Language is <span class="hl">not a barrier</span></h2>
-      <p class="lead">Rosetta is a free, private translator that runs entirely in your browser. Translate typed or spoken text across 40+ languages, hold a two-way live conversation on a single phone, or make a peer-to-peer video call with real-time translated subtitles — with no sign-up, no API keys and nothing to install.</p>
+      <p class="lead">Rosetta is a free translator that works right in your browser. Translate typed or spoken text across 40+ languages, hold a two-way live conversation on a single phone, or make a peer-to-peer video call with real-time translated subtitles — with no sign-up, no API keys and nothing to install.</p>
     </div>
 
     <div class="cards3">
@@ -906,7 +909,7 @@
     <h2 class="h2 center-text">Frequently asked <span class="hl">questions</span></h2>
     <div class="faq">
       <details><summary>Is Rosetta free?</summary><p>Yes — completely free, with no sign-up and no API keys, and no limit on how much you translate.</p></details>
-      <details><summary>Is my translation private?</summary><p>Yes. Rosetta runs in your browser and video calls are peer-to-peer, so your conversations are not stored on any server.</p></details>
+      <details><summary>Is my translation private?</summary><p>Rosetta does not store what you translate. To produce a translation, the text is sent to a translation service (Google Translate, with MyMemory as a fallback), and voice input uses your browser's speech recognition, which in Chrome is processed by Google. Video calls are peer-to-peer and are not recorded. See the <a href="/privacy.html">privacy policy</a> for details.</p></details>
       <details><summary>How many languages does it support?</summary><p>40+ world and regional languages, including all the major Indian languages plus Spanish, French, German, Arabic, Chinese, Japanese and Korean.</p></details>
       <details><summary>Can I translate a live conversation on one phone?</summary><p>Yes — Conversation mode lets two people talk on a single device, translating and reading each reply aloud in the other language.</p></details>
       <details><summary>Can I translate a video call?</summary><p>Yes. Start a call, share the room code, and each person sees the other's speech as live translated subtitles. Chrome or Edge work best.</p></details>
@@ -975,11 +978,11 @@ function setStatus(text,kind=""){
 function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),2000);}
 function loadVoices(){return window.speechSynthesis?speechSynthesis.getVoices():[];}
 if(window.speechSynthesis) speechSynthesis.onvoiceschanged=loadVoices;
-function speak(text,code,btn){
+function speak(text,code,btn,rate){
   if(!window.speechSynthesis||!text||!text.trim())return;
   speechSynthesis.cancel();
   const lang=(byCode[code]||{}).speech||"en-US";
-  const u=new SpeechSynthesisUtterance(text); u.lang=lang;
+  const u=new SpeechSynthesisUtterance(text); u.lang=lang; if(rate) u.rate=rate;
   const v=loadVoices(); const ex=v.find(x=>x.lang===lang)||v.find(x=>x.lang&&x.lang.toLowerCase().startsWith(lang.split("-")[0]));
   if(ex)u.voice=ex;
   if(btn){u.onstart=()=>btn.classList.add("on");u.onend=()=>btn.classList.remove("on");u.onerror=()=>btn.classList.remove("on");}
@@ -1054,7 +1057,11 @@ else micBtn.addEventListener("click",()=>{
   try{recog.start();}catch(e){toast("Could not start microphone.");}
 });
 $("speakSrc").addEventListener("click",()=>speak(input.value,srcSel.value==="auto"?"en":srcSel.value,$("speakSrc")));
-$("speakTgt").addEventListener("click",()=>speak(output.textContent,tgtSel.value,$("speakTgt")));
+/* The output box holds placeholder text while empty; never read that aloud. */
+const tgtText=()=>output.classList.contains("empty")?"":output.textContent;
+$("speakTgt").addEventListener("click",()=>speak(tgtText(),tgtSel.value,$("speakTgt")));
+/* Slow playback for learners and for repeating a phrase to someone. */
+$("speakSlow").addEventListener("click",()=>{ if(!tgtText()) return toast("Translate something first"); speak(tgtText(),tgtSel.value,$("speakSlow"),0.6); });
 const swapBtn=$("swapBtn");
 function refreshSwap(){swapBtn.disabled=srcSel.value==="auto";}
 swapBtn.addEventListener("click",()=>{
