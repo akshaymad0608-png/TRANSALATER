@@ -15,7 +15,7 @@
 <meta name="keywords" content="translator, voice translator, video call translator, live conversation translator, real-time translation, speech to text translation, free online translator, browser translator, 40 languages, live subtitles, speech translation" />
 <meta name="author" content="Rosetta" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
-<meta name="theme-color" content="#5B45E0" />
+<meta name="theme-color" content="#FAFAFB" />
 <meta name="color-scheme" content="light" />
 <link rel="canonical" href="https://languagetransalator.com/" />
 
@@ -111,11 +111,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js"></script>
 <style>
   :root{
-    --primary-solid:#5B45E0; --header-bg:rgba(237,239,246,.86); --placeholder:#70758D; --hover:#eef0f7; --dot-idle:#c3c7d6;
+    --primary-solid:#6B2BF0; --header-bg:rgba(250,250,251,.86); --placeholder:#70758D; --hover:#eef0f7; --dot-idle:#c3c7d6;
    
-    --bg:#EDEFF6; --surface:#FFFFFF; --surface-2:#F7F8FC;
-    --ink:#1A1C29; --muted:#666A82; --line:#E2E5F0;
-    --primary:#5B45E0; --primary-press:#4a37c4;
+    --bg:#FAFAFB; --surface:#FFFFFF; --surface-2:#F5F5F8;
+    --ink:#18181D; --muted:#5F6170; --line:#E7E7EE;
+    --primary:#6B2BF0; --primary-press:#5A1FD6; --hl:#E9E1FF; --ring:#E2E2EA;
     --from:#B84A1C; --to:#0A7A6B; --danger:#D64949;
     --radius:18px; --shadow:0 1px 2px rgba(26,28,41,.04), 0 12px 30px -18px rgba(26,28,41,.28);
   }
@@ -337,7 +337,7 @@
     :root:not([data-theme="light"]){
     --bg:#0E1017; --surface:#161926; --surface-2:#1D2130;
     --ink:#E7E9F2; --muted:#9AA0B8; --line:#2A2F42;
-    --primary:#8E7BFF; --primary-press:#7D6BFF;
+    --primary:#8E7BFF; --primary-press:#7D6BFF; --hl:rgba(142,123,255,.28); --ring:#262A3A;
     --primary-solid:#6A55E8; --from:#DD5F2B; --to:#0E9C88; --header-bg:rgba(14,16,23,.86); --placeholder:#7C82A0; --hover:#242938; --dot-idle:#3A4058;
     --shadow:0 1px 2px rgba(0,0,0,.45), 0 12px 30px -18px rgba(0,0,0,.85);
     color-scheme:dark;
@@ -346,7 +346,7 @@
   :root[data-theme="dark"]{
     --bg:#0E1017; --surface:#161926; --surface-2:#1D2130;
     --ink:#E7E9F2; --muted:#9AA0B8; --line:#2A2F42;
-    --primary:#8E7BFF; --primary-press:#7D6BFF;
+    --primary:#8E7BFF; --primary-press:#7D6BFF; --hl:rgba(142,123,255,.28); --ring:#262A3A;
     --primary-solid:#6A55E8; --from:#DD5F2B; --to:#0E9C88; --header-bg:rgba(14,16,23,.86); --placeholder:#7C82A0; --hover:#242938; --dot-idle:#3A4058;
     --shadow:0 1px 2px rgba(0,0,0,.45), 0 12px 30px -18px rgba(0,0,0,.85);
     color-scheme:dark;
@@ -442,22 +442,215 @@
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   /* Held only for the instant the theme swaps — see the toggle script. */
   .theme-switching,.theme-switching *,.theme-switching *::before,.theme-switching *::after{transition:none !important}
+
+  /* ================= Bahasa-style layout ================= */
+  body{background:var(--bg)}
+  .display,.h2,.fcard h3,.ucard h3,.brand-name,.cta,.pill,.navlinks a{font-family:"Inter",system-ui,sans-serif}
+  .hl{background:linear-gradient(transparent 58%,var(--hl) 58%,var(--hl) 92%,transparent 92%);padding:0 .08em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+
+  /* nav */
+  .topnav{position:sticky;top:0;z-index:40;background:var(--header-bg);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid transparent}
+  .topnav-in{max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:20px}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+  .brand .mark{width:36px;height:36px;border-radius:11px}
+  .brand .mark svg{width:20px;height:20px}
+  .brand-name{font-size:21px;font-weight:700;letter-spacing:-.03em;font-style:italic}
+  .navlinks{display:flex;gap:30px;margin:0 auto}
+  .navlinks a{color:var(--ink);text-decoration:none;font-size:14.5px;font-weight:500;opacity:.82}
+  .navlinks a:hover{opacity:1;color:var(--primary)}
+  .navright{display:flex;align-items:center;gap:10px}
+  .navright .status{box-shadow:none;padding:6px 12px}
+  .pill{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 24px;border-radius:999px;background:var(--primary-solid);color:#fff;text-decoration:none;font-weight:600;font-size:14.5px;transition:.16s;white-space:nowrap}
+  .pill:hover{background:var(--primary-press);transform:translateY(-1px)}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;padding:64px 20px 72px;text-align:center}
+  .orbits{position:absolute;inset:0;pointer-events:none}
+  .ring{position:absolute;left:50%;top:-120px;border:1px solid var(--ring);border-radius:50%;transform:translateX(-50%)}
+  .r1{width:760px;height:760px}.r2{width:1120px;height:1120px}.r3{width:1480px;height:1480px}.r4{width:1840px;height:1840px}
+  .flag{position:absolute;width:var(--s);height:var(--s);margin-left:calc(var(--s)/-2);border-radius:50%;background:var(--surface);border:1px solid var(--line);
+    display:grid;place-items:center;box-shadow:0 10px 24px -14px rgba(24,24,29,.35);animation:bob 6s ease-in-out infinite}
+  .flag img{width:58%;height:58%;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+  .flag:nth-child(odd){animation-delay:-3s}
+  @keyframes bob{50%{transform:translateY(-8px)}}
+  .hero-copy{position:relative;max-width:760px;margin:0 auto}
+  .eyebrow{display:inline-block;margin:0 0 18px;padding:6px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:13px;font-weight:500;color:var(--muted)}
+  .display{font-size:clamp(38px,6.2vw,68px);line-height:1.08;font-weight:500;letter-spacing:-.035em;margin:0;color:var(--ink)}
+  .hero-sub{max-width:520px;margin:20px auto 0;font-size:17px;line-height:1.6;color:var(--muted)}
+  .hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+  .cta{display:inline-flex;align-items:center;gap:10px;padding:9px 18px 9px 14px;border-radius:12px;text-decoration:none;text-align:left;transition:.16s}
+  .cta svg{width:24px;height:24px;flex:none}
+  .cta span{display:flex;flex-direction:column;font-size:15px;font-weight:600;line-height:1.2}
+  .cta small{font-size:10.5px;font-weight:500;opacity:.75;letter-spacing:.02em}
+  .cta.dark{background:#141418;color:#fff}
+  .cta.dark:hover{background:#000;transform:translateY(-1px)}
+
+  /* the app, framed like a device */
+  .device{position:relative;max-width:900px;margin:56px auto 0;text-align:left;background:var(--surface);border:10px solid #141418;border-radius:40px;
+    padding:34px 22px 22px;box-shadow:0 40px 80px -40px rgba(24,24,29,.45);scroll-margin-top:90px}
+  .island{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:120px;height:22px;border-radius:99px;background:#141418}
+  .device .tabs{margin:0 auto 18px;background:var(--hl);border:0;box-shadow:none;border-radius:16px;max-width:520px}
+  .device .tab.active{background:var(--surface);color:var(--ink);box-shadow:0 2px 8px -4px rgba(24,24,29,.25)}
+  .device .board{box-shadow:none}
+
+  /* content */
+  .site{max-width:1080px;margin:0 auto;padding:0 24px}
+  .sec{padding:72px 0 0}
+  .sec.center{text-align:center}
+  .h2{text-wrap:balance;font-size:clamp(30px,4.4vw,46px);line-height:1.12;font-weight:500;letter-spacing:-.03em;margin:0;color:var(--ink)}
+  .center-text{text-align:center}
+  .lead{font-size:16.5px;line-height:1.65;color:var(--muted);margin:0}
+  .lead.narrow{max-width:560px;margin:16px auto 0}
+  .body{font-size:16px;line-height:1.7;color:var(--muted);margin:16px 0 0}
+  .split-head{display:grid;grid-template-columns:1fr 1.25fr;gap:48px;align-items:end}
+  .cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
+  .fcard,.ucard{background:var(--surface-2);border:1px solid var(--line);border-radius:22px;padding:26px 24px;text-align:left}
+  .ficon{display:grid;place-items:center;width:44px;height:44px;border-radius:13px;background:var(--hl);color:var(--primary);margin-bottom:18px}
+  .ficon svg{width:22px;height:22px}
+  .fcard h3,.ucard h3{font-size:20px;font-weight:500;letter-spacing:-.02em;margin:0 0 10px;color:var(--ink)}
+  .fcard p,.ucard p{font-size:14.5px;line-height:1.65;color:var(--muted);margin:0}
+  .ucard p b{color:var(--ink);font-weight:600}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .two-col .pill{margin-top:26px}
+  .chatdemo{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:18px;box-shadow:0 30px 60px -36px rgba(24,24,29,.4)}
+  .cd-top{display:flex;gap:6px;background:var(--hl);border-radius:14px;padding:5px;margin-bottom:16px}
+  .cd-lang{flex:1;text-align:center;padding:9px;border-radius:10px;font-size:14px;font-weight:500;color:var(--muted)}
+  .cd-lang.on{background:var(--surface);color:var(--ink)}
+  .cd-msg{max-width:86%;padding:12px 14px;border-radius:16px;font-size:15px;line-height:1.5;margin-bottom:10px;color:var(--ink)}
+  .cd-msg b{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--primary);margin-bottom:3px}
+  .cd-msg small{display:block;margin-top:6px;font-size:13px;color:var(--muted)}
+  .cd-msg.a{background:var(--surface-2);border:1px solid var(--line);border-bottom-left-radius:5px}
+  .cd-msg.b{margin-left:auto;background:var(--hl);border-bottom-right-radius:5px}
+
+  .marquee{overflow:hidden;margin-top:36px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .mrow{display:flex;gap:16px;width:max-content;list-style:none;margin:0 0 16px;padding:0;animation:slide 70s linear infinite}
+  .mrow.rev{animation-direction:reverse;animation-duration:80s}
+  .marquee:hover .mrow{animation-play-state:paused}
+  @keyframes slide{to{transform:translateX(-50%)}}
+  .mrow li{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-width:118px;height:96px;padding:0 18px;border-radius:20px;background:var(--surface-2);border:1px solid var(--line);font-size:15px;font-weight:500;color:var(--ink);white-space:nowrap}
+  .mrow li img{width:30px;height:30px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+
+  .uc-tabs{display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:30px 0 30px}
+  .uc-tab{border:0;cursor:pointer;height:44px;padding:0 22px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink);font:500 14.5px "Inter",sans-serif;transition:.16s}
+  .uc-tab:hover{border-color:var(--primary)}
+  .uc-tab.on{background:var(--primary-solid);border-color:var(--primary-solid);color:#fff}
+  .uc-tab:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+  .uc-panel{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .uc-panel[hidden]{display:none}
+
+  .chiplinks{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:28px auto 0;max-width:900px}
+  .chiplinks a{display:inline-flex;align-items:center;min-height:42px;padding:0 16px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:14.5px;font-weight:500;transition:.16s}
+  .chiplinks a:hover{border-color:var(--primary);color:var(--primary)}
+
+  .faqwrap{max-width:780px;margin:0 auto}
+  .faqwrap .faq{margin-top:32px}
+  .faqwrap details{background:var(--surface-2);border:1px solid var(--line);border-radius:16px;padding:2px 20px;margin:10px 0}
+  .faqwrap summary{cursor:pointer;font-weight:500;font-size:16px;padding:16px 0;list-style:none;color:var(--ink)}
+  .faqwrap summary::-webkit-details-marker{display:none}
+  .faqwrap summary::after{content:"+";float:right;color:var(--primary);font-size:20px;line-height:1}
+  .faqwrap details[open] summary::after{content:"–"}
+  .faqwrap details p{margin:0 0 16px;font-size:15px;line-height:1.65;color:var(--muted)}
+
+  .sitefoot{margin-top:96px;border-top:1px solid var(--line);background:var(--surface-2)}
+  .foot-in{max-width:1080px;margin:0 auto;padding:48px 24px 24px;display:grid;grid-template-columns:1.2fr 2fr;gap:48px}
+  .foot-brand p{margin:14px 0 0;font-size:14px;line-height:1.65;color:var(--muted);max-width:320px}
+  .foot-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .foot-cols .fh{margin:0 0 12px;font-size:13px;font-weight:600;color:var(--ink)}
+  .foot-cols a{display:block;padding:5px 0;font-size:14px;color:var(--muted);text-decoration:none}
+  .foot-cols a:hover{color:var(--primary)}
+  .copy a{color:inherit}
+  .copy{max-width:1080px;margin:0 auto;padding:16px 24px 28px;font-size:13px;color:var(--muted)}
+
+  @media (max-width:900px){
+    .navlinks{display:none}
+    .navright{margin-left:auto}
+    .split-head,.two-col{grid-template-columns:1fr;gap:20px}
+    .cards3,.uc-panel{grid-template-columns:1fr}
+    .foot-in{grid-template-columns:1fr;gap:28px}
+  }
+  @media (max-width:660px){
+    .topnav-in{padding:10px 16px;gap:10px}
+    .navright .status{display:none}
+    .pill{height:44px;padding:0 18px}
+    .hero{padding:36px 16px 40px}
+    .flag{display:none}
+    .eyebrow{display:none}
+    .hero-ctas{display:none}
+    .hero-sub{margin-top:14px}
+    .r1{width:520px;height:520px}.r2{width:780px;height:780px}
+    .hero-sub{font-size:16px}
+    .cta{flex:1 1 100%;justify-content:center}
+    .device{margin-top:32px;border:0;border-radius:22px;padding:14px;box-shadow:0 20px 40px -28px rgba(24,24,29,.4)}
+    .island{display:none}
+    .site{padding:0 16px}
+    .sec{padding-top:56px}
+    .mrow li{min-width:104px;height:84px}
+    .foot-cols{grid-template-columns:1fr 1fr}
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]) .cta.dark{background:#fff;color:#141418}
+    :root:not([data-theme="light"]) .device,:root:not([data-theme="light"]) .island{border-color:#2A2F42}
+    :root:not([data-theme="light"]) .island{background:#2A2F42}
+  }
+  :root[data-theme="dark"] .cta.dark{background:#fff;color:#141418}
+  :root[data-theme="dark"] .device{border-color:#2A2F42}
+  :root[data-theme="dark"] .island{background:#2A2F42}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4380996737976478" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="brand">
+<nav class="topnav" aria-label="Main">
+  <div class="topnav-in">
+    <a class="brand" href="/" aria-label="Rosetta home">
       <div class="mark" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-      <div><p class="brand-name" aria-hidden="true">Rosetta</p><h1 class="sr-only">Rosetta — Free Voice &amp; Video-Call Translator, 40+ Languages</h1><p>speak · translate · converse · call</p></div>
+      <span class="brand-name">Rosetta</span>
+    </a>
+    <div class="navlinks">
+      <a href="#app">Translate</a>
+      <a href="#how">How it works</a>
+      <a href="#languages">Languages</a>
+      <a href="#faq">FAQ</a>
+      <a href="/contact.html">Contact</a>
     </div>
-    <button class="themeToggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch between light and dark"><svg class="sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6L17 17M7 7L5.4 5.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 019.8 4a8.4 8.4 0 102 10.2 8.2 8.2 0 008.2 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></button>
-    <div class="status" id="status"><span class="dot"></span><span id="statusText">Ready</span></div>
-  </header>
+    <div class="navright">
+      <div class="status" id="status"><span class="dot"></span><span id="statusText">Ready</span></div>
+      <button class="themeToggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch between light and dark"><svg class="sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6L17 17M7 7L5.4 5.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 019.8 4a8.4 8.4 0 102 10.2 8.2 8.2 0 008.2 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></button>
+      <a class="pill" href="#app">Get started</a>
+    </div>
+  </div>
+</nav>
 
+<section class="hero">
+  <div class="orbits" aria-hidden="true">
+    <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span><span class="ring r4"></span>
+      <span class="flag" style="left:18%;top:70px;--s:64px" title="English"><img src="/flags/us.svg" alt="" width="40" height="40" decoding="async"></span>
+      <span class="flag" style="left:26%;top:250px;--s:58px" title="Hindi"><img src="/flags/in.svg" alt="" width="40" height="40" decoding="async"></span>
+      <span class="flag fm" style="left:3%;top:210px;--s:52px" title="English UK"><img src="/flags/gb.svg" alt="" width="40" height="40" decoding="async"></span>
+      <span class="flag fm" style="left:22%;top:500px;--s:62px" title="Spanish"><img src="/flags/es.svg" alt="" width="40" height="40" decoding="async"></span>
+      <span class="flag fm" style="left:5%;top:610px;--s:50px" title="Arabic"><img src="/flags/eg.svg" alt="" width="40" height="40" decoding="async"></span>
+      <span class="flag fm" style="left:8%;top:420px;--s:46px" title="Japanese"><img src="/flags/jp.svg" alt="" width="40" height="40" decoding="async"></span>
+      <span class="flag" style="left:79%;top:85px;--s:64px" title="Russian"><img src="/flags/ru.svg" alt="" width="40" height="40" decoding="async"></span>
+      <span class="flag fm" style="left:95%;top:215px;--s:54px" title="Korean"><img src="/flags/kr.svg" alt="" width="40" height="40" decoding="async"></span>
+      <span class="flag" style="left:74%;top:290px;--s:52px" title="Chinese"><img src="/flags/cn.svg" alt="" width="40" height="40" decoding="async"></span>
+      <span class="flag fm" style="left:77%;top:515px;--s:52px" title="Greek"><img src="/flags/gr.svg" alt="" width="40" height="40" decoding="async"></span>
+      <span class="flag fm" style="left:94%;top:620px;--s:58px" title="Arabic (Saudi)"><img src="/flags/sa.svg" alt="" width="40" height="40" decoding="async"></span>
+      <span class="flag fm" style="left:91%;top:420px;--s:46px" title="French"><img src="/flags/fr.svg" alt="" width="40" height="40" decoding="async"></span>
+  </div>
+  <div class="hero-copy">
+    <p class="eyebrow">Free voice, text &amp; video-call translator</p>
+    <h1 class="display">Bridging languages,<br><span class="hl">connecting people</span><span class="sr-only"> — free voice &amp; video-call translator for 40+ languages</span></h1>
+    <p class="hero-sub">Translate typed or spoken words across 40+ languages, talk face to face on one phone, or video call with live subtitles. Free, private, no sign-up.</p>
+    <div class="hero-ctas">
+      <a class="cta dark" href="#app"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h9M8 3v2c0 4-2 7-5 8M6 9c0 3 3 5 6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 20l4-9 4 9M14.5 17h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><small>Start now</small>Translate text &amp; voice</span></a>
+      <a class="cta dark" href="#app" data-open-view="video"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 10l6-3v10l-6-3M3 7a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><small>Live subtitles</small>Start a video call</span></a>
+    </div>
+  </div>
+
+  <div class="device" id="app">
+    <span class="island" aria-hidden="true"></span>
   <div class="tabs" role="tablist">
     <button class="tab active" data-view="translate" role="tab">
       <svg viewBox="0 0 24 24" fill="none"><path d="M4 5h9M8 3v2c0 4-2 7-5 8M6 9c0 3 3 5 6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 20l4-9 4 9M14.5 17h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -607,45 +800,110 @@
     <p class="hint">Share the <b>room code</b> with one person. Each of you sets your own languages. What you say is transcribed, translated, and shown to the other as <b>live subtitles</b>. Works best in a normal browser tab (Chrome/Edge) with camera + mic allowed.</p>
   </div>
 
-  <!-- ============ SEO / ABOUT CONTENT (crawlable prose for search + AI answer engines) ============ -->
-  <section class="about" aria-label="About Rosetta translator">
-    <h2>Free online translator — voice, text, conversation &amp; video call</h2>
-    <p class="lead">Rosetta is a free, private translator that runs entirely in your browser. Translate typed or spoken text across 40+ languages, hold a two-way live conversation on a single phone, or make a peer-to-peer video call with real-time translated subtitles — with no sign-up, no API keys and nothing to install.</p>
+  </div>
+</section>
 
-    <h2>Three ways to translate</h2>
-    <h3>1. Text &amp; voice translation</h3>
-    <p>Type a sentence or tap the microphone and speak — Rosetta detects the language, translates instantly, and can read the result aloud. Copy the translation or swap the two languages with one tap.</p>
-    <h3>2. Live conversation mode</h3>
-    <p>Two people, one phone. Each person picks their language, taps their button and speaks; Rosetta translates and speaks the reply aloud in the other person's language. Perfect for talking to someone face to face when you don't share a language.</p>
-    <h3>3. Video call with live subtitles</h3>
-    <p>Start a call, share the room code, and each person sees what the other says as real-time translated subtitles. Calls are peer-to-peer, so your conversation stays private. Works best in Chrome or Edge with camera and microphone access.</p>
+<main class="site">
+  <!-- crawlable prose for search + AI answer engines -->
+  <section class="sec" id="how" aria-label="About Rosetta translator">
+    <div class="split-head">
+      <h2 class="h2">Language is <span class="hl">not a barrier</span></h2>
+      <p class="lead">Rosetta is a free, private translator that runs entirely in your browser. Translate typed or spoken text across 40+ languages, hold a two-way live conversation on a single phone, or make a peer-to-peer video call with real-time translated subtitles — with no sign-up, no API keys and nothing to install.</p>
+    </div>
 
-    <h2>40+ languages supported</h2>
-    <p class="langs">English, Hindi, Gujarati, Marathi, Bengali, Punjabi, Tamil, Telugu, Kannada, Malayalam, Urdu, Arabic, Spanish, French, German, Italian, Portuguese, Russian, Chinese (Simplified &amp; Traditional), Japanese, Korean, Thai, Vietnamese, Indonesian, Malay, Filipino, Turkish, Dutch, Polish, Ukrainian, Greek, Hebrew, Persian, Swedish, Danish, Finnish, Norwegian, Czech, Romanian, Hungarian, Swahili and Afrikaans.</p>
+    <div class="cards3">
+      <article class="fcard">
+        <span class="ficon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h9M8 3v2c0 4-2 7-5 8M6 9c0 3 3 5 6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 20l4-9 4 9M14.5 17h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <h3>Text &amp; voice translation</h3>
+        <p>Type a sentence or tap the microphone and speak — Rosetta detects the language, translates instantly, and can read the result aloud. Copy the translation or swap the two languages with one tap.</p>
+      </article>
+      <article class="fcard">
+        <span class="ficon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 10h8M8 14h5M21 12a8 8 0 01-11.6 7.1L3 21l1.9-6.4A8 8 0 1121 12z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <h3>Live conversation mode</h3>
+        <p>Two people, one phone. Each person picks their language, taps their button and speaks; Rosetta translates and speaks the reply aloud in the other person's language.</p>
+      </article>
+      <article class="fcard">
+        <span class="ficon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 10l6-3v10l-6-3M3 7a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <h3>Video call with live subtitles</h3>
+        <p>Start a call, share the room code, and each person sees what the other says as real-time translated subtitles. Calls are peer-to-peer, so your conversation stays private.</p>
+      </article>
+    </div>
+  </section>
 
-    <h2>Popular translations &amp; modes</h2>
-    <p class="langs" style="display:flex;flex-wrap:wrap;gap:9px">
-      <a href="/english-to-hindi-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Hindi</a>
-      <a href="/english-to-gujarati-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Gujarati</a>
-      <a href="/english-to-marathi-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Marathi</a>
-      <a href="/english-to-tamil-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Tamil</a>
-      <a href="/english-to-bengali-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Bengali</a>
-      <a href="/english-to-telugu-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Telugu</a>
-      <a href="/english-to-kannada-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Kannada</a>
-      <a href="/english-to-malayalam-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Malayalam</a>
-      <a href="/english-to-punjabi-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Punjabi</a>
-      <a href="/english-to-urdu-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Urdu</a>
-      <a href="/english-to-arabic-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Arabic</a>
-      <a href="/english-to-spanish-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Spanish</a>
-      <a href="/english-to-french-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → French</a>
-      <a href="/english-to-german-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → German</a>
-      <a href="/english-to-japanese-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Japanese</a>
-      <a href="/english-to-portuguese-translation.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">English → Portuguese</a>
-      <a href="/voice-conversation-translator.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">Voice &amp; Conversation</a>
-      <a href="/video-call-translator.html" style="background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px">Video Call Translator</a>
+  <section class="sec two-col">
+    <div>
+      <h2 class="h2">Talk to anyone, <span class="hl">face to face</span></h2>
+      <p class="body">Ordering at a market, asking a doctor a question, meeting a new colleague: put one phone between you and take turns. Each person taps their own button and speaks; Rosetta writes it down, translates it and reads it aloud in the other person's language.</p>
+      <p class="body">Every line stays on screen with the original underneath, so either of you can check what was said. Download the transcript when you are done.</p>
+      <a class="pill" href="#app" data-open-view="conversation">Open conversation mode</a>
+    </div>
+    <div class="chatdemo" aria-hidden="true">
+      <div class="cd-top"><span class="cd-lang on">English</span><span class="cd-lang">Hindi</span></div>
+      <div class="cd-msg a"><b>English</b>Excuse me, which platform does the Mumbai train leave from?<small>माफ़ कीजिए, मुंबई की ट्रेन किस प्लेटफ़ॉर्म से जाती है?</small></div>
+      <div class="cd-msg b"><b>Hindi</b>प्लेटफ़ॉर्म नंबर चार, दस मिनट में।<small>Platform number four, in ten minutes.</small></div>
+      <div class="cd-msg a"><b>English</b>Thank you so much!<small>बहुत-बहुत धन्यवाद!</small></div>
+    </div>
+  </section>
+
+  <section class="sec center" id="languages">
+    <h2 class="h2">Speak in <span class="hl">40+ languages</span></h2>
+    <p class="lead narrow">Every major Indian language plus the world's most spoken ones — with text, voice playback and live subtitles in each.</p>
+  </section>
+  <div class="marquee">
+    <ul class="mrow" aria-label="Supported languages"><li><img src="/flags/gb.svg" alt="" width="30" height="30" loading="lazy" decoding="async">English</li><li><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Hindi</li><li><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Gujarati</li><li><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Marathi</li><li><img src="/flags/bd.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Bengali</li><li><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Punjabi</li><li><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Tamil</li><li><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Telugu</li><li><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Kannada</li><li><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Malayalam</li><li><img src="/flags/pk.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Urdu</li><li><img src="/flags/sa.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Arabic</li><li><img src="/flags/es.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Spanish</li><li><img src="/flags/fr.svg" alt="" width="30" height="30" loading="lazy" decoding="async">French</li><li><img src="/flags/de.svg" alt="" width="30" height="30" loading="lazy" decoding="async">German</li><li><img src="/flags/it.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Italian</li><li><img src="/flags/pt.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Portuguese</li><li><img src="/flags/ru.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Russian</li><li><img src="/flags/cn.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Chinese (Simplified)</li><li><img src="/flags/tw.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Chinese (Traditional)</li><li><img src="/flags/jp.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Japanese</li><li><img src="/flags/kr.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Korean</li><li aria-hidden="true"><img src="/flags/gb.svg" alt="" width="30" height="30" loading="lazy" decoding="async">English</li><li aria-hidden="true"><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Hindi</li><li aria-hidden="true"><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Gujarati</li><li aria-hidden="true"><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Marathi</li><li aria-hidden="true"><img src="/flags/bd.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Bengali</li><li aria-hidden="true"><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Punjabi</li><li aria-hidden="true"><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Tamil</li><li aria-hidden="true"><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Telugu</li><li aria-hidden="true"><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Kannada</li><li aria-hidden="true"><img src="/flags/in.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Malayalam</li><li aria-hidden="true"><img src="/flags/pk.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Urdu</li><li aria-hidden="true"><img src="/flags/sa.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Arabic</li><li aria-hidden="true"><img src="/flags/es.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Spanish</li><li aria-hidden="true"><img src="/flags/fr.svg" alt="" width="30" height="30" loading="lazy" decoding="async">French</li><li aria-hidden="true"><img src="/flags/de.svg" alt="" width="30" height="30" loading="lazy" decoding="async">German</li><li aria-hidden="true"><img src="/flags/it.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Italian</li><li aria-hidden="true"><img src="/flags/pt.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Portuguese</li><li aria-hidden="true"><img src="/flags/ru.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Russian</li><li aria-hidden="true"><img src="/flags/cn.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Chinese (Simplified)</li><li aria-hidden="true"><img src="/flags/tw.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Chinese (Traditional)</li><li aria-hidden="true"><img src="/flags/jp.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Japanese</li><li aria-hidden="true"><img src="/flags/kr.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Korean</li></ul>
+    <ul class="mrow rev" aria-label="More supported languages"><li><img src="/flags/th.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Thai</li><li><img src="/flags/vn.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Vietnamese</li><li><img src="/flags/id.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Indonesian</li><li><img src="/flags/my.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Malay</li><li><img src="/flags/ph.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Filipino</li><li><img src="/flags/tr.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Turkish</li><li><img src="/flags/nl.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Dutch</li><li><img src="/flags/pl.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Polish</li><li><img src="/flags/ua.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Ukrainian</li><li><img src="/flags/gr.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Greek</li><li><img src="/flags/il.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Hebrew</li><li><img src="/flags/ir.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Persian</li><li><img src="/flags/se.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Swedish</li><li><img src="/flags/dk.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Danish</li><li><img src="/flags/fi.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Finnish</li><li><img src="/flags/no.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Norwegian</li><li><img src="/flags/cz.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Czech</li><li><img src="/flags/ro.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Romanian</li><li><img src="/flags/hu.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Hungarian</li><li><img src="/flags/ke.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Swahili</li><li><img src="/flags/za.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Afrikaans</li><li aria-hidden="true"><img src="/flags/th.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Thai</li><li aria-hidden="true"><img src="/flags/vn.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Vietnamese</li><li aria-hidden="true"><img src="/flags/id.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Indonesian</li><li aria-hidden="true"><img src="/flags/my.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Malay</li><li aria-hidden="true"><img src="/flags/ph.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Filipino</li><li aria-hidden="true"><img src="/flags/tr.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Turkish</li><li aria-hidden="true"><img src="/flags/nl.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Dutch</li><li aria-hidden="true"><img src="/flags/pl.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Polish</li><li aria-hidden="true"><img src="/flags/ua.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Ukrainian</li><li aria-hidden="true"><img src="/flags/gr.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Greek</li><li aria-hidden="true"><img src="/flags/il.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Hebrew</li><li aria-hidden="true"><img src="/flags/ir.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Persian</li><li aria-hidden="true"><img src="/flags/se.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Swedish</li><li aria-hidden="true"><img src="/flags/dk.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Danish</li><li aria-hidden="true"><img src="/flags/fi.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Finnish</li><li aria-hidden="true"><img src="/flags/no.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Norwegian</li><li aria-hidden="true"><img src="/flags/cz.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Czech</li><li aria-hidden="true"><img src="/flags/ro.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Romanian</li><li aria-hidden="true"><img src="/flags/hu.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Hungarian</li><li aria-hidden="true"><img src="/flags/ke.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Swahili</li><li aria-hidden="true"><img src="/flags/za.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Afrikaans</li></ul>
+  </div>
+
+  <section class="sec center">
+    <h2 class="h2">Built for <span class="hl">every situation</span></h2>
+    <div class="uc-tabs" role="tablist" aria-label="Use cases">
+      <button class="uc-tab on" role="tab" aria-selected="true" data-uc="travel">Travellers</button>
+      <button class="uc-tab" role="tab" aria-selected="false" data-uc="work">Business &amp; work</button>
+      <button class="uc-tab" role="tab" aria-selected="false" data-uc="learn">Language learners</button>
+    </div>
+    <div class="uc-panel on" data-uc="travel">
+      <article class="ucard"><h3>Ask for directions</h3><p>Open the Quick Phrase Kit for ready-made travel, food, medical and emergency phrases, then tap one to translate it into the local language.</p></article>
+      <article class="ucard"><h3>Show, don't shout</h3><p>On a noisy street, tap <b>Show to person</b> and the translation fills the screen in large type, so the other person can simply read it.</p></article>
+      <article class="ucard"><h3>Hear how it sounds</h3><p>Press the speaker under any translation to play it aloud, so you can let your phone do the talking at a counter or in a taxi.</p></article>
+    </div>
+    <div class="uc-panel" data-uc="work" hidden>
+      <article class="ucard"><h3>Calls with live subtitles</h3><p>Start a video call, share the room code, and both of you read the other's words as translated captions while you talk.</p></article>
+      <article class="ucard"><h3>Reply to a message fast</h3><p>Paste a message or email, read it in your language, write your answer and translate it back before you send.</p></article>
+      <article class="ucard"><h3>Meet in person</h3><p>Conversation mode keeps a two-sided transcript of a face-to-face meeting that you can download afterwards for your notes.</p></article>
+    </div>
+    <div class="uc-panel" data-uc="learn" hidden>
+      <article class="ucard"><h3>Learn the pronunciation</h3><p>For scripts such as Hindi, Arabic or Japanese, Rosetta shows a romanised "say it" line under the translation, and the speaker reads it aloud.</p></article>
+      <article class="ucard"><h3>Practise speaking</h3><p>Speak a sentence into the mic in the language you are learning and check whether Rosetta understood what you meant.</p></article>
+      <article class="ucard"><h3>Compare both ways</h3><p>Use the swap button to translate your sentence back again, a quick way to spot words that did not carry the meaning you wanted.</p></article>
+    </div>
+  </section>
+
+  <section class="sec center">
+    <h2 class="h2">Popular translations</h2>
+    <p class="chiplinks">
+      <a href="/english-to-hindi-translation.html">English → Hindi</a>
+      <a href="/english-to-gujarati-translation.html">English → Gujarati</a>
+      <a href="/english-to-marathi-translation.html">English → Marathi</a>
+      <a href="/english-to-tamil-translation.html">English → Tamil</a>
+      <a href="/english-to-bengali-translation.html">English → Bengali</a>
+      <a href="/english-to-telugu-translation.html">English → Telugu</a>
+      <a href="/english-to-kannada-translation.html">English → Kannada</a>
+      <a href="/english-to-malayalam-translation.html">English → Malayalam</a>
+      <a href="/english-to-punjabi-translation.html">English → Punjabi</a>
+      <a href="/english-to-urdu-translation.html">English → Urdu</a>
+      <a href="/english-to-arabic-translation.html">English → Arabic</a>
+      <a href="/english-to-spanish-translation.html">English → Spanish</a>
+      <a href="/english-to-french-translation.html">English → French</a>
+      <a href="/english-to-german-translation.html">English → German</a>
+      <a href="/english-to-japanese-translation.html">English → Japanese</a>
+      <a href="/english-to-portuguese-translation.html">English → Portuguese</a>
+      <a href="/voice-conversation-translator.html">Voice &amp; Conversation</a>
+      <a href="/video-call-translator.html">Video Call Translator</a>
     </p>
+  </section>
 
-    <h2>Frequently asked questions</h2>
+  <section class="sec faqwrap" id="faq">
+    <h2 class="h2 center-text">Frequently asked <span class="hl">questions</span></h2>
     <div class="faq">
       <details><summary>Is Rosetta free?</summary><p>Yes — completely free, with no sign-up and no API keys, and no limit on how much you translate.</p></details>
       <details><summary>Is my translation private?</summary><p>Yes. Rosetta runs in your browser and video calls are peer-to-peer, so your conversations are not stored on any server.</p></details>
@@ -655,7 +913,7 @@
       <details><summary>Do I need to install an app?</summary><p>No — Rosetta works in any modern web browser on phone or computer, with nothing to install.</p></details>
     </div>
   </section>
-</div>
+</main>
 
 <!-- Show to Person overlay -->
 <div class="show-overlay" id="showOverlay">
@@ -1339,7 +1597,7 @@ function copyRoomCode(){
     root.classList.remove("theme-switching");
     try{localStorage.setItem("rosetta_theme",next);}catch(e){}
     var m=document.querySelector('meta[name="theme-color"]');
-    if(m) m.setAttribute("content", next==="dark"?"#0E1017":"#EDEFF6");
+    if(m) m.setAttribute("content", next==="dark"?"#0E1017":"#FAFAFB");
     label();
   });
   /* The OS can change under an open tab. Only relabel while no explicit choice
@@ -1351,8 +1609,39 @@ function copyRoomCode(){
   }
 })();
 </script>
-<footer style="text-align:center;padding:32px 24px;border-top:1px solid var(--line);color:var(--muted);font-size:0.85rem;">
-  <p>© 2026 Rosetta &nbsp;·&nbsp; <a href="/about.html" style="color:var(--muted);text-decoration:none;">About</a> &nbsp;<a href="/privacy.html" style="color:var(--muted);text-decoration:none;">Privacy</a> &nbsp;<a href="/terms.html" style="color:var(--muted);text-decoration:none;">Terms</a> &nbsp;<a href="/contact.html" style="color:var(--muted);text-decoration:none;">Contact</a></p>
+<script>
+/* Hero and section buttons that open a specific mode: switch the app's tab,
+   then let the #app anchor scroll. Use-case tabs below are separate (.uc-tab)
+   so they never collide with the app's own .tab handler. */
+document.querySelectorAll("[data-open-view]").forEach(function(a){
+  a.addEventListener("click",function(){
+    var t=document.querySelector('.tab[data-view="'+a.getAttribute("data-open-view")+'"]');
+    if(t) t.click();
+  });
+});
+document.querySelectorAll(".uc-tab").forEach(function(b){
+  b.addEventListener("click",function(){
+    var k=b.getAttribute("data-uc");
+    document.querySelectorAll(".uc-tab").forEach(function(x){var on=x===b;x.classList.toggle("on",on);x.setAttribute("aria-selected",on?"true":"false");});
+    document.querySelectorAll(".uc-panel").forEach(function(pn){pn.hidden=pn.getAttribute("data-uc")!==k;});
+  });
+});
+</script>
+<footer class="sitefoot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <a class="brand" href="/"><div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div><span class="brand-name">Rosetta</span></a>
+      <p>Free voice, text and video-call translator for 40+ languages. Runs in your browser — no sign-up, nothing stored.</p>
+    </div>
+    <nav class="foot-cols" aria-label="Footer">
+      <div><p class="fh">Translate</p><a href="#app">Text &amp; voice</a><a href="/voice-conversation-translator.html">Conversation</a><a href="/video-call-translator.html">Video call</a></div>
+      <div><p class="fh">Popular</p><a href="/english-to-hindi-translation.html">English → Hindi</a><a href="/english-to-gujarati-translation.html">English → Gujarati</a><a href="/english-to-spanish-translation.html">English → Spanish</a></div>
+      <div><p class="fh">Rosetta</p><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/contact.html">Contact</a></div>
+    </nav>
+  </div>
+  <p class="copy">© 2026 Rosetta · Flags: <a href="https://github.com/lipis/flag-icons" rel="noopener">flag-icons</a> (MIT)</p>
 </footer>
 </body>
 </html>
