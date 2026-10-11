@@ -9,8 +9,12 @@
 <!-- Live domain: https://languagetransalator.com/ — keep canonical/og:url/JSON-LD in sync if the domain changes. -->
 <title>Free Voice &amp; Video-Call Translator, 40+ Languages — Rosetta</title>
 <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-<link rel="apple-touch-icon" href="/icon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/manifest.json" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="Rosetta" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="description" content="Free translator for 40+ languages — text & voice, live two-way conversation, and video calls with real-time subtitles. No sign-up, private, in-browser." />
 <meta name="keywords" content="translator, voice translator, video call translator, live conversation translator, real-time translation, speech to text translation, free online translator, browser translator, 40 languages, live subtitles, speech translation" />
 <meta name="author" content="Rosetta" />
@@ -601,6 +605,47 @@
   :root[data-theme="dark"] .cta.dark{background:#fff;color:#141418}
   :root[data-theme="dark"] .device{border-color:#2A2F42}
   :root[data-theme="dark"] .island{background:#2A2F42}
+
+  /* ================= mobile & install ================= */
+  .nav-install{display:inline-flex;align-items:center;gap:7px;height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:600 14px "Inter",sans-serif;cursor:pointer}
+  .nav-install svg{width:18px;height:18px}
+  .nav-install:hover{border-color:var(--primary);color:var(--primary)}
+  .nav-install[hidden]{display:none}
+  .inapp-note{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;padding:12px 14px;border-radius:14px;background:#FFF4E5;border:1px solid #F6D3A1;color:#5A3A00}
+  .inapp-note[hidden]{display:none}
+  .inapp-note p{margin:0;font-size:13.5px;line-height:1.5}
+  .inapp-note button{flex:none;border:0;background:none;font-size:22px;line-height:1;color:inherit;cursor:pointer;min-width:32px;min-height:32px}
+  .ib.na{opacity:.45}
+  .ios-sheet{position:fixed;inset:0;z-index:300;background:rgba(10,10,14,.5);display:flex;align-items:flex-end;justify-content:center;padding:12px}
+  .ios-sheet[hidden]{display:none}
+  .ios-card{width:100%;max-width:440px;background:var(--surface);color:var(--ink);border-radius:22px;padding:22px 20px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(0,0,0,.25)}
+  .ios-card h2{margin:0 0 12px;font:600 19px "Inter",sans-serif;letter-spacing:-.01em}
+  .ios-card ol{margin:0;padding-left:20px}
+  .ios-card li{font-size:15px;line-height:1.6;margin-bottom:8px}
+  .ios-card li svg{width:18px;height:18px;vertical-align:-3px;color:var(--primary)}
+  .ios-small{font-size:13px;color:var(--muted);margin:10px 0 16px}
+  .ios-card .pill{width:100%;border:0;cursor:pointer}
+  .pwa-banner{padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+  /* Touch screens get touch-sized controls at any width, including a phone
+     turned sideways, which is wider than the phone breakpoint. */
+  @media (pointer:coarse){
+    select{min-height:44px;padding-top:10px;padding-bottom:10px}
+    .ib{width:44px;height:44px}
+    .tab{min-height:44px}
+    .conv-toolbar .ib{width:40px!important;height:40px!important}
+  }
+  @media (max-width:660px){
+    .nav-install{width:44px;padding:0;justify-content:center}
+    .nav-install span{display:none}
+  }
+  @media (max-width:400px){
+    .topnav-in{gap:8px}
+    .navright{gap:6px}
+    .brand .mark{width:32px;height:32px}
+    .brand-name{font-size:19px}
+    .topnav .pill{padding:0 14px}
+  }
+  @media (max-width:350px){.navright .pill{display:none}}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4380996737976478" crossorigin="anonymous"></script>
 </head>
@@ -623,6 +668,7 @@
     <div class="navright">
       <div class="status" id="status"><span class="dot"></span><span id="statusText">Ready</span></div>
       <button class="themeToggle" id="themeToggle" type="button" aria-label="Switch theme" title="Switch between light and dark"><svg class="sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6L17 17M7 7L5.4 5.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 019.8 4a8.4 8.4 0 102 10.2 8.2 8.2 0 008.2 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></button>
+      <button class="nav-install" id="navInstall" type="button" hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Install app</span></button>
       <a class="pill" href="#app">Get started</a>
     </div>
   </div>
@@ -656,6 +702,10 @@
 
   <div class="device" id="app">
     <span class="island" aria-hidden="true"></span>
+    <div class="inapp-note" id="inappNote" hidden>
+      <p><b>Open in your browser for voice and video.</b> This app's built-in browser blocks the microphone and video calls. Tap <b>⋮</b> or <b>…</b> at the top and choose <b>Open in Chrome</b> (or <b>Open in browser</b>). Typing still works here.</p>
+      <button type="button" id="inappClose" aria-label="Dismiss">&#215;</button>
+    </div>
   <div class="tabs" role="tablist">
     <button class="tab active" data-view="translate" role="tab">
       <svg viewBox="0 0 24 24" fill="none"><path d="M4 5h9M8 3v2c0 4-2 7-5 8M6 9c0 3 3 5 6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 20l4-9 4 9M14.5 17h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -688,6 +738,7 @@
               <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
             </button>
             <button class="ib speak" id="speakSrc" title="Listen to source"><svg viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9a3 3 0 010 6M18.5 7a6 6 0 010 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+            <button class="ib" id="pasteBtn" title="Paste" aria-label="Paste from clipboard"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="9" y="3" width="6" height="4" rx="1.2" stroke="currentColor" stroke-width="1.6"/></svg></button>
             <button class="ib" id="clearBtn" title="Clear"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
             <button class="ib expand" id="expandBtn" title="Expand"><svg viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <span class="wcount"><span id="count">0</span><span id="wcount" style="opacity:.6">·0w</span></span>
@@ -930,9 +981,22 @@
 
 <!-- PWA Install Banner -->
 <div class="pwa-banner" id="pwaBanner">
-  <p><b>Add Rosetta to home screen</b>Opens instantly, works offline</p>
+  <p><b>Install Rosetta on your phone</b>Opens like an app from your home screen, no app store needed</p>
   <button class="pwa-btn" id="pwaInstall">Install</button>
   <button class="pwa-dismiss" id="pwaDismiss" aria-label="Dismiss">&#215;</button>
+</div>
+
+<div class="ios-sheet" id="iosSheet" hidden>
+  <div class="ios-card" role="dialog" aria-modal="true" aria-labelledby="iosTitle">
+    <h2 id="iosTitle">Install Rosetta on iPhone</h2>
+    <ol>
+      <li>Tap the <b>Share</b> button <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12M8 7l4-4 4 4M6 11H5a1 1 0 00-1 1v8a1 1 0 001 1h14a1 1 0 001-1v-8a1 1 0 00-1-1h-1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg> in Safari's toolbar.</li>
+      <li>Scroll down and tap <b>Add to Home Screen</b>.</li>
+      <li>Tap <b>Add</b>. Rosetta now opens from your home screen like an app.</li>
+    </ol>
+    <p class="ios-small">Using Chrome on iPhone? Tap the share icon in the address bar, then <b>Add to Home Screen</b>.</p>
+    <button type="button" class="pill" id="iosClose">Got it</button>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1011,6 +1075,13 @@ async function callTranslate(text,src,tgt){
   }
 }
 
+/* ================= mobile helpers ================= */
+/* In-app browsers (Instagram, Facebook, Snapchat, LINE and Android WebViews)
+   have no speech recognition and often no WebRTC. */
+const IN_APP=/FBAN|FBAV|FB_IAB|Instagram|Snapchat|Line\/|; wv\)/i.test(navigator.userAgent);
+/* A short tap of feedback when the mic opens; Android only, silent elsewhere. */
+function buzz(){try{navigator.vibrate&&navigator.vibrate(15);}catch(e){}}
+
 /* ================= tabs ================= */
 document.querySelectorAll(".tab").forEach(tab=>{
   tab.addEventListener("click",()=>{
@@ -1020,8 +1091,22 @@ document.querySelectorAll(".tab").forEach(tab=>{
     $("view-"+tab.dataset.view).classList.add("on");
     if(window.speechSynthesis)speechSynthesis.cancel();
     stopConvListening();
+    syncWakeLock();
   });
 });
+
+/* Two people talking over one phone should not have the screen go dark
+   mid-sentence. Hold a screen wake lock while Conversation or Video Call is
+   open and the page is visible; release it everywhere else. */
+let wakeLock=null;
+async function syncWakeLock(){
+  const want=document.visibilityState==="visible"&&!$("view-translate").classList.contains("on");
+  try{
+    if(want&&!wakeLock&&"wakeLock" in navigator){wakeLock=await navigator.wakeLock.request("screen");wakeLock.addEventListener("release",()=>{wakeLock=null;});}
+    else if(!want&&wakeLock){await wakeLock.release();wakeLock=null;}
+  }catch(e){wakeLock=null;}
+}
+document.addEventListener("visibilitychange",syncWakeLock);
 
 /* ================= TRANSLATE mode ================= */
 const srcSel=$("srcLang"),tgtSel=$("tgtLang"),input=$("input"),output=$("output"),detected=$("detected"),count=$("count");
@@ -1046,12 +1131,12 @@ async function translate(){
   finally{$("translateBtn").disabled=false;}
 }
 let recog=null,listening=false; const micBtn=$("micBtn");
-if(!SR){micBtn.disabled=true;micBtn.title="Speech recognition not supported here";}
+if(!SR){micBtn.classList.add("na");micBtn.addEventListener("click",()=>toast(IN_APP?"Voice input is blocked in this app's browser. Open the page in Chrome.":"Voice input isn't supported in this browser. Try Chrome or Edge."));}
 else micBtn.addEventListener("click",()=>{
   if(listening){recog.stop();return;}
   recog=new SR(); recog.lang=(byCode[srcSel.value]||{speech:"en-US"}).speech; recog.interimResults=true; recog.continuous=false;
   const base=input.value?input.value+" ":"";
-  recog.onstart=()=>{listening=true;micBtn.classList.add("on");setStatus("Listening…","live");};
+  recog.onstart=()=>{listening=true;micBtn.classList.add("on");setStatus("Listening…","live");buzz();};
   recog.onresult=e=>{let t="";for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;input.value=base+t;if(typeof updateCounts==="function")updateCounts();else count.textContent=input.value.length;};
   recog.onerror=e=>{listening=false;micBtn.classList.remove("on");
     if(e.error==="not-allowed"||e.error==="service-not-allowed"){setStatus("Mic blocked","err");toast("Allow microphone access to use voice input.");}
@@ -1073,6 +1158,14 @@ swapBtn.addEventListener("click",()=>{
   const out=output.classList.contains("empty")?"":output.textContent; const prev=input.value;
   input.value=out; output.textContent=prev||"Translation appears here"; output.classList.toggle("empty",!prev);
   if(typeof updateCounts==="function")updateCounts();else count.textContent=input.value.length; detected.textContent=""; showRoman(""); applyDir(); refreshSwap();
+});
+$("pasteBtn").addEventListener("click",async()=>{
+  try{
+    const t=await navigator.clipboard.readText();
+    if(!t||!t.trim()){toast("Clipboard is empty");return;}
+    input.value=t; if(typeof updateCounts==="function")updateCounts(); else count.textContent=t.length;
+    applyDir(); translate();
+  }catch(e){input.focus();toast("Long-press the text box and choose Paste");}
 });
 $("clearBtn").addEventListener("click",()=>{input.value="";count.textContent="0";const wc=$("wcount");if(wc)wc.textContent="·0w";detected.textContent="";output.textContent="Translation appears here";output.classList.add("empty");showRoman("");input.focus();});
 $("copyBtn").addEventListener("click",async()=>{const t=output.classList.contains("empty")?"":output.textContent;if(!t){toast("Nothing to copy yet");return;}try{await navigator.clipboard.writeText(t);toast("Copied to clipboard");}catch{toast("Copy failed");}});
@@ -1514,23 +1607,57 @@ document.querySelectorAll(".pk-cat").forEach(btn=>{
 function togglePk(){const pk=$("pk");pk.toggleAttribute("open");renderPkGrid();}
 renderPkGrid();
 
-/* ================= PWA INSTALL BANNER ================= */
+/* ================= INSTALL (PWA) ================= */
+/* Chrome/Edge/Samsung fire beforeinstallprompt; iPhone never does, so iOS
+   gets a short "Share → Add to Home Screen" sheet instead. Nothing is shown
+   once Rosetta is already running as an installed app. */
+const IS_STANDALONE=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+const IS_IOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
 let pwaDeferredPrompt=null;
-window.addEventListener("beforeinstallprompt",e=>{
-  e.preventDefault(); pwaDeferredPrompt=e;
-  try{if(localStorage.getItem("pwa_dismissed"))return;}catch(ex){}
-  setTimeout(()=>$("pwaBanner").classList.add("show"),3500);
-});
-$("pwaInstall").addEventListener("click",async()=>{
-  if(!pwaDeferredPrompt)return;
-  pwaDeferredPrompt.prompt();
-  await pwaDeferredPrompt.userChoice;
-  pwaDeferredPrompt=null; $("pwaBanner").classList.remove("show");
-});
+const navInstall=$("navInstall");
+function bannerDismissed(){try{return !!localStorage.getItem("pwa_dismissed");}catch(e){return false;}}
+function offerInstall(){
+  if(IS_STANDALONE||IN_APP)return;
+  navInstall.hidden=false;
+  if(!bannerDismissed())setTimeout(()=>$("pwaBanner").classList.add("show"),6000);
+}
+async function doInstall(){
+  if(pwaDeferredPrompt){
+    pwaDeferredPrompt.prompt();
+    const choice=await pwaDeferredPrompt.userChoice;
+    pwaDeferredPrompt=null;
+    if(choice&&choice.outcome==="accepted"){navInstall.hidden=true;}
+  }else if(IS_IOS){
+    $("iosSheet").hidden=false;
+  }
+  $("pwaBanner").classList.remove("show");
+}
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();pwaDeferredPrompt=e;offerInstall();});
+window.addEventListener("appinstalled",()=>{navInstall.hidden=true;$("pwaBanner").classList.remove("show");toast("Rosetta installed — find it on your home screen");});
+if(IS_IOS)offerInstall();
+navInstall.addEventListener("click",doInstall);
+$("pwaInstall").addEventListener("click",doInstall);
 $("pwaDismiss").addEventListener("click",()=>{
   $("pwaBanner").classList.remove("show");
   try{localStorage.setItem("pwa_dismissed","1");}catch(e){}
 });
+$("iosClose").addEventListener("click",()=>{$("iosSheet").hidden=true;});
+$("iosSheet").addEventListener("click",e=>{if(e.target.id==="iosSheet")$("iosSheet").hidden=true;});
+
+/* In-app browser notice */
+if(IN_APP){
+  let gone=false; try{gone=!!sessionStorage.getItem("inapp_closed");}catch(e){}
+  if(!gone)$("inappNote").hidden=false;
+  $("inappClose").addEventListener("click",()=>{$("inappNote").hidden=true;try{sessionStorage.setItem("inapp_closed","1");}catch(e){}});
+}
+
+/* Offline: the app shell opens from cache, but translating needs a connection. */
+window.addEventListener("offline",()=>{setStatus("Offline","err");toast("You're offline — translation needs an internet connection");});
+window.addEventListener("online",()=>{setStatus("Ready");toast("Back online");});
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{navigator.serviceWorker.register("/sw.js").catch(()=>{});});
+}
 
 /* ================= COPY ROOM CODE ================= */
 function copyRoomCode(){
@@ -1548,7 +1675,7 @@ function copyRoomCode(){
   const hasCode = c => LANGS.some(l => l.code === c);
   try{
     const p = new URLSearchParams(location.search);
-    const sl = p.get("sl"), tl = p.get("tl"), q = p.get("q");
+    const sl = p.get("sl"), tl = p.get("tl"), q = p.get("q") || p.get("title") || p.get("url");
 
     // restore last-used pair when the URL doesn't specify one
     if(!sl){ const v = localStorage.getItem("rosetta_sl"); if(v && (v === "auto" || hasCode(v))) srcSel.value = v; }
