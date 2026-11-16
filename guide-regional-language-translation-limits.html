@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gujarati, Marathi and Tamil Machine Translation: Limits and Workarounds | Rosetta</title>
+<meta name="description" content="Machine translation is weaker for many Indian languages than for Spanish or French. See why, what typically goes wrong, and how to get better results in Gujarati, Marathi and Tamil." />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="canonical" href="https://languagetransalator.com/guide-regional-language-translation-limits.html" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="author" content="Akshay Mahajan" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Rosetta" />
+<meta property="og:title" content="Gujarati, Marathi and Tamil Machine Translation: Limits and Workarounds | Rosetta" />
+<meta property="og:description" content="Machine translation is weaker for many Indian languages than for Spanish or French. See why, what typically goes wrong, and how to get better results in Gujarati, Marathi and Tamil." />
+<meta property="og:url" content="https://languagetransalator.com/guide-regional-language-translation-limits.html" />
+<meta property="og:image" content="https://languagetransalator.com/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Gujarati, Marathi and Tamil Machine Translation: Limits and Workarounds | Rosetta" />
+<meta name="twitter:description" content="Machine translation is weaker for many Indian languages than for Spanish or French. See why, what typically goes wrong, and how to get better results in Gujarati, Marathi and Tamil." />
+<meta name="twitter:image" content="https://languagetransalator.com/og-image.png" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Gujarati, Marathi and Tamil Machine Translation: Limits and Workarounds", "description": "Machine translation is weaker for many Indian languages than for Spanish or French. See why, what typically goes wrong, and how to get better results in Gujarati, Marathi and Tamil.", "author": {"@type": "Person", "name": "Akshay Mahajan", "url": "https://akshay.website"}, "publisher": {"@type": "Organization", "name": "Rosetta", "url": "https://languagetransalator.com/"}, "datePublished": "2026-11-16", "dateModified": "2026-11-16", "mainEntityOfPage": "https://languagetransalator.com/guide-regional-language-translation-limits.html", "inLanguage": "en"}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4380996737976478" crossorigin="anonymous"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #FAFAFB; --surface: #fff; --text: #0E1017; --muted: #5A5F73;
+    --accent: #6B2BF0; --line: #D8DBEA; --radius: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0E1017; --surface: #181B25; --text: #E8EAF2; --muted: #8B90A8; --line: #252836; }
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  header { background: var(--surface); border-bottom: 1px solid var(--line); padding: 16px 24px; display: flex; align-items: center; gap: 12px; }
+  header a { text-decoration: none; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; }
+  header a:hover { color: var(--accent); }
+  .back { font-size: 0.85rem; color: var(--muted); }
+  main { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 32px; }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 600; margin: 32px 0 10px; }
+  p { color: var(--muted); margin-bottom: 14px; }
+  ul { color: var(--muted); padding-left: 20px; margin-bottom: 14px; }
+  li { margin-bottom: 8px; }
+  a { color: var(--accent); }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; margin-bottom: 24px; }
+  footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
+  footer a { color: var(--muted); text-decoration: none; margin: 0 8px; }
+  footer a:hover { color: var(--accent); }
+</style>
+<link rel="stylesheet" href="/site.css" />
+
+<style>.lead{font-size:1.08rem;color:var(--text)}.note{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px 16px;font-size:.9rem}ol{color:var(--muted);padding-left:22px;margin-bottom:14px}.meta{font-size:.85rem;color:var(--muted);margin:-20px 0 24px}.crumb{font-size:.85rem;margin-bottom:16px}h1{font-size:1.8rem;margin-bottom:28px;line-height:1.25}</style>
+</head>
+<body>
+<nav class="topnav" aria-label="Main">
+  <div class="topnav-in">
+    <a class="brand" href="/" aria-label="Rosetta home"><div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div><span class="brand-name">Rosetta</span></a>
+    <div class="navlinks">
+      <a href="/#app">Translate</a>
+      <a href="/voice-conversation-translator.html">Conversation</a>
+      <a href="/video-call-translator.html">Video call</a>
+      <a href="/about.html">About</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+    <div class="navright">
+      
+      <a class="pill" href="/#app">Translate now</a>
+    </div>
+  </div>
+</nav>
+<main>
+  <p class="crumb"><a href="/">Home</a> › <a href="/guides.html">Guides</a></p>
+  <h1>Gujarati, Marathi and Tamil Machine Translation: Limits and Workarounds</h1>
+  <p class="meta">By <a href="/about.html">Akshay Mahajan</a> · Updated November 2026</p>
+  <article>
+<p class="lead">Rosetta supports the major Indian languages, and for everyday messages the results are useful. But machine translation is not equally strong across languages, and Indian regional languages generally get less training data than English, Spanish or French. This guide explains the typical weak points and how to work around them.</p>
+<p class="note">These are general characteristics of machine translation, written from our experience building and using translation tools. They are not measured accuracy scores, and quality changes as engines are updated.</p>
+
+<h2>Why regional languages are harder</h2>
+<ul>
+<li><strong>Less written material online</strong> to learn from, especially for formal, technical and conversational text.</li>
+<li><strong>Rich grammar:</strong> gendered verbs, honorific levels, cases and agglutinative word-building (words made by joining many parts) that English does not have.</li>
+<li><strong>Dialects and registers.</strong> Spoken Gujarati in Surat, Ahmedabad and Kutch differs; Marathi in Pune and Nagpur differs; Tamil in Chennai and Jaffna differs. Engines favour the standard written form.</li>
+<li><strong>Script differences.</strong> Typing in Roman letters (“kem cho”, “kasa kay”, “vanakkam”) is far less reliable than using the native script.</li>
+</ul>
+
+<h2>Gujarati</h2>
+<ul>
+<li>Formal and informal “you” (તમે / તું) are easy to confuse. Check which one the output uses for the person you are addressing.</li>
+<li>Postpositions attach to nouns and the order differs from English; short, simple English input gives the cleanest Gujarati.</li>
+<li>Business terms, place names and English loanwords are often left in English or spelled inconsistently. Compare with a native speaker’s usage if it is customer-facing.</li>
+</ul>
+
+<h2>Marathi</h2>
+<ul>
+<li>Marathi and Hindi share the Devanagari script and many words, which can make the engine slip Hindi words or grammar into Marathi output. Read the result for Hindi forms.</li>
+<li>Gendered verbs include neuter forms that Hindi lacks. Mistakes here are easy for native readers to spot.</li>
+<li>Honorific plural usage for respect is common; check it when addressing elders or customers.</li>
+</ul>
+
+<h2>Tamil</h2>
+<ul>
+<li>Tamil has a large gap between written (formal) and spoken forms. Engines usually produce the formal written style, which can sound stiff or bookish if used for casual chat.</li>
+<li>Words are built by adding suffixes, so one Tamil word can correspond to a whole English phrase. Very long input sentences can lose parts.</li>
+<li>Technical vocabulary is often borrowed or transliterated from English; two engines may spell the same word differently.</li>
+</ul>
+
+<h2>Workarounds that work in any of them</h2>
+<ol>
+<li><strong>Write short, plain source sentences.</strong> One idea, subject stated, no idioms.</li>
+<li><strong>Use the native script</strong> for input where you can.</li>
+<li><strong>Translate back.</strong> Put the output back through the translator in the reverse direction. If the meaning has changed, rewrite the original.</li>
+<li><strong>Keep a glossary</strong> of the names, product terms and amounts that must not change, and check them by eye every time.</li>
+<li><strong>Have a native reader review</strong> anything customer-facing, published or legally relevant.</li>
+</ol>
+<p>Try it in the translators for <a href="/english-to-gujarati-translation.html">Gujarati</a>, <a href="/english-to-marathi-translation.html">Marathi</a> and <a href="/english-to-tamil-translation.html">Tamil</a>, or go the other way with <a href="/gujarati-to-english-translation.html">Gujarati to English</a>, <a href="/marathi-to-english-translation.html">Marathi to English</a> and <a href="/tamil-to-english-translation.html">Tamil to English</a>.</p>
+
+  <div class="card"><h2 style="margin-top:0">Try Rosetta</h2><p style="margin-bottom:0">Free text, voice, conversation and video-call translation in 40+ languages — no sign-up. <a href="/#app">Open the translator →</a></p></div>
+  <h2>More guides</h2><ul><li><a href="/guide-hindi-english-translation-mistakes.html">Common Hindi to English Translation Mistakes (and How to Avoid Them)</a></li><li><a href="/guide-voice-translation-reliability.html">How Reliable Is Voice Translation? What Works and What Does Not</a></li><li><a href="/guide-video-call-subtitles.html">How to Add Translated Subtitles to a Video Call</a></li><li><a href="/guides.html">All guides</a></li></ul>
+  </article>
+</main>
+<footer class="sitefoot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <a class="brand" href="/"><div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div><span class="brand-name">Rosetta</span></a>
+      <p>Free voice, text and video-call translator for 40+ languages. Runs in your browser — no sign-up, nothing stored.</p>
+    </div>
+    <nav class="foot-cols" aria-label="Footer">
+      <div><p class="fh">Translate</p><a href="/#app">Text &amp; voice</a><a href="/voice-conversation-translator.html">Conversation</a><a href="/video-call-translator.html">Video call</a></div>
+      <div><p class="fh">Popular</p><a href="/english-to-hindi-translation.html">English → Hindi</a><a href="/english-to-gujarati-translation.html">English → Gujarati</a><a href="/english-to-spanish-translation.html">English → Spanish</a></div>
+      <div><p class="fh">Rosetta</p><a href="/guides.html">Guides</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/contact.html">Contact</a></div>
+    </nav>
+  </div>
+  <p class="copy">© 2026 Rosetta · Flags: <a href="https://github.com/lipis/flag-icons" rel="noopener">flag-icons</a> (MIT)</p>
+</footer>
+</body>
+</html>
