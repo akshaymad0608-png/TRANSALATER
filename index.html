@@ -1549,8 +1549,9 @@ function startVcRecog(once){
   vcRecog=new SR(); vcRecog.lang=(byCode[vcMyLang.value]||{speech:"en-US"}).speech;
   vcRecog.interimResults=true; vcRecog.continuous=!once&&autoCaptions;
   vcListening=true; syncCapBtn();
+  let heard=false,told=false; // told: an error message was already shown for this attempt
   vcRecog.onresult=e=>{
-    recogErrors=0;
+    recogErrors=0; heard=true;
     let interim="",fin="";
     for(let i=e.resultIndex;i<e.results.length;i++){
       const tr=e.results[i][0].transcript;
@@ -1562,17 +1563,24 @@ function startVcRecog(once){
     if(e.error==="not-allowed"||e.error==="service-not-allowed"||e.error==="audio-capture"){
       stopVcRecog(); autoCaptions=false; syncCapBtn();
       toast(e.error==="audio-capture"?"The microphone is busy — subtitles are off.":"Mic blocked — subtitles are off.");
+    }else if(e.error==="network"){
+      recogErrors++; told=true;
+      toast("Speech service can't be reached, so subtitles can't be sent. Check your connection, or try Chrome or Edge.");
+    }else if(e.error==="language-not-supported"){
+      stopVcRecog(); autoCaptions=false; syncCapBtn(); told=true;
+      toast("This browser can't recognise the language you chose. Pick another language or try Chrome.");
     }else if(e.error!=="no-speech"&&e.error!=="aborted"){recogErrors++;}
   };
   vcRecog.onend=()=>{
     const again=vcListening&&autoCaptions&&!once&&inCall&&micOn&&!ttsBusy;
     vcListening=false; syncCapBtn();
+    if(once&&!heard&&!told)toast("Didn't catch anything. Tap CC, then speak, and wait for the words to appear.");
     if(again){
       if(recogErrors>5){autoCaptions=false;syncCapBtn();toast("Subtitles paused after repeated errors — tap CC to try again.");return;}
       setTimeout(()=>startVcRecog(),recogErrors?1500:250);
     }
   };
-  try{vcRecog.start(); if(once)buzz();}catch(e){vcListening=false;syncCapBtn();}
+  try{vcRecog.start(); if(once)buzz();}catch(e){vcListening=false;syncCapBtn();toast("Couldn't start the microphone for subtitles. Reload the page and allow the mic.");}
 }
 function stopVcRecog(){vcListening=false;if(vcRecog){try{vcRecog.abort();}catch(e){}}vcRecog=null;syncCapBtn();}
 function syncCapBtn(){
